@@ -59,7 +59,7 @@ namespace Pr12.Pages
                 },
                 new Option
                 {
-                    name = "Желтый",
+                    name = "Розовый",
                     Price = 10000
                 },
                 new Option
@@ -69,12 +69,12 @@ namespace Pr12.Pages
                 },
                 new Option
                 {
-                    name = "Голубой",
+                    name = "Огненный",
                     Price = 15000
                 },
                 new Option
                 {
-                    name = "Сиреневый",
+                    name = "Изумрудный",
                     Price = 13000
                 },
                 new Option
@@ -115,8 +115,8 @@ namespace Pr12.Pages
             moreNames.Add(
                 new Option
                 {
-                    name = "Доп.колесо",
-                    Price = 5000
+                    name = "Зимняя резина",
+                    Price = 35000
                 }
                 );
             changeTotal();
@@ -127,8 +127,8 @@ namespace Pr12.Pages
             moreNames.Add(
                 new Option
                 {
-                    name = "Усилитель руля",
-                    Price = 15000
+                    name = "Люк",
+                    Price = 29000
                 }
                 );
             changeTotal();
@@ -139,8 +139,8 @@ namespace Pr12.Pages
             moreNames.Add(
                 new Option
                 {
-                    name = "Круиз-контроль",
-                    Price = 20000
+                    name = "Климат-контроль",
+                    Price = 40000
                 }
                 );
             changeTotal();
@@ -151,7 +151,7 @@ namespace Pr12.Pages
             moreNames.Add(
                 new Option
                 {
-                    name = "V12",
+                    name = "Усиленная подвеска",
                     Price = 50000
                 }
                 );
@@ -173,39 +173,39 @@ namespace Pr12.Pages
 
         public void RecountTotal()
         {
-            var cra = NavigationData.CurrentData as Car;
-            cra.TotalPrice = 0;
-            cra.TotalPrice += cra.Model.Price;
-            cra.TotalPrice += cra.Engine.Price;
-            cra.TotalPrice += cra.Color.Price;
-            foreach (var i in cra.More)
+            var machine = NavigationData.CurrentData as Car;
+            machine.TotalPrice = 0;
+            machine.TotalPrice += machine.Model.Price;
+            machine.TotalPrice += machine.Engine.Price;
+            machine.TotalPrice += machine.Color.Price;
+            foreach (var i in machine.More)
             {
-                cra.TotalPrice += i.Price;
+                machine.TotalPrice += i.Price;
             }
-            NavigationData.CurrentData = cra;
+            NavigationData.CurrentData = machine;
         }
 
         private void more1_Unchecked(object sender, RoutedEventArgs e)
         {
-            moreNames.Remove(moreNames.First(x => x.name == "Доп.колесо"));
+            moreNames.Remove(moreNames.First(x => x.name == "Зимняя резина"));
             changeTotal();
         }
 
         private void more2_Unchecked(object sender, RoutedEventArgs e)
         {
-            moreNames.Remove(moreNames.First(x => x.name == "Усилитель руля"));
+            moreNames.Remove(moreNames.First(x => x.name == "Люк"));
             changeTotal();
         }
 
         private void more3_Unchecked(object sender, RoutedEventArgs e)
         {
-            moreNames.Remove(moreNames.First(x => x.name == "Круиз-контроль"));
+            moreNames.Remove(moreNames.First(x => x.name == "Климат-контроль"));
             changeTotal();
         }
 
         private void more4_Unchecked(object sender, RoutedEventArgs e)
         {
-            moreNames.Remove(moreNames.First(x => x.name == "V12"));
+            moreNames.Remove(moreNames.First(x => x.name == "Усиленная подвеска"));
             changeTotal();
         }
     }

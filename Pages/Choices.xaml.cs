@@ -37,16 +37,16 @@ namespace Pr12.Pages
 
         public void RecountTotal()
         {
-            var cra = NavigationData.CurrentData as Car;
-            cra.TotalPrice = 0;
-            cra.TotalPrice += cra.Model.Price;
-            cra.TotalPrice += cra.Engine.Price;
-            cra.TotalPrice += cra.Color.Price;
-            foreach (var i in cra.More)
+            var machine = NavigationData.CurrentData as Car;
+            machine.TotalPrice = 0;
+            machine.TotalPrice += machine.Model.Price;
+            machine.TotalPrice += machine.Engine.Price;
+            machine.TotalPrice += machine.Color.Price;
+            foreach (var i in machine.More)
             {
-                cra.TotalPrice += i.Price;
+                machine.TotalPrice += i.Price;
             }
-            NavigationData.CurrentData = cra;
+            NavigationData.CurrentData = machine;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
