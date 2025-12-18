@@ -14,13 +14,13 @@
             <ComboBox x:Name="ColorComboBox" Width="100" Text="Выберите цвет:" Margin="5" SelectionChanged="ColorComboBox_SelectionChanged"/>
             <TextBlock x:Name="ColorCost" HorizontalAlignment="Center" Text="Стоимость: 187000" Margin="5" FontWeight="Bold"/>
             <TextBlock HorizontalAlignment="Center" Text="Выберите доп. опции:" Margin="5"/>
-            <CheckBox x:Name="more1" Width="200" Content="Доп.колесо" Checked="more1_Checked" Unchecked="more1_Unchecked"/>
-            <CheckBox x:Name="more2" Width="200" Content="Усилитель руля" Checked="more2_Checked" Unchecked="more2_Unchecked"/>
-            <CheckBox x:Name="more3" Width="200" Content="Круиз-контроль" Checked="more3_Checked" Unchecked="more3_Unchecked"/>
-            <CheckBox x:Name="more4" Width="200" Content="V12" Checked="more4_Checked" Unchecked="more4_Unchecked"/>
-            <TextBlock x:Name="MoreCost" HorizontalAlignment="Center" Text="Стоимость: 187000" Margin="5" FontWeight="Bold"/>
+            <CheckBox x:Name="more1" Width="200" Content="Зимняя резина" Checked="more1_Checked" Unchecked="more1_Unchecked"/>
+            <CheckBox x:Name="more2" Width="200" Content="Люк" Checked="more2_Checked" Unchecked="more2_Unchecked"/>
+            <CheckBox x:Name="more3" Width="200" Content="Климат контроль" Checked="more3_Checked" Unchecked="more3_Unchecked"/>
+            <CheckBox x:Name="more4" Width="200" Content="Усиленная подвеска" Checked="more4_Checked" Unchecked="more4_Unchecked"/>
+            <TextBlock x:Name="MoreCost" HorizontalAlignment="Center" Text="Стоимость: 352999" Margin="5" FontWeight="Bold"/>
             <Button x:Name="NextButton" HorizontalAlignment="Center" Content="Далее" Click="NextButton_Click" Margin="5"/>
-            <TextBlock x:Name="TotalCost" HorizontalAlignment="Center" Text="Общая Стоимость: 187000" Margin="5" FontWeight="Bold"/>
+            <TextBlock x:Name="TotalCost" HorizontalAlignment="Center" Text="Общая Стоимость: 352999" Margin="5" FontWeight="Bold"/>
         </StackPanel>
     </Grid>
 </Page>

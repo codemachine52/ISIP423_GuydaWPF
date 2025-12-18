@@ -45,35 +45,36 @@ namespace Pr12.Pages
                 new Option
                 {
                     Price = 200000,
-                    name = "четко"
+                    name = "S55 - самый надежный"
                 },
                 new Option
                 {
-                    name = "чтобы дпсники не догоняли",
-                    Price = 300000
+                    name = "Атмосферный 2.0",
+                    Price = 93000
                 },
                 new Option
                 {
-                    name = "ну так",
-                    Price = 100000
+                    name = "6.3 V12 - идеально для повседневной езды",
+                    Price = 500000
                 }
             };
             List<Option> models = new List<Option>()
             {
                 new Option
                 {
-                    Price = 5000000,
-                    name = "BMW M5 F10"
+                    Price = 2000000,
+                    name = "BMW X5 E53 2007"
                 },
                 new Option
                 {
-                    name = "Audi RS6",
-                    Price = 10000000
+                    Price = 4589000,
+                    name = "Audi RS Q7 2016"
                 },
                 new Option
                 {
-                    name = "Mercedes E63 AMG W212",
-                    Price = 4000000
+                    Price = 6700000,
+                    name = "Mercedes Benz W213 AMG рестайлинг"
+                    
                 }
             };
 
