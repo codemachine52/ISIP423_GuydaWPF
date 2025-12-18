@@ -1,0 +1,26 @@
+﻿<Page x:Class="Pr12.Pages.ColorOptions"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pr12.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ColorOptions">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock/>
+            <ComboBox x:Name="ColorComboBox" Width="100" Text="Выберите цвет:" Margin="5" SelectionChanged="ColorComboBox_SelectionChanged"/>
+            <TextBlock x:Name="ColorCost" HorizontalAlignment="Center" Text="Стоимость: 187000" Margin="5" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Center" Text="Выберите доп. опции:" Margin="5"/>
+            <CheckBox x:Name="more1" Width="200" Content="Доп.колесо" Checked="more1_Checked" Unchecked="more1_Unchecked"/>
+            <CheckBox x:Name="more2" Width="200" Content="Усилитель руля" Checked="more2_Checked" Unchecked="more2_Unchecked"/>
+            <CheckBox x:Name="more3" Width="200" Content="Круиз-контроль" Checked="more3_Checked" Unchecked="more3_Unchecked"/>
+            <CheckBox x:Name="more4" Width="200" Content="V12" Checked="more4_Checked" Unchecked="more4_Unchecked"/>
+            <TextBlock x:Name="MoreCost" HorizontalAlignment="Center" Text="Стоимость: 187000" Margin="5" FontWeight="Bold"/>
+            <Button x:Name="NextButton" HorizontalAlignment="Center" Content="Далее" Click="NextButton_Click" Margin="5"/>
+            <TextBlock x:Name="TotalCost" HorizontalAlignment="Center" Text="Общая Стоимость: 187000" Margin="5" FontWeight="Bold"/>
+        </StackPanel>
+    </Grid>
+</Page>

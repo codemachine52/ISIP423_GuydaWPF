@@ -1,0 +1,26 @@
+﻿<Page x:Class="Pr12.Pages.Results"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Pr12.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Results">
+
+    <Grid>
+        <StackPanel>
+            <TextBlock Margin="5" TextAlignment="Center" Text="Отправка Заявки" FontSize="20" FontWeight="Bold"/>
+            <TextBlock Margin="5" TextAlignment="Center" Text="ФИО"/>
+            <TextBox x:Name="name" Margin="5" Width="100" TextChanged="name_TextChanged"></TextBox>
+
+            <TextBlock Margin="5" TextAlignment="Center" Text="Почта"/>
+            <TextBox x:Name="Email" Margin="5" Width="100" TextChanged="Phone_TextChanged"></TextBox>
+
+            <TextBlock Margin="5" TextAlignment="Center" Text="Телефон"/>
+            <TextBox x:Name="Phone" Margin="5" Width="100" TextChanged="Email_TextChanged"  PreviewTextInput="NumberValidationTextBox"></TextBox>
+
+            <Button x:Name="Next" Margin="5" Width="100" Height="20" Click="Button_Click">Подтвердить</Button>
+        </StackPanel>
+    </Grid>
+</Page>
