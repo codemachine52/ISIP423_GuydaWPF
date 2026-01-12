@@ -94,6 +94,7 @@ namespace WpfApp1.Pages
             if(EngineChoose.SelectedIndex == 0)
             {
                 PriceText.Text += cars[CarChoose.SelectedIndex].price.ToString();
+                PriceFinal = cars[CarChoose.SelectedIndex].price;
             }
             else
             {

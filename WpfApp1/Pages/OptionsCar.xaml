@@ -14,5 +14,7 @@
         <CheckBox x:Name="Gidrl" Content="Гидравлика" HorizontalAlignment="Left" Margin="91,138,0,0" VerticalAlignment="Top" Background="#FFDCC1C1" FontSize="16" Checked="Gidrl_Checked"/>
         <CheckBox x:Name="Toner" Content="Тонировка" HorizontalAlignment="Left" Margin="91,180,0,0" VerticalAlignment="Top" Background="#FFDCC1C1" FontSize="16" Checked="Toner_Checked"/>
         <TextBlock x:Name="CarWithOptionPrice" HorizontalAlignment="Left" Margin="206,271,0,0" TextWrapping="Wrap" Text="Стоимость машины с доп опциями: " VerticalAlignment="Top" Width="365" FontSize="14"/>
+        <ComboBox x:Name="Colors" HorizontalAlignment="Left" Margin="507,122,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Colors_SelectionChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="491,86,0,0" TextWrapping="Wrap" Text="Выберите цвет автомобиля" VerticalAlignment="Top"/>
     </Grid>
 </Page>

@@ -45,8 +45,36 @@ namespace WpfApp1.Pages
         {
             name = "Тонировка",
             price = 26500
-        }
+        },
     };
+        List<Options> colors = new List<Options>()
+        {
+            new Options
+        {
+            name = "Синий",
+            price = 7200
+        },
+        new Options
+        {
+            name = "Желтый",
+            price = 4500
+        },
+        new Options
+        {
+            name = "Фиолетовый",
+            price = 10000
+        },
+        new Options
+        {
+            name = "Пурпурный",
+            price = 11000
+        },
+        new Options
+        {
+            name = "Огненный",
+            price = 9900
+        }
+        };
 
         decimal price1;
         Car machine;
@@ -56,6 +84,8 @@ namespace WpfApp1.Pages
             price1 = car.price;
             machine = car;
             Calculate();
+            Colors.ItemsSource = colors;
+            Colors.DisplayMemberPath = "name";
         }
         private void Condey_Checked(object sender, RoutedEventArgs e)
         {
@@ -83,6 +113,11 @@ namespace WpfApp1.Pages
         public void Calculate()
         {
             CarWithOptionPrice.Text = $"Стоимость машины с доп. опциями: {price1.ToString()}";
+        }
+
+        private void Colors_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Calculate();
         }
     }
 }
