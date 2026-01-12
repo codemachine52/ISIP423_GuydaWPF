@@ -12,8 +12,9 @@
         <StackPanel>
             <TextBlock x:Name="HelloText" TextAlignment="Center" HorizontalAlignment="Center" Width="296" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите автомобиль"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
             <ComboBox x:Name="CarChoose"  Width="120" SelectionChanged="CarChoose_SelectionChanged"/>
-            <TextBlock x:Name="EngineText" TextAlignment="Center" HorizontalAlignment="Center" Width="296" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите двигатель"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
-            <ComboBox x:Name="EngineChoose"  Width="120" SelectionChanged="CarChoose_SelectionChanged"/>
+            <TextBlock x:Name="EngineText" TextAlignment="Center" HorizontalAlignment="Center" Width="407" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите двигатель по количеству ЛС"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+            <ComboBox x:Name="EngineChoose"  Width="120" SelectionChanged="EngineChoose_SelectionChanged"/>
+            <TextBlock x:Name="PriceText" TextAlignment="Center" HorizontalAlignment="Center" Width="407" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Итоговая цена: "/><LineBreak/><Run Language="ru-ru"/></TextBlock>
         </StackPanel>
     </Grid>
 </Page>
