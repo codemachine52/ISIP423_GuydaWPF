@@ -117,6 +117,7 @@ namespace WpfApp1.Pages
 
         private void Colors_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            price1 += colors[Colors.SelectedIndex].price;
             Calculate();
         }
     }
