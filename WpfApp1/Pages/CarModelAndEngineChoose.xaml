@@ -10,11 +10,13 @@
 
     <Grid Background="#FF446B41" OpacityMask="Black">
         <StackPanel>
-            <TextBlock x:Name="HelloText" TextAlignment="Center" HorizontalAlignment="Center" Width="296" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите автомобиль"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+            <TextBlock x:Name="HelloText" TextAlignment="Center" HorizontalAlignment="Center" Width="296" Margin="25" FontSize="18" Height="21" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите автомобиль"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
             <ComboBox x:Name="CarChoose"  Width="120" SelectionChanged="CarChoose_SelectionChanged"/>
-            <TextBlock x:Name="EngineText" TextAlignment="Center" HorizontalAlignment="Center" Width="407" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите двигатель по количеству ЛС"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+            <TextBlock x:Name="EngineText" Margin="25" TextAlignment="Center" HorizontalAlignment="Center" Width="408"  FontSize="18" Height="23" FontFamily="Arial"><Run Language="ru-ru" Text="Выберите двигатель по количеству ЛС"/><LineBreak/><Run Language="ru-ru"/></TextBlock>
             <ComboBox x:Name="EngineChoose"  Width="120" SelectionChanged="EngineChoose_SelectionChanged"/>
-            <TextBlock x:Name="PriceText" TextAlignment="Center" HorizontalAlignment="Center" Width="407" Margin="30" FontSize="18" Height="32" FontFamily="Arial"><Run Language="ru-ru" Text="Итоговая цена: "/><LineBreak/><Run Language="ru-ru"/></TextBlock>
+            <Button x:Name="PriceCalculate" HorizontalAlignment="Center" Content="Рассчитать стоимость" Width ="137" Height="39" Margin="25" Click="PriceCalculate_Click"></Button>
+            <TextBlock x:Name="PriceText" TextAlignment="Center"  Width="244"  FontSize="18" Height="26" FontFamily="Arial"><Run Language="ru-ru" Text="Итоговая цена: "/><LineBreak/><Run Language="ru-ru"/></TextBlock>
         </StackPanel>
+        <Button x:Name="NextButton" Margin="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="25" Click="NextButton_Click">Далее</Button>
     </Grid>
 </Page>

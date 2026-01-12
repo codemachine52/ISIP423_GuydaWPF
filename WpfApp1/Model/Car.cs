@@ -11,5 +11,6 @@ namespace WpfApp1
         public string Name { get; set; }
         public decimal price { get; set; }
         public string color { get; set; }
+        public Engine engine { get; set; }
     }
 }

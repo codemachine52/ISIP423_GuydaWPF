@@ -63,13 +63,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Car.cs" />
-    <Compile Include="Engine.cs" />
+    <Compile Include="Model\Car.cs" />
+    <Compile Include="Model\Engine.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\CarModelAndEngineChoose.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\OptionsCar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -81,6 +85,9 @@
   <ItemGroup>
     <Compile Include="Pages\CarModelAndEngineChoose.xaml.cs">
       <DependentUpon>CarModelAndEngineChoose.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OptionsCar.xaml.cs">
+      <DependentUpon>OptionsCar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Results.xaml.cs">
       <DependentUpon>Results.xaml</DependentUpon>

@@ -44,10 +44,7 @@ namespace WpfApp1.Pages
                     cost = 678999
                 }
             };
-        public CarModelAndEngineChoose()
-        {
-            InitializeComponent();
-            List<Car> cars = new List<Car>()
+        List<Car> cars = new List<Car>()
             {
                 new Car{
                     Name = "Мерс Е200 2003",
@@ -65,14 +62,14 @@ namespace WpfApp1.Pages
                     color = "Красный"
                 }
             };
-
-            
-
+        public CarModelAndEngineChoose()
+        {
+            InitializeComponent();
             CarChoose.ItemsSource = cars;
             CarChoose.SelectedIndex = 0;
             CarChoose.DisplayMemberPath = "Name";
 
-            
+
 
             EngineChoose.SelectedIndex = 0;
             EngineChoose.ItemsSource = engines;
@@ -86,12 +83,35 @@ namespace WpfApp1.Pages
 
         private void EngineChoose_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (EngineChoose.SelectedIndex != 0)
+                MessageBox.Show($"Вы выбрали двигатель {engines[EngineChoose.SelectedIndex].HP} лошадинных сил, объемом {engines[EngineChoose.SelectedIndex].displacement} л.");
+            
+        }
+
+        private void PriceCalculate_Click(object sender, RoutedEventArgs e)
+        {
+            PriceText.Text = "Итоговая цена: ";
             if(EngineChoose.SelectedIndex == 0)
-                MessageBox.Show($"Вы выбрали двигатель {engines[0].HP} лошадинных сил, объемом {engines[0].displacement}!");
-            if (EngineChoose.SelectedIndex == 1)
-                MessageBox.Show($"Вы выбрали двигатель {engines[1].HP} лошадинных сил, объемом {engines[1].displacement}!");
-            if (EngineChoose.SelectedIndex == 2)
-                MessageBox.Show($"Вы выбрали двигатель {engines[2].HP} лошадинных сил, объемом {engines[2].displacement}!");
+            {
+                PriceText.Text += cars[CarChoose.SelectedIndex].price.ToString();
+            }
+            else
+            {
+                decimal PriceFinal = cars[CarChoose.SelectedIndex].price + engines[EngineChoose.SelectedIndex].cost;
+                PriceText.Text += PriceFinal.ToString();
+            }
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService?.CanGoForward == true)
+            {
+                var car = NavigationData.CurrentData as Car;
+                car.Name = (string)CarChoose.SelectedItem;
+                car.engine = (Engine)EngineChoose.SelectedItem;
+                NavigationData.CurrentData = car;
+                NavigationService.Navigate(new OptionsCar());
+            }
         }
     }
 }

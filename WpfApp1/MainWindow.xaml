@@ -8,7 +8,7 @@
         Title="Автосалон У Владоса" Height="450" Width="800">
     <Grid>
         <Frame x:Name="MainFrame" Grid.Row="1" Source="Pages/CarModelAndEngineChoose.xaml" NavigationUIVisibility="Hidden"/>
-        <Button x:Name="BackButton" Margin="25" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100" Height="25" Click="BackButton_Click">Назад</Button>
+        <Button x:Name="BackButton" Margin="25" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Height="25" Click="BackButton_Click">Назад</Button>
         <StackPanel x:Name="dataLoss" Visibility="Hidden" Width="400" Height="100" Background="LightGray">
             <TextBlock x:Name="dataLossText" Margin="5" Text="Вы потеряете введеные данные. Уверены что хотите вернуться?" TextAlignment="Center"/>
             <Button x:Name="yesButton" Width="50" Height="20" Margin="5" Click="yesButton_Click">Да</Button>
