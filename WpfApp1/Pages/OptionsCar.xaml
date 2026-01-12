@@ -6,9 +6,13 @@
       xmlns:local="clr-namespace:WpfApp1.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="OptionsCar">
+      Title="Дополнительные опции">
 
-    <Grid>
-        
+    <Grid Background="#FFAF9494">
+        <CheckBox x:Name="Condey" Content="Кондиционер" HorizontalAlignment="Left" Margin="91,58,0,0" VerticalAlignment="Top" Background="#FFDCC1C1" FontSize="16" Checked="Condey_Checked"/>
+        <CheckBox x:Name="Climat" Content="Климат-контроль" HorizontalAlignment="Left" Margin="91,99,0,0" VerticalAlignment="Top" Background="#FFDCC1C1" FontSize="16" Checked="Climat_Checked"/>
+        <CheckBox x:Name="Gidrl" Content="Гидравлика" HorizontalAlignment="Left" Margin="91,138,0,0" VerticalAlignment="Top" Background="#FFDCC1C1" FontSize="16" Checked="Gidrl_Checked"/>
+        <CheckBox x:Name="Toner" Content="Тонировка" HorizontalAlignment="Left" Margin="91,180,0,0" VerticalAlignment="Top" Background="#FFDCC1C1" FontSize="16" Checked="Toner_Checked"/>
+        <TextBlock x:Name="CarWithOptionPrice" HorizontalAlignment="Left" Margin="206,271,0,0" TextWrapping="Wrap" Text="Стоимость машины с доп опциями: " VerticalAlignment="Top" Width="365" FontSize="14"/>
     </Grid>
 </Page>

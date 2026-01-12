@@ -83,6 +83,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Options.cs" />
     <Compile Include="Pages\CarModelAndEngineChoose.xaml.cs">
       <DependentUpon>CarModelAndEngineChoose.xaml</DependentUpon>
     </Compile>

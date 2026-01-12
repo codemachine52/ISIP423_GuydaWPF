@@ -23,6 +23,7 @@ namespace WpfApp1.Pages
     /// 
     public partial class CarModelAndEngineChoose : Page
     {
+        decimal PriceFinal;
         List<Engine> engines = new List<Engine>()
             {
                 new Engine
@@ -70,7 +71,6 @@ namespace WpfApp1.Pages
             CarChoose.DisplayMemberPath = "Name";
 
 
-
             EngineChoose.SelectedIndex = 0;
             EngineChoose.ItemsSource = engines;
             EngineChoose.DisplayMemberPath = "HP";
@@ -97,20 +97,25 @@ namespace WpfApp1.Pages
             }
             else
             {
-                decimal PriceFinal = cars[CarChoose.SelectedIndex].price + engines[EngineChoose.SelectedIndex].cost;
+                PriceFinal = cars[CarChoose.SelectedIndex].price + engines[EngineChoose.SelectedIndex].cost;
                 PriceText.Text += PriceFinal.ToString();
             }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NavigationService?.CanGoForward == true)
+            if (NavigationService.CanGoForward == true)
+            {
+                //NavigationService.GoForward();
+            }
+            if (CarChoose.SelectedIndex != -1 && EngineChoose.SelectedIndex != -1)
             {
                 var car = NavigationData.CurrentData as Car;
-                car.Name = (string)CarChoose.SelectedItem;
+                car.Name = CarChoose.SelectedItem.ToString();
                 car.engine = (Engine)EngineChoose.SelectedItem;
+                car.price = PriceFinal;
                 NavigationData.CurrentData = car;
-                NavigationService.Navigate(new OptionsCar());
+                NavigationService.Navigate(new OptionsCar(car));
             }
         }
     }

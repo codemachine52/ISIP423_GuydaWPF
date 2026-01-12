@@ -24,6 +24,8 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            var car = new Car();
+            NavigationData.CurrentData = car;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
