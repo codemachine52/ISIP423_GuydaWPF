@@ -8,248 +8,95 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
 
-    <Grid>
-        <!-- Верхняя панель -->
-        <Border Background="#8A2BE2" 
-                Height="70" 
-                VerticalAlignment="Top">
+    <Grid Background="Black">
+        <Border Background="RosyBrown"  Height="45" VerticalAlignment="Top">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <!-- Логотип -->
-                <StackPanel Grid.Column="0" 
-                            Orientation="Horizontal" 
-                            VerticalAlignment="Center" 
-                            Margin="30,0,0,0">
-                    <TextBlock Text="🎬" 
-                               FontSize="28" 
-                               VerticalAlignment="Center"/>
-                    <TextBlock Text="КИНОТЕАТР МЕЧТА" 
-                               VerticalAlignment="Center" 
-                               FontSize="22" 
-                               Margin="15,0,0,0" 
-                               Foreground="White" 
-                               FontWeight="Bold"
-                               FontFamily="Segoe UI Black"/>
-                </StackPanel>
-
-                <!-- Поиск с иконкой -->
-                <Border Grid.Column="1" 
-                        CornerRadius="25" 
-                        Background="#FFFFFF20" 
-                        VerticalAlignment="Center" 
-                        Margin="100,0,100,0" 
-                        Height="45" 
-                        Width="400">
-                    <Grid>
-                        <TextBox x:Name="FindFilm" 
-                                 Height="30" 
-                                 Background="Transparent" 
-                                 BorderThickness="0" 
-                                 Foreground="White" 
-                                 Margin="50,0,20,0" 
-                                 FontSize="16" 
-                                 VerticalAlignment="Center"
-                                 TextChanged="FindFilm_TextChanged"
-                                 CaretBrush="White">
-                            <TextBox.Style>
-                                <Style TargetType="TextBox">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="TextBox">
-                                                <Border Background="Transparent">
-                                                    <ScrollViewer x:Name="PART_ContentHost"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>
-                        <TextBlock Text="🔍" 
-                                   FontSize="18" 
-                                   Foreground="#AAAAAA" 
-                                   VerticalAlignment="Center" 
-                                   Margin="15,0,0,0"/>
-                        <TextBlock x:Name="SearchPlaceholder" 
-                                   Text="Поиск фильма..." 
-                                   FontSize="16" 
-                                   Foreground="#AAAAAA" 
-                                   VerticalAlignment="Center" 
-                                   Margin="50,0,0,0"
-                                   IsHitTestVisible="False"/>
-                    </Grid>
-                </Border>
-
-                <!-- Профиль -->
-                <Button Grid.Column="2" 
-                        Width="50" 
-                        HorizontalAlignment="Right" 
-                        Background="Transparent" 
-                        Content="👤" 
-                        FontSize="24" 
-                        BorderBrush="Transparent" 
-                        Margin="0,0,30,0"
-                        Foreground="White"
-                        Cursor="Hand"/>
+                <TextBlock Text="Кинотеатр Мечта" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" Margin="60,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
+                <Button Width="50" HorizontalAlignment="Right" Background="{x:Null}" Content="👤" FontSize="20" BorderBrush="{x:Null}" Margin="0,0,60,0"/>
             </Grid>
         </Border>
-
-        <!-- Основная область с фильмами -->
-        <Border Margin="0,70,0,0" Background="Transparent">
-            <ScrollViewer VerticalScrollBarVisibility="Auto" 
-                          HorizontalScrollBarVisibility="Disabled"
-                          Margin="0">
-                <ListBox x:Name="listBox" 
-                         Background="Transparent"
-                         BorderThickness="0"
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         ItemsSource="{Binding}" d:ItemsSource="{d:SampleData ItemCount=5}">
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <!-- Карточка фильма -->
-                            <Border BorderBrush="#2D3748" 
-                                    BorderThickness="1"
-                                    CornerRadius="15"
-                                    Background="#1A202C"
-                                    Margin="20,15"
-                                    Width="260"
-                                    Height="380"
-                                    Cursor="Hand">
-
-                                <Border.Effect>
-                                    <DropShadowEffect BlurRadius="20" 
-                                                      ShadowDepth="4" 
-                                                      Color="#00000080"
-                                                      Opacity="0.7"/>
-                                </Border.Effect>
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="180"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-
-                                    <!-- Постер фильма -->
-                                    <Border Grid.Row="0" 
-                                            Background="#2D3748" 
-                                            CornerRadius="15,15,0,0">
-                                        <Grid>
-                                            <Image Source="{Binding ImagePath}" 
-                                                   HorizontalAlignment="Center" 
-                                                   VerticalAlignment="Center"
-                                                   Stretch="UniformToFill"
-                                                   Height="180"
-                                                   Width="260">
-                                                <Image.Clip>
-                                                    <RectangleGeometry Rect="0,0,260,180" RadiusX="15" RadiusY="0"/>
-                                                </Image.Clip>
-                                            </Image>
-                                            <!-- Рейтинг фильма -->
-                                            <Border Background="#FFD700" 
-                                                    HorizontalAlignment="Left" 
-                                                    VerticalAlignment="Top"
-                                                    CornerRadius="0,0,10,0"
-                                                    Width="50"
-                                                    Height="30"
-                                                    Margin="0">
-                                                <TextBlock Text="{Binding Rating}" 
-                                                           Foreground="Black"
-                                                           FontWeight="Bold"
-                                                           FontSize="14"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center"/>
-                                            </Border>
-                                            <!-- Жанр -->
-                                            <Border Background="#8A2BE2" 
-                                                    HorizontalAlignment="Right" 
-                                                    VerticalAlignment="Top"
-                                                    CornerRadius="0,0,0,10"
-                                                    Padding="10,5"
-                                                    Margin="0"
-                                                    Opacity="0.8">
-                                                <TextBlock Text="{Binding Genre}" 
-                                                           Foreground="White"
-                                                           FontSize="11"
-                                                           FontWeight="SemiBold"/>
-                                            </Border>
-                                        </Grid>
-                                    </Border>
-
-                                    <!-- Информация о фильме -->
-                                    <StackPanel Grid.Row="1" 
-                                                Margin="15,15">
-                                        <TextBlock Text="{Binding Name}" 
-                                                   HorizontalAlignment="Center" 
-                                                   TextWrapping="Wrap"
-                                                   FontSize="18" 
-                                                   FontWeight="Bold"
-                                                   Foreground="White"
-                                                   TextAlignment="Center"
-                                                   MaxHeight="60"
-                                                   TextTrimming="CharacterEllipsis"/>
-
-                                        <TextBlock Text="{Binding Duration}" 
-                                                   HorizontalAlignment="Center"
-                                                   FontSize="14" 
-                                                   Foreground="#AAAAAA"
-                                                   Margin="0,5,0,0"/>
-
-                                        <!-- Цена билета -->
-                                        <StackPanel Orientation="Horizontal" 
-                                                    HorizontalAlignment="Center"
-                                                    Margin="0,10,0,0">
-                                            <TextBlock Text="{Binding Price, StringFormat='{}{0} ₽'}" 
-                                                       FontSize="20" 
-                                                       FontWeight="Bold"
-                                                       Foreground="#00FFAA"/>
-                                            <TextBlock Text="/билет" 
-                                                       FontSize="12" 
-                                                       Foreground="#AAAAAA"
-                                                       VerticalAlignment="Bottom"
-                                                       Margin="5,0,0,2"/>
-                                        </StackPanel>
-                                    </StackPanel>
-
-                                    <!-- Кнопка покупки -->
-                                    <Button Grid.Row="2"
-                                            Content="КУПИТЬ БИЛЕТ" 
-                                            Margin="25,0,25,20"
-                                            Padding="15,10"
-                                            Click="BuyTicket_Click"
-                                            Tag="{Binding ID}"
-                                            Background="#8A2BE2"
-                                            Foreground="White"
-                                            FontSize="14"
-                                            FontWeight="Bold"
-                                            BorderThickness="0"
-                                            Cursor="Hand">
-                                        <Button.Resources>
-                                            <Style TargetType="Border">
-                                                <Setter Property="CornerRadius" Value="10"/>
-                                            </Style>
-                                        </Button.Resources>
-                                    </Button>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" 
-                                       HorizontalAlignment="Center"
-                                       Margin="40,20"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                </ListBox>
-            </ScrollViewer>
+        <Border CornerRadius="10" Height="25" Background="Azure" VerticalAlignment="Top" Margin="60,10,10,10" Width="250" HorizontalAlignment="Center">
+            <TextBox x:Name="FindFilm" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="Black" Margin="10,0,10,0" FontSize="14" />
         </Border>
+        <ListBox x:Name="listBox" 
+                 Margin="25,70,25,70"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="listBox_SelectionChanged">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <!-- Карточка товара -->
+                    <Border BorderBrush="#E0E0E0" 
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Background="White"
+                            Margin="12,8"
+                            Width="240"
+                            Height="290">
+
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="6" ShadowDepth="1" Color="#CCCCCC"/>
+                        </Border.Effect>
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="140"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Область картинки -->
+                            <Border Grid.Row="0" 
+                                    Background="#F8F8F8" 
+                                    CornerRadius="6,6,0,0">
+                                <Image Height="140" VerticalAlignment="Center" UseLayoutRounding="False" Source="{Binding ImagePath}" Width="240" />
+                            </Border>
+
+                            <!-- Информация -->
+                            <StackPanel Grid.Row="1" 
+                                        Margin="15,10">
+                                <TextBlock Text="{Binding Name}" 
+                                           HorizontalAlignment="Center" 
+                                           TextWrapping="Wrap"
+                                           FontSize="15" 
+                                           FontWeight="SemiBold"
+                                           Foreground="#333333"
+                                           TextAlignment="Center"/>
+
+                                <!-- Цена в рублях -->
+                                <TextBlock Text="{Binding Price, StringFormat='{}{0} ₽'}" 
+                                           HorizontalAlignment="Center"
+                                           FontSize="16" 
+                                           FontWeight="Bold"
+                                           Foreground="#E74C3C"
+                                           Margin="0,10,0,0"/>
+                            </StackPanel>
+
+                            <!-- Кнопка в корзину -->
+                            <Button Grid.Row="2"
+                                    Content="Добавить в корзину" 
+                                    Margin="20,0,20,15"
+                                    Padding="10,6"
+                                    Click="ToBasket_Click"
+                                    Tag="{Binding ID}"
+                                    Background="#3498DB"
+                                    Foreground="White"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    BorderThickness="0"
+                                    Cursor="Hand">
+                            </Button>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
     </Grid>
 </Page>

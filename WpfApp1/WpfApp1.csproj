@@ -69,10 +69,20 @@
     <Compile Include="BusyPlace.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Cinema.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cinema.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="Cinema.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Cinema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cinema.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cinema.edmx</DependentUpon>
     </Compile>
     <Compile Include="Classification.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
@@ -109,16 +119,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Cinema.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Cinema.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Cinema.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Cinema.edmx</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -166,23 +166,27 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Images\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cinema.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Cinema.Context.cs</LastGenOutput>
       <DependentUpon>Cinema.edmx</DependentUpon>
+      <LastGenOutput>Cinema.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Cinema.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Cinema.edmx</DependentUpon>
       <LastGenOutput>Cinema.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Resource Include="Images\avengers_endgame.jpg" />
+    <Resource Include="Images\cruella.jpg" />
+    <Resource Include="Images\f9.jpg" />
+    <Resource Include="Images\it2.jpg" />
+    <Resource Include="Images\joker.jpg" />
+    <Resource Include="Images\lion_king.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
