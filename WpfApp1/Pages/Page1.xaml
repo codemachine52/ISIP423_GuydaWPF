@@ -7,7 +7,6 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Page1">
-
     <Grid Background="Black">
         <Border Background="RosyBrown"  Height="45" VerticalAlignment="Top">
             <Grid>
@@ -67,20 +66,16 @@
                                            TextAlignment="Center"
                                            VerticalAlignment="Center"/>
 
-                                <TextBlock x:Name="RatingFilm" Text="{Binding Rating}"
-                                           HorizontalAlignment="Center"
-                                           FontSize="14"
-                                           />
-                                
+                                <TextBlock x:Name="RatingFilm" Text="{Binding Rating}" HorizontalAlignment="Center" FontSize="14"/>
                             </StackPanel>
 
                             <!-- Кнопка в корзину -->
                             <Button Name="ButSeans"  Grid.Row="2"
-                                    Content="Добавить в корзину" 
+                                    Content="Купить билет" 
                                     Margin="20,0,20,15"
                                     Padding="10,6"
                                     Tag="{Binding ID}"
-                                    Background="#3498DB"
+                                    Background="DarkOrange"
                                     Foreground="White"
                                     FontSize="14"
                                     FontWeight="SemiBold"
@@ -90,17 +85,17 @@
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
-                        <DataTrigger Binding="{Binding ratconv}" Value ="1">
-                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Green"></Setter>
+                        <DataTrigger Binding="{Binding RatingColorCode}" Value="1">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Green"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ratconv}" Value ="2">
-                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Yellow"></Setter>
+                        <DataTrigger Binding="{Binding RatingColorCode}" Value="2">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="#FFDE9000"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ratconv}" Value ="3">
-                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Orange"></Setter>
+                        <DataTrigger Binding="{Binding RatingColorCode}" Value="3">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="#FFFD6800"/>
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding ratconv}" Value ="4">
-                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Red"></Setter>
+                        <DataTrigger Binding="{Binding RatingColorCode}" Value="4">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Red"/>
                         </DataTrigger>
                     </DataTemplate.Triggers>
                 </DataTemplate>

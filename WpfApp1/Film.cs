@@ -29,7 +29,6 @@ namespace WpfApp1
         public int GanreID { get; set; }
         public System.DateTime FilmPremierDate { get; set; }
         public string Description { get; set; }
-    
         public virtual Age Age { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Session> Session { get; set; }
