@@ -166,9 +166,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\avengers_endgame.jpg" />
+    <Resource Include="Images\cruella.jpg" />
+    <Resource Include="Images\f9.jpg" />
+    <Resource Include="Images\it2.jpg" />
+    <Resource Include="Images\joker.jpg" />
+    <Resource Include="Images\lion_king.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cinema.Context.tt">
@@ -181,12 +188,6 @@
       <DependentUpon>Cinema.edmx</DependentUpon>
       <LastGenOutput>Cinema.cs</LastGenOutput>
     </Content>
-    <Resource Include="Images\avengers_endgame.jpg" />
-    <Resource Include="Images\cruella.jpg" />
-    <Resource Include="Images\f9.jpg" />
-    <Resource Include="Images\it2.jpg" />
-    <Resource Include="Images\joker.jpg" />
-    <Resource Include="Images\lion_king.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

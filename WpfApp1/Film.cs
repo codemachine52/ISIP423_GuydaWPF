@@ -22,10 +22,10 @@ namespace WpfApp1
         }
     
         public int ID { get; set; }
-        public string FilmName { get; set; }
+        public string Name { get; set; }
         public double Rating { get; set; }
         public int AgeID { get; set; }
-        public string Image { get; set; }
+        public string ImagePath { get; set; }
         public int GanreID { get; set; }
         public System.DateTime FilmPremierDate { get; set; }
         public string Description { get; set; }

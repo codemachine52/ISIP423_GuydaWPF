@@ -19,10 +19,10 @@
             <TextBox x:Name="FindFilm" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="Black" Margin="10,0,10,0" FontSize="14" />
         </Border>
         <ListBox x:Name="listBox" 
-                 Margin="25,70,25,70"
+                 Margin="25,70,25,0"
                  Background="Transparent"
                  BorderThickness="0"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="listBox_SelectionChanged">
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}">
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -50,7 +50,8 @@
                             <Border Grid.Row="0" 
                                     Background="#F8F8F8" 
                                     CornerRadius="6,6,0,0">
-                                <Image Height="140" VerticalAlignment="Center" UseLayoutRounding="False" Source="{Binding ImagePath}" Width="240" />
+                                <Image Height="140" VerticalAlignment="Center" UseLayoutRounding="False" Source="{Binding ImagePath}" Width="240" 
+                                       Stretch="Fill"/>
                             </Border>
 
                             <!-- Информация -->
@@ -59,26 +60,25 @@
                                 <TextBlock Text="{Binding Name}" 
                                            HorizontalAlignment="Center" 
                                            TextWrapping="Wrap"
-                                           FontSize="15" 
+                                           Margin="10"
+                                           FontSize="18" 
                                            FontWeight="SemiBold"
                                            Foreground="#333333"
-                                           TextAlignment="Center"/>
+                                           TextAlignment="Center"
+                                           VerticalAlignment="Center"/>
 
-                                <!-- Цена в рублях -->
-                                <TextBlock Text="{Binding Price, StringFormat='{}{0} ₽'}" 
+                                <TextBlock x:Name="RatingFilm" Text="{Binding Rating}"
                                            HorizontalAlignment="Center"
-                                           FontSize="16" 
-                                           FontWeight="Bold"
-                                           Foreground="#E74C3C"
-                                           Margin="0,10,0,0"/>
+                                           FontSize="14"
+                                           />
+                                
                             </StackPanel>
 
                             <!-- Кнопка в корзину -->
-                            <Button Grid.Row="2"
+                            <Button Name="ButSeans"  Grid.Row="2"
                                     Content="Добавить в корзину" 
                                     Margin="20,0,20,15"
                                     Padding="10,6"
-                                    Click="ToBasket_Click"
                                     Tag="{Binding ID}"
                                     Background="#3498DB"
                                     Foreground="White"
@@ -89,7 +89,22 @@
                             </Button>
                         </Grid>
                     </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding ratconv}" Value ="1">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Green"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ratconv}" Value ="2">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Yellow"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ratconv}" Value ="3">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Orange"></Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ratconv}" Value ="4">
+                            <Setter TargetName="RatingFilm" Property="Foreground" Value="Red"></Setter>
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
+                
             </ListBox.ItemTemplate>
 
             <ListBox.ItemsPanel>

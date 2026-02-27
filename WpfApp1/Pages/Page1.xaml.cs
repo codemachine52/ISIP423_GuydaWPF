@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
-
+using WpfApp1.Pages;
 namespace WpfApp1.Pages
 {
     public partial class Page1 : Page
@@ -14,132 +15,21 @@ namespace WpfApp1.Pages
         {
             InitializeComponent();
             listBox.ItemsSource = allMovies;
-
-            FindFilm.TextChanged += (s, e) =>
-            {
-                SearchPlaceholder.Visibility =
-                    string.IsNullOrWhiteSpace(FindFilm.Text) ?
-                    Visibility.Visible : Visibility.Collapsed;
-            };
+            RatingConvert();
         }
-        private void FindFilm_TextChanged(object sender, TextChangedEventArgs e)
+        public int ratconv;
+        private void RatingConvert()
         {
-            if (string.IsNullOrWhiteSpace(FindFilm.Text))
+            foreach (Film film in allMovies)
             {
-                listBox.ItemsSource = allMovies;
-            }
-            else
-            {
-                var searchText = FindFilm.Text.ToLower();
-                var filtered = allMovies.Where(m =>
-                    m.FilmName.ToLower().Contains(searchText));
-                listBox.ItemsSource = filtered;
-            }
-        }
-            private void BuyTicket_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is int filmId)
-            {
-                var film = allMovies.FirstOrDefault(f => f.ID == filmId);
-                if (film != null)
+                if(film.Rating >= 7)
                 {
-                    // Создаем объект Session для покупки
-                    // Здесь можно открыть окно выбора сеанса
-                    var result = MessageBox.Show(
-                        $"Выбрать сеанс для фильма:\n\n" +
-                        $"🎬 {film.FilmName}\n" +
-                        $"⭐ Рейтинг: {film.Rating}/10\n" +
-                        $"🎭 Жанр: {film.Ganre}\n" +
-                        $"Возраст: {film.Age}\n" +
-                        $"Перейти к выбору времени и места?",
-                        "Покупка билета",
-                        MessageBoxButton.YesNo,
-                        MessageBoxImage.Question);
-
-                    if (result == MessageBoxResult.Yes)
-                    {
-                        // Здесь можно открыть страницу выбора сеанса
-                        // Например: NavigationService.Navigate(new SessionPage(filmId));
-                        MessageBox.Show($"Функционал выбора сеанса для фильма '{film.FilmName}' в разработке.",
-                            "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
+                    ratconv = 1;
                 }
+                if (film.Rating < 7 && film.Rating > 5) ratconv = 2;
+                if (film.Rating < 5 && film.Rating > 3) ratconv = 3;
+                else ratconv = 4;
             }
         }
-
-        // Кнопка "Подробнее"
-        private void ShowDetails_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is int filmId)
-            {
-                var film = allMovies.FirstOrDefault(f => f.ID == filmId);
-                if (film != null)
-                {
-                    MessageBox.Show(
-                        $"🎬 Название: {film.FilmName}\n" +
-                        $"⭐ Рейтинг: {film.Rating}/10\n" +
-                        $"🎭 Жанр: {film.Ganre}\n" +
-                        $"🎫 Возрастной рейтинг: {film.Age}\n\n" +
-                        $"📖 Описание:\n{film.Description}\n\n",
-                        "Подробная информация о фильме",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Information);
-                }
-            }
-        }
-
-        // Кнопка профиля
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
-        {
-            var user = Core.Context.Client.FirstOrDefault();
-            // Проверяем авторизацию через Core
-            if (user != null)
-            {
-                MessageBox.Show(
-                    $"👤 Профиль пользователя:\n\n" +
-                    $"ФИО: {user.Fio}\n" +
-                    $"Email: {user.Email}\n" +
-                    $"Телефон: {user.PhoneNum}\n" +
-                    $"Возраст: {user.Age} лет",
-                    "Мой профиль",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Для просмотра профиля необходимо авторизоваться!",
-                    "Авторизация", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        // Сброс фильтров
-        //private void ResetFilters_Click(object sender, RoutedEventArgs e)
-        //{
-        //    FindFilm.Text = "";
-        //    GenreComboBox.SelectedIndex = 0;
-        //    AgeComboBox.SelectedIndex = 0;
-        //    listBox.ItemsSource = allFilms;
-        //}
-
-        // Добавление фильма в избранное
-        private void AddToFavorites_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button button && button.Tag is int filmId)
-            {
-                var film = allMovies.FirstOrDefault(f => f.ID == filmId);
-                if (film != null)
-                {
-                    // Здесь можно добавить логику добавления в избранное
-                    MessageBox.Show($"Фильм '{film.FilmName}' добавлен в избранное!",
-                        "Избранное", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    // Меняем иконку кнопки
-                    button.Content = "❤️ В избранном";
-                    button.IsEnabled = false;
-                }
-            }
-        }
-
-        
     }
 }

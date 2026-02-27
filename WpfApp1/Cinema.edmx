@@ -46,10 +46,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FilmName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="AgeID" Type="int" Nullable="false" />
-          <Property Name="Image" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar(max)" Nullable="false" />
           <Property Name="GanreID" Type="int" Nullable="false" />
           <Property Name="FilmPremierDate" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -371,10 +371,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FilmName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="Double" Nullable="false" />
           <Property Name="AgeID" Type="Int32" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="GanreID" Type="Int32" Nullable="false" />
           <Property Name="FilmPremierDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -679,10 +679,10 @@
             <EntityTypeMapping TypeName="MuraGuydaCinemaModel.Film">
               <MappingFragment StoreEntitySet="Film">
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FilmName" ColumnName="FilmName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="AgeID" ColumnName="AgeID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="GanreID" ColumnName="GanreID" />
                 <ScalarProperty Name="FilmPremierDate" ColumnName="FilmPremierDate" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
