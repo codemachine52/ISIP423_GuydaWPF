@@ -10,22 +10,19 @@
 
     <Grid Background="#FF585454">
         <TextBlock Text="Авторизация" VerticalAlignment="Top" Margin="30"
-                   HorizontalAlignment="Center" FontSize="18" Foreground="BlanchedAlmond"/>
-        <Border Background="Beige" HorizontalAlignment="Center" VerticalAlignment="Center" CornerRadius="8" Width="200" Height="150">
+                   HorizontalAlignment="Center" FontSize="24" Foreground="BlanchedAlmond" FontWeight="Bold" FontFamily="Times New Roman"/>
+        <Border Background="Beige" HorizontalAlignment="Center" CornerRadius="10" Width="200" Height="200">
             <StackPanel>
                 <TextBlock Text="Введите логин" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10"/>
                 <TextBox x:Name="LoginEnter" Width="150" Height="20"/>
-                <TextBlock Text="Введите пароль" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20"/>
+                <TextBlock Text="Введите пароль" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
                 <TextBox x:Name="PasswordEnter" Width="150" Height="20"/>
+                <Button Content="Авторизоваться" FontSize="18" Height="30" HorizontalAlignment="Center" Margin="20" Background="#FF3DB7CE" Foreground="White" FontFamily="Times New Roman" FontWeight="Bold"/>
             </StackPanel>
         </Border>
-
-        <Button Content="Авторизоваться" FontSize="18" Width="190" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="100" Background="#FF3DB7CE" Foreground="White"/>
-        <Border VerticalAlignment="Bottom" Height="90" Width="200">
-            <StackPanel HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="Нет аккаунта?" FontSize="15" Foreground="Snow" HorizontalAlignment="Center"/>
-                <Button Content="Зарегистрируйтесь" FontSize="15" Background="Transparent" Foreground="#FF2936FF" FontWeight="Bold"/>
-            </StackPanel>
-        </Border>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
+            <TextBlock Text="Нет аккаунта?" FontSize="15" Foreground="Snow" HorizontalAlignment="Center"/>
+            <Button Content="Зарегистрируйтесь" FontSize="15" Background="Transparent" Foreground="#FF4E57EC" FontWeight="Bold"/>
+        </StackPanel>
     </Grid>
 </Page>

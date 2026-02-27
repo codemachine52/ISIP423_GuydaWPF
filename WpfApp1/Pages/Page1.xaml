@@ -11,7 +11,7 @@
         <Border Background="RosyBrown"  Height="45" VerticalAlignment="Top">
             <Grid>
                 <TextBlock Text="Кинотеатр Мечта" VerticalAlignment="Center" FontSize="20" HorizontalAlignment="Left" Margin="60,0,0,0" Foreground="White" FontWeight="Bold"></TextBlock>
-                <Button Width="50" HorizontalAlignment="Right" Background="{x:Null}" Content="👤" FontSize="20" BorderBrush="{x:Null}" Margin="0,0,60,0"/>
+                <Button Width="50" HorizontalAlignment="Right" Background="{x:Null}" Content="👤" FontSize="20" BorderBrush="{x:Null}" Margin="0,0,60,0" Click="Button_Click"/>
             </Grid>
         </Border>
         <Border CornerRadius="10" Height="25" Background="Azure" VerticalAlignment="Top" Margin="60,10,10,10" Width="250" HorizontalAlignment="Center">
