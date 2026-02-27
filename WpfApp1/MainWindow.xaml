@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="Кинотеатр Мечта" Height="450" Width="800">
     <Grid>
-        <Frame Source="Pages/Page1.xaml"></Frame>
+        <Frame Source="Pages/Page1.xaml" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </Window>
