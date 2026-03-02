@@ -20,17 +20,19 @@
             </Border.Background>
             <StackPanel>
                 <TextBlock Text="Введите почту" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10" Foreground="AntiqueWhite"/>
-                <TextBox x:Name="LoginEnter" Width="150" Height="20"/>
+                <TextBox x:Name="LoginEnter" Width="150" Height="20" LostFocus="LoginEnter_LostFocus"/>
                 <TextBlock Text="Придумайте пароль" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="AntiqueWhite"/>
-                <TextBox x:Name="PasswordEnter" Width="150" Height="20"/>
+                <PasswordBox x:Name="PasswordEnter" Width="150" Height="20" LostFocus="PasswordEnter_LostFocus" 
+                             AutomationProperties.HelpText="Длина пароля больше 5 символов!"/>
                 <TextBlock Text="Введите ФИО" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="AntiqueWhite"/>
-                <TextBox x:Name="FIOEnter" Width="150" Height="20"/>
+                <TextBox x:Name="FIOEnter" Width="150" Height="20" LostFocus="FIOEnter_LostFocus"/>
                 <TextBlock Text="Введите возраст" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="AntiqueWhite"/>
-                <TextBox x:Name="AgeEnter" Width="150" Height="20"/>
+                <TextBox x:Name="AgeEnter" Width="150" Height="20" LostFocus="AgeEnter_LostFocus"/>
                 <TextBlock Text="Введите номер телефона" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Foreground="AntiqueWhite"/>
-                <TextBox x:Name="PhoneEnter" Width="150" Height="20"/>
-                <Button Content="Зарегистрироваться" FontSize="16" Height="30" HorizontalAlignment="Center" Margin="20" Background="#FFAB3838" Foreground="#FF7FDCDE" FontWeight="Bold"/>
+                <TextBox x:Name="PhoneEnter" Width="150" Height="20" LostFocus="PhoneEnter_LostFocus"/>
+                <Button x:Name="Registr" Content="Зарегистрироваться" FontSize="16" Height="30" HorizontalAlignment="Center" Margin="20" Background="#FFAB3838" Foreground="#FF7FDCDE" FontWeight="Bold" Click="Registr_Click"/>
             </StackPanel>
         </Border>
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20" Content="⏪Войти" FontSize="18" Background="#FFEDEDED" Click="Button_Click"/>
     </Grid>
 </Page>

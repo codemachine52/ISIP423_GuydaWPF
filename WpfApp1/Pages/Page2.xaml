@@ -16,8 +16,8 @@
                 <TextBlock Text="Введите логин" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10"/>
                 <TextBox x:Name="LoginEnter" Width="150" Height="20"/>
                 <TextBlock Text="Введите пароль" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10"/>
-                <TextBox x:Name="PasswordEnter" Width="150" Height="20"/>
-                <Button Content="Авторизоваться" FontSize="18" Height="30" HorizontalAlignment="Center" Margin="20" Background="#FF3DB7CE" Foreground="White" FontFamily="Times New Roman" FontWeight="Bold"/>
+                <PasswordBox x:Name="PasswordEnter" Width="150" Height="20"/>
+                <Button Content="Авторизоваться" FontSize="18" Height="30" HorizontalAlignment="Center" Margin="20" Background="#FF3DB7CE" Foreground="White" FontFamily="Times New Roman" FontWeight="Bold" Click="Button_Click_1"/>
             </StackPanel>
         </Border>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">

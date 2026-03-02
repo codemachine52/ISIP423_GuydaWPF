@@ -20,14 +20,39 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class Page2 : Page
     {
-        public Page2()
+        Client Us;
+        public Page2(Client user)
         {
             InitializeComponent();
+            Us = user;
+            LoginEnter.Text = user.Email;
+            PasswordEnter.Password = user.Password;
         }
-
+        
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Page3());
+            
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var cl = Core.Context.Client.Where(c => (c.Email == LoginEnter.Text) && (c.Password == PasswordEnter.Password)).FirstOrDefault();
+            if (cl != null)
+            {
+                Us = cl;
+                MessageBox.Show("Вы успешно авторизовались!");
+                NavigationService.Navigate(new Page1(Us));
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Пользователь не найден в Базе данных! Желаете зарегистрироваться?", "Ошибка входа", MessageBoxButton.YesNoCancel, MessageBoxImage.Error);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    NavigationService.Navigate(new Page3());
+                }
+            }
         }
     }
 }

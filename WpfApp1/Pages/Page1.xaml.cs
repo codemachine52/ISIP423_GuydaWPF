@@ -13,16 +13,24 @@ namespace WpfApp1.Pages
     public partial class Page1 : Page
     {
         private List<Film> allMovies = Core.Context.Film.ToList();
-
-        public Page1()
+        Client User;
+        public Page1(Client us)
         {
             InitializeComponent();
             listBox.ItemsSource = allMovies;
+            User = us;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Page2());
+            if (User == null)
+            {
+                NavigationService.Navigate(new Page3());
+            }
+            else
+            {
+
+            }
         }
     }
 }
