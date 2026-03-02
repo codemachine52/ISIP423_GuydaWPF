@@ -22,7 +22,7 @@
         </Border>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
             <TextBlock Text="Нет аккаунта?" FontSize="15" Foreground="Snow" HorizontalAlignment="Center"/>
-            <Button Content="Зарегистрируйтесь" FontSize="15" Background="Transparent" Foreground="#FF4E57EC" FontWeight="Bold"/>
+            <Button Content="Зарегистрируйтесь" FontSize="15" Background="Transparent" Foreground="#FF4E57EC" FontWeight="Bold" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </Page>
