@@ -137,4 +137,13 @@ namespace WpfApp1.Pages
             NavigationService.Navigate(new Page2(user));
         }
     }
+
+    //button btn = sender as button;
+    // Film thisFilm = btn.datacontext as film;
+
+    // на след странице в конструктор добавляем фильм
+    //глобальная переменная с get set
+    // film = f в конструкторе
+    // this.DataContext = this;
+    // потом биндинг используем в xaml
 }
