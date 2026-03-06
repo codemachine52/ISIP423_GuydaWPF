@@ -25,6 +25,8 @@
                 <TextBlock x:Name="usAge" Text="Возраст" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 0, 0, 0"/>
                 <TextBlock Text="Страна" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 0, 0"/>
                 <Image Source="/Images/images.jfif" Width="40" Height="30" VerticalAlignment="Top" Margin="90, -25, 0, 0" HorizontalAlignment="Left"/>
+                <TextBlock x:Name="usEmail" Text="E-mail" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 5, 10, 0"/>
+                <TextBlock x:Name="usNumber" Text="Номер телефона" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
             </StackPanel>
         </Border>
     </Grid>
