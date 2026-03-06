@@ -32,7 +32,7 @@ namespace WpfApp1.Pages
             {
                 NavigationService.Navigate(new Page3());
             }
-            else
+            if(User != null)
             {
                 NavigationService.Navigate(new Page4(User));
             }

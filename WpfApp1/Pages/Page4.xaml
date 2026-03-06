@@ -21,13 +21,12 @@
 
         <Border Background="Bisque" HorizontalAlignment="Center" VerticalAlignment="Center" Width="480" Height="220" CornerRadius="12">
             <StackPanel>
-                <TextBlock x:Name="usFIO" Text="Фио" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10"/>
-                <TextBlock x:Name="usAge" Text="Возраст" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 0, 0, 0"/>
-                <TextBlock Text="Страна" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 0, 0"/>
-                <Image Source="/Images/images.jfif" Width="40" Height="30" VerticalAlignment="Top" Margin="90, -25, 0, 0" HorizontalAlignment="Left"/>
-                <TextBlock x:Name="usEmail" Text="E-mail" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 5, 10, 0"/>
-                <TextBlock x:Name="usNumber" Text="Номер телефона" FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
+                <TextBlock x:Name="FIOuser" Text="Фио: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10"/>
+                <TextBlock x:Name="AGEuser" Text="Возраст: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 0, 0, 0"/>
+                <TextBlock x:Name="EMAILuser" Text="E-mail: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
+                <TextBlock x:Name="NUMBERuser" Text="Номер телефона: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
             </StackPanel>
         </Border>
+        <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF10D0B1" Foreground="White" Click="GoBack_Click"/>
     </Grid>
 </Page>
