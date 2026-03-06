@@ -47,7 +47,8 @@ namespace WpfApp1.Pages
         {
             Core.Context.Client.Add(user);
             Core.Context.SaveChanges();
-            if (Core.Context.Client.Contains(user))
+            var usIsInBD = Core.Context.Client.Where(u => u.Email == user.Email).FirstOrDefault();
+            if (usIsInBD != null)
             {
                 MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешная регистрация");
             }

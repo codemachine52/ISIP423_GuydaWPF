@@ -20,6 +20,7 @@
                 <Button Content="Авторизоваться" FontSize="18" Height="30" HorizontalAlignment="Center" Margin="20" Background="#FF3DB7CE" Foreground="White" FontFamily="Times New Roman" FontWeight="Bold" Click="Button_Click_1"/>
             </StackPanel>
         </Border>
+        <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF10D0B1" Foreground="Black" Click="GoBack_Click"/>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10">
             <TextBlock Text="Нет аккаунта?" FontSize="15" Foreground="Snow" HorizontalAlignment="Center"/>
             <Button Content="Зарегистрируйтесь" FontSize="15" Background="Transparent" Foreground="#FF4E57EC" FontWeight="Bold" Click="Button_Click"/>

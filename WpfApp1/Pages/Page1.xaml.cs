@@ -14,10 +14,15 @@ namespace WpfApp1.Pages
     {
         private List<Film> allMovies = Core.Context.Film.ToList();
         Client User;
-        public Page1(Client us)
+
+        public Page1()
         {
             InitializeComponent();
             listBox.ItemsSource = allMovies;
+        }
+
+        public Page1(Client us) : this()
+        {
             User = us;
         }
 
@@ -29,7 +34,7 @@ namespace WpfApp1.Pages
             }
             else
             {
-                
+                NavigationService.Navigate(new Page4(User));
             }
         }
     }
