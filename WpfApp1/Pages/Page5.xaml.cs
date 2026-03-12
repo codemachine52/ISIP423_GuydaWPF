@@ -25,7 +25,12 @@ namespace WpfApp1.Pages
         {
             InitializeComponent();
             kino = thisFilm;
-            this.DataContext = this;
+            this.DataContext = thisFilm;
+            
+        }
+        private void GoBack_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Page1());
         }
     }
 }

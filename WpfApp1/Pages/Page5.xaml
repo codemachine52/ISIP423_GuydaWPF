@@ -17,14 +17,17 @@
             </LinearGradientBrush>
         </Grid.Background>
 
-        <Border 
-         Width="420"
-         Height="400"
-         CornerRadius="30"
-         Background="#FF9A344C">
+        <Border Width="420" Height="400" CornerRadius="30" Background="#99822B43">
+            <!-- Область картинки -->
+            <StackPanel>
+            <Image Height="150" UseLayoutRounding="False" Source="{Binding ImagePath}" Width="270" Stretch="Fill" Margin="20,30,0,20"/>
+                <TextBlock Text="{Binding Name}" FontSize="24" FontWeight="Black" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding Description}" FontSize="18" HorizontalAlignment="Center" Margin="20"/>
+                <Button x:Name="TicketBuy" Content="Купить билет" Height="40" Width="180" FontSize="20" Background="PeachPuff" Foreground="Black" />
+            </StackPanel>
         </Border>
 
-
+        <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF713059" Foreground="White" Click="GoBack_Click"/>
     </Grid>
     
 </Page>
