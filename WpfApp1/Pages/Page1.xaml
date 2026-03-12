@@ -14,8 +14,8 @@
                 <Button Width="50" HorizontalAlignment="Right" Background="{x:Null}" Content="👤" FontSize="20" BorderBrush="{x:Null}" Margin="0,0,60,0" Click="Button_Click"/>
             </Grid>
         </Border>
-        <Border CornerRadius="10" Height="25" Background="Azure" VerticalAlignment="Top" Margin="60,10,10,10" Width="250" HorizontalAlignment="Center">
-            <TextBox x:Name="FindFilm" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" SelectionBrush="{x:Null}" Foreground="Black" Margin="10,0,10,0" FontSize="14" />
+        <Border CornerRadius="10" Height="25" Background="White" VerticalAlignment="Top" Margin="60,10,10,10" Width="250" HorizontalAlignment="Center">
+            <TextBox x:Name="FindFilm" Height="20" Background="Transparent" BorderBrush="Transparent" SelectionBrush="Transparent" Foreground="Black" Margin="10,0,10,0" FontSize="14" TextChanged="FindFilm_TextChanged" />
         </Border>
         <ListBox x:Name="listBox" 
                  Margin="25,70,25,0"
