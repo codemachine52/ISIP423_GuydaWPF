@@ -20,9 +20,12 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class Page5 : Page
     {
-        public Page5()
+        public Film kino {  get; set; }
+        public Page5(Film thisFilm)
         {
             InitializeComponent();
+            kino = thisFilm;
+            this.DataContext = this;
         }
     }
 }

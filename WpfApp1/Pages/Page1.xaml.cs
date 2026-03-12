@@ -37,5 +37,12 @@ namespace WpfApp1.Pages
                 NavigationService.Navigate(new Page4(User));
             }
         }
+
+        private void ButInfo_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            Film thisFilm = btn.DataContext as Film;
+            NavigationService.Navigate(new Page5(thisFilm));
+        }
     }
 }

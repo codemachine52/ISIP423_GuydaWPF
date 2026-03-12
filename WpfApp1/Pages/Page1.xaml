@@ -69,10 +69,12 @@
                                 <TextBlock x:Name="RatingFilm" Text="{Binding Rating}" HorizontalAlignment="Center" FontSize="14"/>
                             </StackPanel>
 
-                            <!-- Кнопка в корзину -->
+                            <!-- Кнопка купить билет -->
                             <Button Name="ButSeans"  Grid.Row="2"
                                     Content="Купить билет" 
-                                    Margin="20,0,20,15"
+                                    Margin="10,0,20,15"
+                                    Width="143"
+                                    HorizontalAlignment="Left"
                                     Padding="10,6"
                                     Tag="{Binding ID}"
                                     Background="DarkOrange"
@@ -82,6 +84,18 @@
                                     BorderThickness="0"
                                     Cursor="Hand">
                             </Button>
+                            
+                            <!-- Кнопка подробнее о фильме -->
+                            <Button Name="ButInfo" Grid.Row="2"
+                             Content="Подробнее"
+                             Margin="20,0,9,15"
+                             Width="68"
+                             HorizontalAlignment="Right"
+                             Padding="1,6"
+                             Tag="{Binding ID}"
+                             Background="#FFB3947E"
+                             Cursor="Hand" Click="ButInfo_Click">
+                            </Button>   
                         </Grid>
                     </Border>
                     <DataTemplate.Triggers>
