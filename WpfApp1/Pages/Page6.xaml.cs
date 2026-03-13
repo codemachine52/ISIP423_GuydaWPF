@@ -16,19 +16,16 @@ using System.Windows.Shapes;
 namespace WpfApp1.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Page5.xaml
+    /// Логика взаимодействия для Page6.xaml
     /// </summary>
-    public partial class Page5 : Page
+    public partial class Page6 : Page
     {
         public Film kino {  get; set; }
         public Client user { get; set; }
-        public Page5(Film thisFilm, Client us)
+        public Page6(Film thisf, Client us)
         {
             InitializeComponent();
-            kino = thisFilm;
-            this.DataContext = thisFilm;
-            Ganre Genre = Core.Context.Ganre.Where(g => thisFilm.GanreID == g.ID).FirstOrDefault();
-            fGenre.Text += Genre.GanreName;
+            Film kino = thisf;
 
             user = us;
         }
@@ -37,9 +34,5 @@ namespace WpfApp1.Pages
             NavigationService.Navigate(new Page1(user));
         }
 
-        private void TicketBuy_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Page6(kino, user));
-        }
     }
 }

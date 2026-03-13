@@ -21,7 +21,7 @@
                  Margin="25,70,25,0"
                  Background="Transparent"
                  BorderThickness="0"
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}">
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" d:ItemsSource="{d:SampleData ItemCount=5}" >
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -82,7 +82,9 @@
                                     FontSize="14"
                                     FontWeight="SemiBold"
                                     BorderThickness="0"
-                                    Cursor="Hand">
+                                    Cursor="Hand"
+                                    Click="ButSeans_Click">
+                                    
                             </Button>
                             
                             <!-- Кнопка подробнее о фильме -->

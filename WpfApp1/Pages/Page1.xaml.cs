@@ -15,7 +15,7 @@ namespace WpfApp1.Pages
     {
         private List<Film> _allMovies;              // все фильмы из БД
         private ObservableCollection<Film> _displayedMovies; // для отображения в ListBox
-        Client User;
+        public Client User { get; set; }
 
         public Page1()
         {
@@ -46,7 +46,7 @@ namespace WpfApp1.Pages
         {
             Button btn = sender as Button;
             Film thisFilm = btn.DataContext as Film;
-            NavigationService.Navigate(new Page5(thisFilm));
+            NavigationService.Navigate(new Page5(thisFilm, User));
         }
         private void FindingFilm()
         {
@@ -72,5 +72,13 @@ namespace WpfApp1.Pages
         {
             FindingFilm();
         }
+
+        private void ButSeans_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            Film thisFilm = btn.DataContext as Film;
+            NavigationService.Navigate(new Page6(thisFilm, User));
+        }
+
     }
 }

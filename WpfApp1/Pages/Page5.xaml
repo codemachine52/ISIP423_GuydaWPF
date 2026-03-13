@@ -23,7 +23,7 @@
                 <TextBlock Text="{Binding Name}" FontSize="24" FontWeight="Black" HorizontalAlignment="Center"/>
                 <TextBlock Text="{Binding Description}" FontSize="18" HorizontalAlignment="Center" Margin="10"/>
                 <TextBlock x:Name="fGenre" Text="Жанр: " FontSize="18" HorizontalAlignment="Center"/>
-                <Button x:Name="TicketBuy" Content="Купить билет" Height="40" Width="180" FontSize="20" Background="PeachPuff" Foreground="Black" Margin="20" />
+                <Button x:Name="TicketBuy" Content="Купить билет" Height="40" Width="180" FontSize="20" Background="PeachPuff" Foreground="Black" Margin="20" Click="TicketBuy_Click" />
             </StackPanel>
         </Border>
 
