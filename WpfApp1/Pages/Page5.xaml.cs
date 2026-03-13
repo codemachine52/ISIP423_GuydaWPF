@@ -26,12 +26,13 @@ namespace WpfApp1.Pages
             InitializeComponent();
             kino = thisFilm;
             this.DataContext = thisFilm;
-            
+            Ganre Genre = Core.Context.Ganre.Where(g => thisFilm.GanreID == g.ID).FirstOrDefault();
+            fGenre.Text += Genre.GanreName;
         }
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Page1());
-            //привет мир
+           
         }
     }
 }
