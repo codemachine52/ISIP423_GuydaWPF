@@ -15,8 +15,10 @@
                 <GradientStop Color="#FFFFD270" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border>
-            
+        <Border Background="BlanchedAlmond" Width="600" Height="270" CornerRadius="10">
+            <UniformGrid Rows="5" Columns="5">
+                <Button Tag="{Binding ID}"/>
+            </UniformGrid>
         </Border>
         <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF715A30"  Foreground="White" Click="GoBack_Click"/>
     </Grid>
