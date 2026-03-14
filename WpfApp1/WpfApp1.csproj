@@ -119,6 +119,9 @@
     <Compile Include="Pages\Page7.xaml.cs">
       <DependentUpon>Page7.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Page8.xaml.cs">
+      <DependentUpon>Page8.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Place.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
@@ -170,6 +173,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Page7.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page8.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -15,7 +15,7 @@ namespace WpfApp1.Pages
     {
         private List<Film> _allMovies;              // все фильмы из БД
         private ObservableCollection<Film> _displayedMovies; // для отображения в ListBox
-        public Client User { get; set; }
+        public Client user { get; set; }
 
         public Page1()
         {
@@ -27,18 +27,18 @@ namespace WpfApp1.Pages
 
         public Page1(Client us) : this()
         {
-            User = us;
+            user = us;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (User == null)
+            if (user == null)
             {
                 NavigationService.Navigate(new Page3());
             }
-            if(User != null)
+            if(user != null)
             {
-                NavigationService.Navigate(new Page4(User));
+                NavigationService.Navigate(new Page4(user));
             }
         }
 
@@ -46,7 +46,7 @@ namespace WpfApp1.Pages
         {
             Button btn = sender as Button;
             Film thisFilm = btn.DataContext as Film;
-            NavigationService.Navigate(new Page5(thisFilm, User));
+            NavigationService.Navigate(new Page5(thisFilm, user));
         }
         private void FindingFilm()
         {
@@ -77,13 +77,23 @@ namespace WpfApp1.Pages
         {
             Button btn = sender as Button;
             Film thisFilm = btn.DataContext as Film;
-            if (User != null)
+            if (user != null)
             {
-                NavigationService.Navigate(new Page7(thisFilm, User));
+                var over18 = Core.Context.Age.Where(a => a.ID == thisFilm.AgeID).FirstOrDefault().IsOver18;
+                if (over18 && user.Age > 18)
+                    NavigationService.Navigate(new Page7(thisFilm, user));
+                if (over18 && user.Age < 18)
+                {
+                    MessageBox.Show("Ошибка! Вам еще нельзя смотреть такие фильмы! Выберите другой из нашего каталога.", "Несоответствие возраста", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                if (!over18)
+                {
+                    NavigationService.Navigate(new Page7(thisFilm, user));
+                }
             }
             else
             {
-                MessageBox.Show("Необходимо войти в аккаунт!", "Неавторизованный пользователь", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Необходимо войти в аккаунт перед покупкой билета!", "Неавторизованный пользователь", MessageBoxButton.OK, MessageBoxImage.Warning);
                 NavigationService.Navigate(new Page2());
             }
         }

@@ -16,36 +16,43 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Border Background="BlanchedAlmond" Width="600" Height="300" CornerRadius="10">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-            <ItemsControl ItemsSource="{Binding Rows}" HorizontalAlignment="Center">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0,5">
-                            <!-- Все места ряда (горизонтально) -->
-                            <ItemsControl ItemsSource="{Binding Seats}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Button Content="{Binding Seat}" 
-                                            Tag="{Binding ID}" 
-                                            Width="40" Height="40" Margin="3"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <!-- Подпись ряда справа -->
-                            <TextBlock Text="{Binding LineNumber}" 
-                                   VerticalAlignment="Center" 
-                                   Margin="10,0,0,0" 
-                                   FontWeight="Bold" FontSize="16"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            </ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <!-- Вся высота для мест -->
+                    <RowDefinition Height="Auto"/>
+                    <!-- Авто для надписи -->
+                </Grid.RowDefinitions>
+
+                <!-- ScrollViewer с местами занимает всю доступную высоту -->
+                <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <ItemsControl ItemsSource="{Binding Rows}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,5">
+                                    <ItemsControl ItemsSource="{Binding Seats}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Button x:Name="Sitting" Content="{Binding Seat}" Tag="{Binding ID}"  Width="40" Height="40" Margin="3" Click="Button_Click"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <!-- Подпись ряда -->
+                                    <TextBlock Text="{Binding LineNumber}" 
+                                       VerticalAlignment="Center" Margin="10,0,0,0" FontWeight="Bold" FontSize="16"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="ЭКРАН"  FontWeight="DemiBold" FontSize="16" Margin="0,5"/>
+            </Grid>
         </Border>
         <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF715A30"  Foreground="White" Click="GoBack_Click"/>
     </Grid>
