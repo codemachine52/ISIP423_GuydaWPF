@@ -15,10 +15,37 @@
                 <GradientStop Color="#FFFFD270" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border Background="BlanchedAlmond" Width="600" Height="270" CornerRadius="10">
-            <UniformGrid Rows="5" Columns="5">
-                <Button Tag="{Binding ID}"/>
-            </UniformGrid>
+        <Border Background="BlanchedAlmond" Width="600" Height="300" CornerRadius="10">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+            <ItemsControl ItemsSource="{Binding Rows}" HorizontalAlignment="Center">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <!-- Все места ряда (горизонтально) -->
+                            <ItemsControl ItemsSource="{Binding Seats}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Content="{Binding Seat}" 
+                                            Tag="{Binding ID}" 
+                                            Width="40" Height="40" Margin="3"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <!-- Подпись ряда справа -->
+                            <TextBlock Text="{Binding LineNumber}" 
+                                   VerticalAlignment="Center" 
+                                   Margin="10,0,0,0" 
+                                   FontWeight="Bold" FontSize="16"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            </ScrollViewer>
         </Border>
         <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF715A30"  Foreground="White" Click="GoBack_Click"/>
     </Grid>

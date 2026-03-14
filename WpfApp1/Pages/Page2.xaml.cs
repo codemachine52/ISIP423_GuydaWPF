@@ -21,7 +21,13 @@ namespace WpfApp1.Pages
     public partial class Page2 : Page
     {
         Client Us;
-        public Page2(Client user)
+
+        public Page2()
+        {
+            InitializeComponent();
+        }
+
+        public Page2(Client user) : this()
         {
             InitializeComponent();
             Us = user;

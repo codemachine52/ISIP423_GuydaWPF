@@ -20,15 +20,36 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class Page6 : Page
     {
-        public Film kino {  get; set; }
+        public class RowInfo
+        {
+            public int LineNumber { get; set; }
+            public List<Place> Seats { get; set; }
+        }
+
+        public Session session {  get; set; }
         public Client user { get; set; }
-        public Page6(Film thisf, Client us)
+        public Page6(int sion, Client us)
         {
             InitializeComponent();
-            Film kino = thisf;
-
+            session = Core.Context.Session.Where(s=> s.ID == sion).FirstOrDefault();
             user = us;
+            LoadSeats();
         }
+
+        private void LoadSeats()
+        {
+            var allSts = Core.Context.Place.Where(p => p.IDhall == session.IDhall).OrderBy(p => p.Line).ThenBy(s => s.Seat).ToList();
+            var rows = allSts                     // список всех мест
+    .GroupBy(p => p.Line)                 // группируем по номеру ряда (Line)
+    .Select(g => new RowInfo               // для каждой группы создаём объект RowInfo
+    {
+        LineNumber = g.Key,                // Key — это номер ряда, по которому сгруппировали
+        Seats = g.ToList()                  // g — это сама группа (все места этого ряда), превращаем её в список
+    })
+    .ToList();                              // превращаем результат в список
+            DataContext = new { Rows = rows };
+        }
+
         private void GoBack_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Page1(user));

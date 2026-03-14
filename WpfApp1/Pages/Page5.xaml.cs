@@ -39,7 +39,15 @@ namespace WpfApp1.Pages
 
         private void TicketBuy_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Page6(kino, user));
+            if (user != null)
+            {
+                NavigationService.Navigate(new Page7(kino, user));
+            }
+            else
+            {
+                MessageBox.Show("Необходимо войти в аккаунт перед покупкой билета!", "Неавторизованный пользователь", MessageBoxButton.OK, MessageBoxImage.Warning);
+                NavigationService.Navigate(new Page2());
+            }
         }
     }
 }

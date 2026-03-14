@@ -116,18 +116,23 @@
     <Compile Include="Pages\Page6.xaml.cs">
       <DependentUpon>Page6.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Page7.xaml.cs">
+      <DependentUpon>Page7.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Place.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
     <Compile Include="Session.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
+    <Compile Include="SessionDisplay.cs" />
     <Compile Include="sysdiagrams.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
     <Compile Include="Ticket.cs">
       <DependentUpon>Cinema.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Page6.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Page7.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -206,12 +215,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\avengers_endgame.jpg" />
     <Resource Include="Images\cruella.jpg" />
     <Resource Include="Images\f9.jpg" />
     <Resource Include="Images\it2.jpg" />
     <Resource Include="Images\joker.jpg" />
     <Resource Include="Images\lion_king.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\avengersEndgame.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Cinema.Context.tt">
@@ -224,7 +235,6 @@
       <DependentUpon>Cinema.edmx</DependentUpon>
       <LastGenOutput>Cinema.cs</LastGenOutput>
     </Content>
-    <Content Include="Images\images.jfif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -77,7 +77,15 @@ namespace WpfApp1.Pages
         {
             Button btn = sender as Button;
             Film thisFilm = btn.DataContext as Film;
-            NavigationService.Navigate(new Page6(thisFilm, User));
+            if (User != null)
+            {
+                NavigationService.Navigate(new Page7(thisFilm, User));
+            }
+            else
+            {
+                MessageBox.Show("Необходимо войти в аккаунт!", "Неавторизованный пользователь", MessageBoxButton.OK, MessageBoxImage.Warning);
+                NavigationService.Navigate(new Page2());
+            }
         }
 
     }
