@@ -38,7 +38,18 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Button x:Name="Sitting" Content="{Binding Seat}" Tag="{Binding ID}"  Width="40" Height="40" Margin="3" Click="Button_Click"/>
+                                                <Button Content="{Binding Place.Seat}" Tag="{Binding Place.ID}" Width="40" Height="40" Margin="3" Click="Button_Click">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding IsBusy}" Value="True">
+                                                                    <Setter Property="Background" Value="Gray"/>
+                                                                    <Setter Property="IsEnabled" Value="False"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>

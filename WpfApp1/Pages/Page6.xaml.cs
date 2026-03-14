@@ -21,15 +21,22 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class Page6 : Page
     {
+        public class SeatInfo
+        {
+            public Place Place { get; set; }
+            public bool IsBusy { get; set; }
+        }
+
         public class RowInfo
         {
             public int LineNumber { get; set; }
-            public List<Place> Seats { get; set; }
+            public List<SeatInfo> Seats { get; set; }
         }
+
 
         public Session session { get; set; }
 
-        public List<BusyPlace> busyPlace = Core.Context.BusyPlace.ToList();
+        public HashSet<int> BusyPlaceIds { get; set; } // HashSet для быстрой проверки
         public Client user { get; set; }
 
         public Page6(Client us)
@@ -48,12 +55,25 @@ namespace WpfApp1.Pages
         private void LoadSeats()
         {
             var allSts = Core.Context.Place.Where(p => p.IDhall == session.IDhall).OrderBy(p => p.Line).ThenBy(s => s.Seat).ToList();
-            var rows = allSts.GroupBy(p => p.Line) // группируем по номеру ряда (Line)
-                .Select(g => new RowInfo               // для каждой группы создаём объект RowInfo
-                {
-                    LineNumber = g.Key,                // Key — это номер ряда, по которому сгруппировали
-                    Seats = g.ToList()                  // g — это сама группа (все места этого ряда), превращаем её в список
-                }).ToList();                              // превращаем результат в список
+
+            var busyIds = Core.Context.BusyPlace
+         .Where(bp => bp.IDSession == session.ID && bp.IsBusy == true)
+         .Select(bp => bp.IDPlace)
+         .ToHashSet();
+
+            // Превращаем места в SeatInfo
+            var seatInfos = allSts.Select(p => new SeatInfo
+            {
+                Place = p,
+                IsBusy = busyIds.Contains(p.ID)
+            }).ToList();
+
+            var rows = seatInfos.GroupBy(si => si.Place.Line).Select(g => new RowInfo
+                                                                {
+                                                                    LineNumber = g.Key,
+                                                                    Seats = g.ToList()
+                                                                }).ToList();
+
             DataContext = new { Rows = rows };
         }
 
@@ -64,18 +84,17 @@ namespace WpfApp1.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            Place plc = btn.DataContext as Place;
-            var Bspl = busyPlace.Where(bp => bp.IDPlace == plc.ID).FirstOrDefault().IsBusy;
-            if (plc != null && Bspl == null)
+            var btn = sender as Button;
+            var seatInfo = btn?.DataContext as SeatInfo;
+            if (seatInfo == null) return;
+
+            if (seatInfo.IsBusy) // на всякий случай, хотя кнопка уже disabled
             {
-                NavigationService.Navigate(new Page8(user, plc, session));
+                MessageBox.Show("Место занято!");
+                return;
             }
-            if (plc == null)
-            {
-                MessageBox.Show("Место занято! Выберите другое!");
-                btn.IsEnabled = false;
-            }
+
+            NavigationService.Navigate(new Page8(user, seatInfo.Place, session));
         }
     }
 }
