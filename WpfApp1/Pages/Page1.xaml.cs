@@ -23,15 +23,15 @@ namespace WpfApp1.Pages
             _allMovies = Core.Context.Film.ToList();
             _displayedMovies = new ObservableCollection<Film>(_allMovies);
             listBox.ItemsSource = _displayedMovies;
+            
         }
 
         public Page1(Client us) : this()
         {
             user = us;
 
-            DelTickets();
-            DelSession();
-            
+            DelTicketsAndSessions();
+            Core.Context.SaveChanges();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -101,37 +101,53 @@ namespace WpfApp1.Pages
             }
         }
 
-        private void DelTickets()
+        private void DelTicketsAndSessions()
         {
-            var tickets = Core.Context.Ticket.Where(t => t.ClientID == user.ID).ToList();
-            var session = Core.Context.Session.Where(s => s.TimeSession < DateTime.Now).ToList();
-            foreach (var t in tickets)
+            var now = DateTime.Now; //текущее время
+
+            var endsSeans = Core.Context.Session.Where(s=>s.TimeSession < now).ToList(); //завершенные или уже начавшиеся сеансы, на которые по
+            //логике нельзя уже купить билет
+            if (!endsSeans.Any()) return; //если таких сеансов нет просто продолжаем работу
+            else
             {
-                if (t.Session.TimeSession < DateTime.Now)
+                var endsSeansID = endsSeans.Select(s => s.ID).ToList(); //ищем айди истекших сеансов
+
+                var ticketOnEndSeans = Core.Context.Ticket.Where(t => endsSeansID.Contains(t.SessionID)).ToList(); //ищем билеты на истекшие сеансы и преобразуем в список истекших билетов
+                if (ticketOnEndSeans.Any()) //если в списке хотя бы один билет то удаляем список из бд и сохраняем ее
                 {
-                    Core.Context.Ticket.Remove(t);
+                    Core.Context.Ticket.RemoveRange(ticketOnEndSeans);
+                    Core.Context.SaveChanges();
+                }
+
+                var busyPlacesOnEndSeansID = Core.Context.BusyPlace.Where(bp => endsSeansID.Contains(bp.IDSession)).ToList(); //занятые места на истекшие сеансы аналогично билетам
+                if (busyPlacesOnEndSeansID.Any())
+                {
+                    Core.Context.BusyPlace.RemoveRange(busyPlacesOnEndSeansID);
                     Core.Context.SaveChanges();
                 }
             }
+
+            Core.Context.Session.RemoveRange(endsSeans); //в самом конце когда все зависимости сеансов удалены, можно удалить и сам сеанс
+            Core.Context.SaveChanges();
         }
 
-        private void DelSession()
-        {
-            var session = Core.Context.Session.ToList();
-            foreach (var item in session)
-            {
-                if (item.TimeSession < DateTime.Now)
-                {
-                    var busyPlace = Core.Context.BusyPlace.Where(b => b.IDSession == item.ID).ToList();
-                    foreach (var busy in busyPlace)
-                    {
-                        Core.Context.BusyPlace.Remove(busy);
-                        Core.Context.SaveChanges();
-                    }
-                    Core.Context.Session.Remove(item);
-                    Core.Context.SaveChanges();
-                }
-            }
-        }
+        //private void DelSession()
+        //{
+        //    var session = Core.Context.Session.ToList();
+        //    foreach (var item in session)
+        //    {
+        //        if (item.TimeSession < DateTime.Now)
+        //        {
+        //            var busyPlace = Core.Context.BusyPlace.Where(b => b.IDSession == item.ID).ToList();
+        //            foreach (var busy in busyPlace)
+        //            {
+        //                Core.Context.BusyPlace.Remove(busy);
+        //                Core.Context.SaveChanges();
+        //            }
+        //            Core.Context.Session.Remove(item);
+        //            Core.Context.SaveChanges();
+        //        }
+        //    }
+        //}
     }
 }
