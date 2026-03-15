@@ -23,15 +23,15 @@ namespace WpfApp1.Pages
             _allMovies = Core.Context.Film.ToList();
             _displayedMovies = new ObservableCollection<Film>(_allMovies);
             listBox.ItemsSource = _displayedMovies;
-
-
-            DelSession();
-            DelTickets();
         }
 
         public Page1(Client us) : this()
         {
             user = us;
+
+            DelTickets();
+            DelSession();
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
