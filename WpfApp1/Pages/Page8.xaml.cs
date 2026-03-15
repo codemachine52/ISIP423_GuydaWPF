@@ -35,14 +35,17 @@ namespace WpfApp1.Pages
 
         private void GetData()
         {
+            var film = session.Film;
             var hall = session.Hall;
             var placeName = place.Seat;
             var lineName = place.Line;
             var classifPrice = Core.Context.Classification.Where(c => hall.ClassID == c.ID).FirstOrDefault().Price;
 
+            FilmText.Text += film.Name;
             HallText.Text += hall.HallName;
             SeatText.Text += placeName.ToString();
             LineText.Text += lineName.ToString();
+            TimeText.Text += session.TimeSession;
             PriceText.Text += classifPrice.ToString() + " рублей";
         }
 

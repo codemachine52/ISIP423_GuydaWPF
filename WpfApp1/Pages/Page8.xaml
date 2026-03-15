@@ -15,14 +15,16 @@
                 <GradientStop Color="#FFC84C4C" Offset="0.793"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Border Background="RosyBrown" Width="450" Height="350" CornerRadius="12">
+        <Border Background="RosyBrown" Width="550" Height="420" CornerRadius="12">
             <StackPanel>
                 <TextBlock Text="Покупка билета" HorizontalAlignment="Center" Margin="10" FontSize="28" FontWeight="Heavy"/>
-                <TextBlock x:Name="HallText" Text="Зал: " FontSize="20" Margin="10, 5"/>
-                <TextBlock x:Name="SeatText" Text="Ваше место: " FontSize="20" FontStyle="Italic" Margin="10, 20"/>
+                <TextBlock x:Name="FilmText" Text="Фильм: " HorizontalAlignment="Left" Margin="10" FontSize="20" FontWeight="Heavy"/>
+                <TextBlock x:Name="HallText" Text="" FontSize="20" Margin="10, 5"/>
+                <TextBlock x:Name="SeatText" Text="Ваше место: " FontSize="20" FontStyle="Italic" Margin="10, 10"/>
                 <TextBlock x:Name="LineText" Text="Ваш ряд: " FontSize="20" FontStyle="Italic" Margin="10, 5"/>
+                <TextBlock x:Name="TimeText" Text="Время показа фильма: " FontSize="20" Margin="10, 10"/>
                 <TextBlock x:Name="PriceText" Text="Итого к оплате: " FontSize="22" FontStyle="Italic" Margin="10, 20" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-                <Button Content="Купить билет" Height="40" Width="150" Margin="20" FontSize="20" Click="Button_Click"/>
+                <Button Content="Купить билет" Height="40" Width="150" Margin="10" FontSize="20" Click="Button_Click"/>
             </StackPanel>
         </Border>
         <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF107A8E"  Foreground="White" Click="GoBack_Click"/>
