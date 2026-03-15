@@ -44,17 +44,13 @@ namespace WpfApp1.Pages
         {
             if (user != null)
             {
-                var over18 = Core.Context.Age.Where(a => a.ID == kino.AgeID).FirstOrDefault().IsOver18;
-                if(over18 && user.Age > 18)
+                var filmAge = Core.Context.Age.Where(a => a.ID == kino.AgeID).FirstOrDefault().Number;
+                if(filmAge < user.Age)
                 NavigationService.Navigate(new Page7(kino, user));
-                if(over18 && user.Age < 18)
+                if(filmAge > user.Age)
                 {
                     MessageBox.Show("Ошибка! Вам еще нельзя смотреть такие фильмы! Выберите другой из нашего каталога.", "Несоответствие возраста", MessageBoxButton.OK, MessageBoxImage.Error);
                     NavigationService.Navigate(new Page1(user));
-                }
-                if (!over18)
-                {
-                    NavigationService.Navigate(new Page7(kino, user));
                 }
             }
             else

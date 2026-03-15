@@ -19,12 +19,13 @@
             <TextBlock Text="Кинотеатр Мечта" VerticalAlignment="Top" Foreground="Black" FontWeight="Heavy"  FontSize="23" HorizontalAlignment="Left" Margin="20, 5"/>
         </Border>
 
-        <Border Background="Bisque" HorizontalAlignment="Center" VerticalAlignment="Center" Width="480" Height="220" CornerRadius="12">
+        <Border x:Name="UsInfo" Background="Bisque" HorizontalAlignment="Center" Width="400" Height="180" CornerRadius="12" Margin="0, 30, 0, 0">
             <StackPanel>
                 <TextBlock x:Name="FIOuser" Text="Фио: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10"/>
                 <TextBlock x:Name="AGEuser" Text="Возраст: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 0, 0, 0"/>
                 <TextBlock x:Name="EMAILuser" Text="E-mail: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
                 <TextBlock x:Name="NUMBERuser" Text="Номер телефона: " FontStyle="Italic" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
+                <TextBlock x:Name="TicketUsers" Text="Активные билеты:" FontWeight="DemiBold" FontSize="18" Margin="10, 10, 10, 0"/>
             </StackPanel>
         </Border>
         <Button x:Name="GoBack" Content="Назад" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30" FontSize="18" Width="100" Background="#FF10D0B1" Foreground="White" Click="GoBack_Click"/>

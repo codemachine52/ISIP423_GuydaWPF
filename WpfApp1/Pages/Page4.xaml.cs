@@ -30,12 +30,25 @@ namespace WpfApp1.Pages
 
         private void LoadUserProfile()
         {
+            var tickets = Core.Context.Ticket.Where(t => t.ClientID == us.ID).ToList();
+            
             if (us != null)
             {
-                FIOuser.Text += " " + us.Fio;
-                AGEuser.Text += " " + us.Age;
-                EMAILuser.Text += " " + us.Email;
-                NUMBERuser.Text += " " + us.PhoneNum;
+                FIOuser.Text += us.Fio;
+                AGEuser.Text += us.Age;
+                EMAILuser.Text += us.Email;
+                NUMBERuser.Text += us.PhoneNum;
+                if(tickets.Count == 0)
+                    TicketUsers.Text = "";
+                if (tickets.Any())
+                {
+                    UsInfo.Height = 380;
+                    UsInfo.Width = 560;
+                    foreach (var t in tickets)
+                    {
+                        TicketUsers.Text += '\n' + t.Session.Film.Name + ", время сеанса: " + t.Session.TimeSession +'\n';
+                    }
+                }
             }
         }
 
