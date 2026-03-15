@@ -79,16 +79,16 @@ namespace WpfApp1.Pages
             Film thisFilm = btn.DataContext as Film;
             if (user != null)
             {
-                var over18 = Core.Context.Age.Where(a => a.ID == thisFilm.AgeID).FirstOrDefault().IsOver18;
-                if (over18 && user.Age > 18)
-                    NavigationService.Navigate(new Page7(thisFilm, user));
-                if (over18 && user.Age < 18)
+                if (user != null)
                 {
-                    MessageBox.Show("Ошибка! Вам еще нельзя смотреть такие фильмы! Выберите другой из нашего каталога.", "Несоответствие возраста", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                if (!over18)
-                {
-                    NavigationService.Navigate(new Page7(thisFilm, user));
+                    var filmAge = Core.Context.Age.Where(a => a.ID == thisFilm.AgeID).FirstOrDefault().Number;
+                    if (filmAge < user.Age)
+                        NavigationService.Navigate(new Page7(thisFilm, user));
+                    if (filmAge > user.Age)
+                    {
+                        MessageBox.Show("Ошибка! Вам еще нельзя смотреть такие фильмы! Выберите другой из нашего каталога.", "Несоответствие возраста", MessageBoxButton.OK, MessageBoxImage.Error);
+                        NavigationService.Navigate(new Page1(user));
+                    }
                 }
             }
             else
