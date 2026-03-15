@@ -34,6 +34,7 @@ namespace WpfApp1.Pages
         {
             flm = thisFilm;
             cl = User;
+
             LoadData();
         }
 

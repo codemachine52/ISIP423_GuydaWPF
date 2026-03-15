@@ -23,6 +23,10 @@ namespace WpfApp1.Pages
             _allMovies = Core.Context.Film.ToList();
             _displayedMovies = new ObservableCollection<Film>(_allMovies);
             listBox.ItemsSource = _displayedMovies;
+
+
+            DelSession();
+            DelTickets();
         }
 
         public Page1(Client us) : this()
@@ -87,7 +91,6 @@ namespace WpfApp1.Pages
                     if (filmAge > user.Age)
                     {
                         MessageBox.Show("Ошибка! Вам еще нельзя смотреть такие фильмы! Выберите другой из нашего каталога.", "Несоответствие возраста", MessageBoxButton.OK, MessageBoxImage.Error);
-                        NavigationService.Navigate(new Page1(user));
                     }
                 }
             }
@@ -98,5 +101,37 @@ namespace WpfApp1.Pages
             }
         }
 
+        private void DelTickets()
+        {
+            var tickets = Core.Context.Ticket.Where(t => t.ClientID == user.ID).ToList();
+            var session = Core.Context.Session.Where(s => s.TimeSession < DateTime.Now).ToList();
+            foreach (var t in tickets)
+            {
+                if (t.Session.TimeSession < DateTime.Now)
+                {
+                    Core.Context.Ticket.Remove(t);
+                    Core.Context.SaveChanges();
+                }
+            }
+        }
+
+        private void DelSession()
+        {
+            var session = Core.Context.Session.ToList();
+            foreach (var item in session)
+            {
+                if (item.TimeSession < DateTime.Now)
+                {
+                    var busyPlace = Core.Context.BusyPlace.Where(b => b.IDSession == item.ID).ToList();
+                    foreach (var busy in busyPlace)
+                    {
+                        Core.Context.BusyPlace.Remove(busy);
+                        Core.Context.SaveChanges();
+                    }
+                    Core.Context.Session.Remove(item);
+                    Core.Context.SaveChanges();
+                }
+            }
+        }
     }
 }

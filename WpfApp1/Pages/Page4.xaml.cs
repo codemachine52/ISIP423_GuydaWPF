@@ -25,8 +25,6 @@ namespace WpfApp1.Pages
         {
             InitializeComponent();
             us = user;
-
-            DelTickets();
             LoadUserProfile();  
         }
 
@@ -50,20 +48,6 @@ namespace WpfApp1.Pages
                     {
                         TicketUsers.Text += '\n' + t.Session.Film.Name + ", время сеанса: " + t.Session.TimeSession +'\n';
                     }
-                }
-            }
-        }
-
-        private void DelTickets()
-        {
-            var tickets = Core.Context.Ticket.Where(t => t.ClientID == us.ID).ToList();
-            var session = Core.Context.Session.Where(s => s.TimeSession < DateTime.Now).ToList();
-            foreach (var t in tickets)
-            {
-                if (t.Session.TimeSession < DateTime.Now)
-                {
-                    Core.Context.Ticket.Remove(t);
-                    Core.Context.SaveChanges();
                 }
             }
         }
