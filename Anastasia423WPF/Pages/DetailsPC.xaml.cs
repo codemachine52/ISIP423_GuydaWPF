@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Anastasia423WPF
+namespace Anastasia423WPF.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Page1.xaml
+    /// Логика взаимодействия для DetailsPC.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class DetailsPC : Page
     {
-        public Page1()
+        public DetailsPC()
         {
             InitializeComponent();
         }
