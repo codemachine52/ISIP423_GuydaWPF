@@ -43,11 +43,8 @@ namespace WpfApp1.Pages
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var cl = Core.Context.Client.Where(c => (c.Email == LoginEnter.Text) && (c.Password == PasswordEnter.Password)).FirstOrDefault();
-            if (cl != null)
+            if (AuthUser(LoginEnter.Text, PasswordEnter.Password))
             {
-                Us = cl;
-                MessageBox.Show("Вы успешно авторизовались!");
                 NavigationService.Navigate(new Page1(Us));
             }
             else
@@ -57,6 +54,29 @@ namespace WpfApp1.Pages
                 if (result == MessageBoxResult.Yes)
                 {
                     NavigationService.Navigate(new Page3());
+                }
+            }
+        }
+
+        public bool AuthUser(string login, string password)
+        {
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Введите логин и пароль");
+                return false;
+            }
+            else
+            {
+                var cl = Core.Context.Client.Where(c => (c.Email == login) && (c.Password == password)).FirstOrDefault();
+                if (cl != null)
+                {
+                    Us = cl;
+                    MessageBox.Show("Вы успешно авторизовались!");
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
