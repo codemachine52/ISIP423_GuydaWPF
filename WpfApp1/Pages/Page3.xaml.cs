@@ -30,11 +30,11 @@ namespace WpfApp1.Pages
         private void CheckAllFieldsFilled()
         {
             // Проверяем что все поля user заполнены (не null и не пустые)
-            bool isAllFilled = !string.IsNullOrWhiteSpace(user.Email) &&
-                               !string.IsNullOrWhiteSpace(user.Password) &&
-                               !string.IsNullOrWhiteSpace(user.Fio) &&
+            bool isAllFilled = !string.IsNullOrWhiteSpace(LoginEnter.Text) &&
+                               !string.IsNullOrWhiteSpace(PasswordEnter.Password) &&
+                               !string.IsNullOrWhiteSpace(FIOEnter.Text) &&
                                user.Age > 0 &&
-                               !string.IsNullOrWhiteSpace(user.PhoneNum);
+                               !string.IsNullOrWhiteSpace(PhoneEnter.Text);
 
             Registr.IsEnabled = isAllFilled;
         }
@@ -45,12 +45,27 @@ namespace WpfApp1.Pages
         }
         private void Registr_Click(object sender, RoutedEventArgs e)
         {
-            Core.Context.Client.Add(user);
-            Core.Context.SaveChanges();
+            if(RegistrationUser(user.Email, user.Password, user.Fio, user.Age, user.PhoneNum))
+            {
+                NavigationService.Navigate(new Page1(user));
+            }
+        }
+
+        public bool RegistrationUser(string email, string pass, string FIO, int age, string phoneNum)
+        {
             var usIsInBD = Core.Context.Client.Where(u => u.Email == user.Email).FirstOrDefault();
-            if (usIsInBD != null)
+
+            if (usIsInBD == null)
             {
                 MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешная регистрация");
+                Core.Context.Client.Add(user);
+                Core.Context.SaveChanges();
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Пользователь уже зарегистрирован!", "Повторная регистрация", MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                return false;
             }
         }
 
@@ -80,8 +95,13 @@ namespace WpfApp1.Pages
                 {
                     user.Password = pasEnt;
                 }
+                else
+                {
+                    MessageBox.Show("Пароль должен содержать больше 5 символов!");
+                    CheckAllFieldsFilled();
+                }
             }
-            else MessageBox.Show("Ошибка! пароль не может быть пустым и должен содержать больше 5 символов!", "Некорректный ввод", MessageBoxButton.OK, MessageBoxImage.Warning);
+            else MessageBox.Show("Ошибка! пароль не может быть пустым", "Некорректный ввод", MessageBoxButton.OK, MessageBoxImage.Warning);
             CheckAllFieldsFilled();
         }
 
