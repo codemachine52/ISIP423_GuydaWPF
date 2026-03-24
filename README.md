@@ -8,3 +8,7 @@
 пользователь успешно удален, пробуем авторизоваться с его данными в приложении
 
 <img width="720" height="229" alt="image" src="https://github.com/user-attachments/assets/2e4fc517-1dc3-4065-90e5-53c20db3cd48" />
+
+### Окно обозреватель тестов:
+
+<img width="860" height="259" alt="image" src="https://github.com/user-attachments/assets/93c5917f-83de-41fa-82be-a909b50f413e" />
