@@ -11,4 +11,5 @@
 
 ### Окно обозреватель тестов:
 
-<img width="860" height="259" alt="image" src="https://github.com/user-attachments/assets/93c5917f-83de-41fa-82be-a909b50f413e" />
+<img width="1355" height="691" alt="image" src="https://github.com/user-attachments/assets/09bba20a-734b-4835-96f5-b60b5d7b517a" />
+
