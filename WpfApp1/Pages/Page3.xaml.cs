@@ -48,6 +48,8 @@ namespace WpfApp1.Pages
             if(RegistrationUser(user.Email, user.Password, user.Fio, user.Age, user.PhoneNum))
             {
                 NavigationService.Navigate(new Page1(user));
+                Core.Context.Client.Add(user);
+                Core.Context.SaveChanges();
             }
         }
 
@@ -58,8 +60,7 @@ namespace WpfApp1.Pages
             if (usIsInBD == null)
             {
                 MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешная регистрация");
-                Core.Context.Client.Add(user);
-                Core.Context.SaveChanges();
+                
                 return true;
             }
             else
