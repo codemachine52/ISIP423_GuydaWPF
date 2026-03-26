@@ -62,17 +62,20 @@ using WpfApp1.Pages;
 
 ```csharp
 [TestMethod]
-public void AuthTestSuccess()
-{
-    var authPage = new AuthPage();
-    var users = Core.Context.Client.ToList();
+        public void AuthTestSuccess()
+        {
+            Page2 auth = new Page2();
+            Assert.IsTrue(auth.AuthUser("ivanov@mail.ru", "pass123"));
+            Assert.IsTrue(auth.AuthUser("petrova@gmail.com", "anna2023"));
+            Assert.IsTrue(auth.AuthUser("sidorov@yandex.ru", "alex17"));
+            Assert.IsTrue(auth.AuthUser("maria.k@mail.ru", "maria_pass"));
+            Assert.IsTrue(auth.AuthUser("den_nik@mail.ru", "den35"));
+            Assert.IsTrue(auth.AuthUser("mur123@mail.ru", "cvpasdw"));
+            Assert.IsTrue(auth.AuthUser("238947sahd@gmail.com", "AJhsjdshgfi"));
+            Assert.IsTrue(auth.AuthUser("alksdj@mail.ru", "QWERTY1"));
+            Assert.IsTrue(auth.AuthUser("jkjgjehgxb@mail.ru", "xcvbnm"));
+        }
 
-    foreach (var user in users)
-    {
-        bool result = authPage.Auth(user.Email, user.Password);
-        Assert.IsTrue(result, $"Пользователь {user.Email} не смог войти с верными данными");
-    }
-}
 ```
 
 После запуска все позитивные тесты были успешно пройдены, так как все пользователи из БД корректно авторизуются.
@@ -88,7 +91,7 @@ public void AuthTestSuccess()
 
 Для проверки последнего сценария был проведён следующий эксперимент (см. скриншоты):
 
-1. В таблице `Client` присутствовал пользователь с `id = 21` (логин `testuser@example.com`, пароль `123456`).
+1. В таблице `Client` присутствовал пользователь с `id = 21` (логин `germi4@mail.ru`, пароль `pass45`).
 
    <img width="657" height="303" alt="Пользователь с id=21 в таблице" src="https://github.com/user-attachments/assets/373df6cf-e6a8-4a43-b0a2-cf0262da3b14" />
 
