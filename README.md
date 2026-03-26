@@ -103,12 +103,11 @@ using WpfApp1.Pages;
 
 ```csharp
 [TestMethod]
-public void AuthTest_DeletedUser_ShouldFail()
-{
-    var authPage = new AuthPage();
-    bool result = authPage.Auth("testuser@example.com", "123456");
-    Assert.IsFalse(result, "Удалённый пользователь не должен иметь возможность войти");
-}
+        public void AuthTestFail()
+        {
+            Page2 auth = new Page2();
+            Assert.IsFalse(auth.AuthUser("germi4@mail.ru", "pass45"));
+        }
 ```
 
 Тест успешно завершился, так как метод `Auth` вернул `false` и показал сообщение об ошибке.
