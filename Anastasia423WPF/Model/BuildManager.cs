@@ -2,7 +2,7 @@
 using System.Linq;
 using Anastasia423WPF;
 
-namespace BuilderPC
+namespace Anastasia423WPF
 {
     public static class BuildManager
     {

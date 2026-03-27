@@ -113,6 +113,9 @@
     <Compile Include="motherboard_.cs">
       <DependentUpon>PCBuild.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AssemblyDetailsPage.xaml.cs">
+      <DependentUpon>AssemblyDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CurrentBuildPage.xaml.cs">
       <DependentUpon>CurrentBuildPage.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AssemblyDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CurrentBuildPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -23,6 +23,27 @@ namespace Anastasia423WPF.Pages
         public SavedBuildsPage()
         {
             InitializeComponent();
+            LoadAssemblies();
+        }
+
+        private void LoadAssemblies()
+        {
+            LwAssemblies.ItemsSource = Core.Context.assembly_.ToList();
+        }
+
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void LwAssemblies_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Получаем сборку, по которой кликнули
+            if (LwAssemblies.SelectedItem is assembly_ selectedAssembly)
+            {
+                // Переходим на страницу деталей, передавая эту сборку
+                NavigationService.Navigate(new AssemblyDetailsPage(selectedAssembly));
+            }
         }
     }
 }

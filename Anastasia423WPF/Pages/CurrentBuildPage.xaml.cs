@@ -30,7 +30,7 @@ namespace BuilderPC
             AddCategoryRow("Накопитель", 8, BuildManager.Storage);
             AddCategoryRow("Корпус", 5, BuildManager.Case);
 
-            TxtTotalPrice.Text = $"{BuildManager.TotalPrice:C2}";
+            TxtTotalPrice.Text = $"{BuildManager.TotalPrice:N0} руб.";
         }
 
         private void AddCategoryRow(string title, int partTypeId, basepart_ selectedPart)
@@ -46,7 +46,7 @@ namespace BuilderPC
             if (selectedPart != null)
             {
                 infoStack.Children.Add(new TextBlock { Text = selectedPart.name, FontSize = 16, Margin = new Thickness(0, 5, 0, 0) });
-                infoStack.Children.Add(new TextBlock { Text = $"{selectedPart.price:C2}", Foreground = System.Windows.Media.Brushes.DarkGreen });
+                infoStack.Children.Add(new TextBlock { Text = $"{selectedPart.price:N0} руб.", Foreground = System.Windows.Media.Brushes.DarkGreen });
             }
             else
             {
