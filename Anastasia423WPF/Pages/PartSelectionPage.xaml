@@ -17,11 +17,11 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Назад" Grid.Column="0" Padding="10,5" Margin="0,0,15,0" Click="BtnBack_Click"/>
+            <Button Content="Назад" Grid.Column="0" Padding="10,5" Margin="0,0,15,0" Click="BtnBack_Click" Width="100" FontSize="18"/>
 
             <TextBox x:Name="TxtSearch" Grid.Column="1" Padding="5" Margin="0,0,10,0" TextChanged="FilterChanged"/>
-            <TextBlock Text="Производитель:" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0"/>
-            <ComboBox x:Name="CmbManufacturers" Grid.Column="3" DisplayMemberPath="name" SelectionChanged="FilterChanged"/>
+            <TextBlock Text="Производитель:" Grid.Column="2" VerticalAlignment="Center" Margin="0,0,5,0" FontSize="18"/>
+            <ComboBox x:Name="CmbManufacturers" Grid.Column="3" DisplayMemberPath="name" SelectionChanged="FilterChanged" FontSize="16"/>
         </Grid>
 
         <ListView x:Name="LwParts" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
