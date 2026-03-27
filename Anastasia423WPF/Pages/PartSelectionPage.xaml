@@ -27,24 +27,22 @@
         <ListView x:Name="LwParts" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Padding="10" Width="Auto" Background="White">
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="120"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{Binding image}" Grid.Column="0" Width="70" Height="70" Stretch="UniformToFill" Margin="0,0,10,0"/>
+                            <Image Source="{Binding image}" Width="100" Height="100" Stretch="Uniform" Margin="0,0,15,0"/>
 
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding name}" FontWeight="Bold" FontSize="16"/>
-                                <TextBlock Text="{Binding manufacturer_.name}" Foreground="Gray"/>
-                            </StackPanel>
+                                <TextBlock Text="{Binding name}" FontSize="18" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding manufacturer_.name}" Foreground="Gray" Margin="0,2,0,5"/>
 
-                            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding price, StringFormat={}{0:N0} руб.}" FontSize="18" FontWeight="Bold" Foreground="DarkGreen" Margin="0,0,0,5"/>
-                                <Button Content="Выбрать" Padding="15,5" Click="BtnSelectPart_Click" Tag="{Binding}"/>
+                                <TextBlock Text="{Binding DisplayDetails}" Foreground="DimGray" FontWeight="Medium" Margin="0,5,0,0"/>
+                                <Button Content="Выбрать" Padding="15,5" Click="Button_Click" Tag="{Binding}"/>
                             </StackPanel>
                         </Grid>
                     </Border>

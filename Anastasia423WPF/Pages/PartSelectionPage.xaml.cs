@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Anastasia423WPF.Pages;
 
 namespace Anastasia423WPF.Pages
 {
@@ -45,74 +46,82 @@ namespace Anastasia423WPF.Pages
 
         private void ApplyFilters()
         {
-            var query = Core.Context.basepart_.Where(p => p.parttypeid == _partTypeId).ToList();
+            // Подгружаем производителя
+            var query = Core.Context.basepart_.Include("manufacturer_");
 
-            // Поиск
+            // Подгружаем характеристики в зависимости от открытой категории.
+            // Строки в кавычках должны строго совпадать с названиями свойств в классе basepart_!
+            switch (_partTypeId)
+            {
+                case 1: query = query.Include("cpu_"); break;
+                case 2: query = query.Include("gpu_"); break;
+                case 3: query = query.Include("ram_"); break;
+                case 6: query = query.Include("powersupply_"); break;
+            }
+
+            var list = query.Where(p => p.parttypeid == _partTypeId).ToList();
+
+            // 3. Фильтрация по поисковой строке (название детали)
             if (!string.IsNullOrWhiteSpace(TxtSearch.Text))
             {
-                query = query.Where(p => p.name.ToLower().Contains(TxtSearch.Text.ToLower())).ToList();
+                list = list.Where(p => p.name.ToLower().Contains(TxtSearch.Text.ToLower())).ToList();
             }
 
-            // Фильтрация по производителю
+            // 4. Фильтрация по производителю из ComboBox
             if (CmbManufacturers.SelectedItem is manufacturer_ selectedMan && selectedMan.id != 0)
             {
-                query = query.Where(p => p.manufacturerid == selectedMan.id).ToList();
+                list = list.Where(p => p.manufacturerid == selectedMan.id).ToList();
             }
 
-            // ПРОВЕРКИ НА СОВМЕСТИМОСТЬ (ОСТАВЛЯЕМ ТОЛЬКО ПОДХОДЯЩИЕ)
+            // 5. ЛОГИКА СОВМЕСТИМОСТИ
+            // Перед фильтрацией получаем данные уже выбранных компонентов, чтобы использовать их как константы
 
-            // 1. Совместимость сокета CPU и Материнской платы
+            // Совместимость сокета (Процессор <-> Мат.плата)
             if (_partTypeId == 1 && BuildManager.Motherboard != null) // Выбираем CPU
             {
-                var moboSocket = Core.Context.motherboard_.FirstOrDefault(m => m.id == BuildManager.Motherboard.id)?.socketid;
-                query = query.Where(p => Core.Context.cpu_.FirstOrDefault(c => c.id == p.id)?.socketid == moboSocket).ToList();
+                var selectedMobo = Core.Context.motherboard_.Find(BuildManager.Motherboard.id);
+                list = list.Where(p => p.cpu_.socketid == selectedMobo.socketid).ToList();
             }
-            if (_partTypeId == 4 && BuildManager.CPU != null) // Выбираем Mobo
+            else if (_partTypeId == 4 && BuildManager.CPU != null) // Выбираем материнку
             {
-                var cpuSocket = Core.Context.cpu_.FirstOrDefault(c => c.id == BuildManager.CPU.id)?.socketid;
-                query = query.Where(p => Core.Context.motherboard_.FirstOrDefault(m => m.id == p.id)?.socketid == cpuSocket).ToList();
+                var selectedCpu = Core.Context.cpu_.Find(BuildManager.CPU.id);
+                list = list.Where(p => p.motherboard_.socketid == selectedCpu.socketid).ToList();
             }
 
-            // 2. Совместимость сокета Кулера
-            if (_partTypeId == 7) // Выбираем Кулер
+            // Совместимость типа памяти (Мат.плата <-> ОЗУ)
+            if (_partTypeId == 3 && BuildManager.Motherboard != null) // Выбираем RAM
             {
-                int? socketId = null;
-                if (BuildManager.CPU != null)
-                    socketId = Core.Context.cpu_.FirstOrDefault(c => c.id == BuildManager.CPU.id)?.socketid;
-                else if (BuildManager.Motherboard != null)
-                    socketId = Core.Context.motherboard_.FirstOrDefault(m => m.id == BuildManager.Motherboard.id)?.socketid;
-
-                if (socketId.HasValue)
-                {
-                    query = query.Where(p => Core.Context.socketprocessorcooler_.Any(spc => spc.processorcoolerid == p.id && spc.socketid == socketId.Value)).ToList();
-                }
+                var selectedMobo = Core.Context.motherboard_.Find(BuildManager.Motherboard.id);
+                list = list.Where(p => p.ram_.memorytypeid == selectedMobo.memorytypeid).ToList();
             }
 
-            // 3. Совместимость Форм-фактора Материнской платы и Корпуса
+            // Совместимость Блока питания (БП <-> Видеокарта)
+            if (_partTypeId == 6 && BuildManager.GPU != null) // Выбираем Блок питания
+            {
+                var selectedGpu = Core.Context.gpu_.Find(BuildManager.GPU.id);
+                // Оставляем только те БП, мощность которых >= рекомендованной для видеокарты
+                list = list.Where(p => p.powersupply_.power >= selectedGpu.recommendpower).ToList();
+            }
+
+            // Совместимость корпуса по форм-фактору мат.платы
             if (_partTypeId == 5 && BuildManager.Motherboard != null) // Выбираем Корпус
             {
-                var moboFormFactor = Core.Context.motherboard_.FirstOrDefault(m => m.id == BuildManager.Motherboard.id)?.formfactorid;
-                query = query.Where(p => Core.Context.boardformfactorcase_.Any(bfc => bfc.caseid == p.id && bfc.formfactorid == moboFormFactor)).ToList();
+                var selectedMobo = Core.Context.motherboard_.Find(BuildManager.Motherboard.id);
+                // Проверяем через связующую таблицу, подходит ли форм-фактор платы к этому корпусу
+                list = list.Where(p => Core.Context.boardformfactorcase_
+                    .Any(bfc => bfc.caseid == p.id && bfc.formfactorid == selectedMobo.formfactorid)).ToList();
             }
 
-            // 4. Совместимость типа памяти (Mobo и RAM)
-            if (_partTypeId == 3 && BuildManager.Motherboard != null) // Выбираем оперативку
-            {
-                var moboMemoryType = Core.Context.motherboard_.FirstOrDefault(m => m.id == BuildManager.Motherboard.id)?.memorytypeid;
-                query = query.Where(p => Core.Context.ram_.FirstOrDefault(r => r.id == p.id)?.memorytypeid == moboMemoryType).ToList();
-            }
-
-            // 5. Мощность блока питания и GPU (БП должен быть >= рекомендуемой мощности видеокарты как минимум
-            if (_partTypeId == 6 && BuildManager.GPU != null) // Выбираем БП
-            {
-                var gpuRecPower = Core.Context.gpu_.FirstOrDefault(g => g.id == BuildManager.GPU.id)?.recommendpower ?? 0;
-                query = query.Where(p => Core.Context.powersupply_.FirstOrDefault(ps => ps.id == p.id)?.power >= gpuRecPower).ToList();
-            }
-
-            LwParts.ItemsSource = query;
+            // 6. Выводим итоговый отфильтрованный список на экран
+            LwParts.ItemsSource = list;
         }
 
-        private void BtnSelectPart_Click(object sender, RoutedEventArgs e)
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as Button)?.Tag is basepart_ selectedPart)
             {
@@ -129,11 +138,6 @@ namespace Anastasia423WPF.Pages
                 }
                 NavigationService.GoBack();
             }
-        }
-
-        private void BtnBack_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
         }
     }
 }

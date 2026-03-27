@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-            <Button Content="Назад" Padding="10,5" Margin="0,0,15,0" Click="BtnBack_Click"/>
+            <Button Content="Назад" Padding="10,5" Margin="0,0,15,0" Click="BtnBack_Click" Width="100" FontSize="18"/>
             <TextBlock Text="Список сохраненных сборок" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
         </StackPanel>
 

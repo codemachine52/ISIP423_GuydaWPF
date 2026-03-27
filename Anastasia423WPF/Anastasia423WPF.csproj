@@ -81,6 +81,7 @@
     <Compile Include="certificate_.cs">
       <DependentUpon>PCBuild.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\basepart_partial.cs" />
     <Compile Include="Model\BuildManager.cs" />
     <Compile Include="Model\CategoryItem.cs" />
     <Compile Include="Model\Core.cs" />
