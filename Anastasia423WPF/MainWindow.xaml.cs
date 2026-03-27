@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BuilderPC;
 
 namespace Anastasia423WPF
 {
@@ -23,6 +24,7 @@ namespace Anastasia423WPF
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new CurrentBuildPage());
         }
     }
 }
