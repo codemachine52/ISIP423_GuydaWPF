@@ -13,10 +13,10 @@ namespace Anastasia423WPF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PC_MGEntities : DbContext
+    public partial class PC15Entities : DbContext
     {
-        public PC_MGEntities()
-            : base("name=PC_MGEntities")
+        public PC15Entities()
+            : base("name=PC15Entities")
         {
         }
     
