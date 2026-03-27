@@ -1,16 +1,16 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
-using Anastasia423WPF;
 using Anastasia423WPF.Pages;
+using Anastasia423WPF.Model;
 
-namespace BuilderPC
+namespace Anastasia423WPF.Pages
 {
     public partial class CurrentBuildPage : Page
     {
         public CurrentBuildPage()
         {
             InitializeComponent();
-            Loaded += CurrentBuildPage_Loaded;
         }
 
         private void CurrentBuildPage_Loaded(object sender, RoutedEventArgs e)
@@ -20,49 +20,33 @@ namespace BuilderPC
 
         private void UpdateUI()
         {
-            CategoriesPanel.Children.Clear();
-            AddCategoryRow("Процессор (CPU)", 1, BuildManager.CPU);
-            AddCategoryRow("Материнская плата", 4, BuildManager.Motherboard);
-            AddCategoryRow("Видеокарта (GPU)", 2, BuildManager.GPU);
-            AddCategoryRow("Оперативная память", 3, BuildManager.RAM);
-            AddCategoryRow("Кулер процессора", 7, BuildManager.Cooler);
-            AddCategoryRow("Блок питания", 6, BuildManager.PowerSupply);
-            AddCategoryRow("Накопитель", 8, BuildManager.Storage);
-            AddCategoryRow("Корпус", 5, BuildManager.Case);
+            // Формируем список данных комплектующих
+            var items = new List<CategoryItem>
+            {
+                new CategoryItem { Title = "Процессор (CPU)", PartTypeId = 1, SelectedPart = BuildManager.CPU },
+                new CategoryItem { Title = "Материнская плата", PartTypeId = 4, SelectedPart = BuildManager.Motherboard },
+                new CategoryItem { Title = "Видеокарта (GPU)", PartTypeId = 2, SelectedPart = BuildManager.GPU },
+                new CategoryItem { Title = "Оперативная память", PartTypeId = 3, SelectedPart = BuildManager.RAM },
+                new CategoryItem { Title = "Кулер процессора", PartTypeId = 7, SelectedPart = BuildManager.Cooler },
+                new CategoryItem { Title = "Блок питания", PartTypeId = 6, SelectedPart = BuildManager.PowerSupply },
+                new CategoryItem { Title = "Накопитель", PartTypeId = 8, SelectedPart = BuildManager.Storage },
+                new CategoryItem { Title = "Корпус", PartTypeId = 5, SelectedPart = BuildManager.Case }
+            };
 
+            // Передаем данные в XAML
+            CategoriesItemsControl.ItemsSource = items;
+
+            // Обновляем общую цену
             TxtTotalPrice.Text = $"{BuildManager.TotalPrice:N0} руб.";
         }
 
-        private void AddCategoryRow(string title, int partTypeId, basepart_ selectedPart)
+        private void BtnSelect_Click(object sender, RoutedEventArgs e)
         {
-            var border = new Border { BorderBrush = System.Windows.Media.Brushes.LightGray, BorderThickness = new Thickness(1), Margin = new Thickness(0, 0, 0, 10), Padding = new Thickness(10) };
-            var grid = new Grid();
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-            var infoStack = new StackPanel();
-            infoStack.Children.Add(new TextBlock { Text = title, FontWeight = FontWeights.Bold });
-
-            if (selectedPart != null)
+            // Кнопка узнает, к какой категории она относится, через свойство Tag
+            if (sender is Button btn && btn.Tag is CategoryItem item)
             {
-                infoStack.Children.Add(new TextBlock { Text = selectedPart.name, FontSize = 16, Margin = new Thickness(0, 5, 0, 0) });
-                infoStack.Children.Add(new TextBlock { Text = $"{selectedPart.price:N0} руб.", Foreground = System.Windows.Media.Brushes.DarkGreen });
+                NavigationService.Navigate(new PartSelectionPage(item.PartTypeId));
             }
-            else
-            {
-                infoStack.Children.Add(new TextBlock { Text = "Не выбрано", FontStyle = FontStyles.Italic, Foreground = System.Windows.Media.Brushes.Gray, Margin = new Thickness(0, 5, 0, 0) });
-            }
-
-            var btn = new Button { Content = selectedPart == null ? "Выбрать" : "Заменить", Padding = new Thickness(15, 5, 15, 5), VerticalAlignment = VerticalAlignment.Center };
-            btn.Click += (s, e) => NavigationService.Navigate(new PartSelectionPage(partTypeId));
-
-            Grid.SetColumn(infoStack, 0);
-            Grid.SetColumn(btn, 1);
-            grid.Children.Add(infoStack);
-            grid.Children.Add(btn);
-            border.Child = grid;
-
-            CategoriesPanel.Children.Add(border);
         }
 
         private void BtnSaveBuild_Click(object sender, RoutedEventArgs e)
@@ -87,7 +71,7 @@ namespace BuilderPC
             };
 
             Core.Context.assembly_.Add(newAssembly);
-            Core.Context.SaveChanges(); // Сохраняем, чтобы получить ID
+            Core.Context.SaveChanges();
 
             foreach (var part in parts)
             {

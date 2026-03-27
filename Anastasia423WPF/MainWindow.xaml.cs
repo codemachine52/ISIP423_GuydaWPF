@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BuilderPC;
-
+using Anastasia423WPF.Pages;
 namespace Anastasia423WPF
 {
     /// <summary>

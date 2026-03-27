@@ -82,6 +82,7 @@
       <DependentUpon>PCBuild.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\BuildManager.cs" />
+    <Compile Include="Model\CategoryItem.cs" />
     <Compile Include="Model\Core.cs" />
     <Compile Include="cpu_.cs">
       <DependentUpon>PCBuild.tt</DependentUpon>
@@ -199,10 +200,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\DetailsPC.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\PartSelectionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,9 +210,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Pages\DetailsPC.xaml.cs">
-      <DependentUpon>DetailsPC.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
