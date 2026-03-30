@@ -5,6 +5,8 @@
         Background="#F5F5F5">
 
     <Grid>
+        
+        <!--окно приветствия игрока, оно же главное меню-->
         <Grid x:Name="StartMenu" Visibility="Visible">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="C# ROGUELIKE" FontSize="48" FontWeight="Bold" Margin="0,0,0,30" TextAlignment="Center"/>
@@ -12,13 +14,15 @@
             </StackPanel>
         </Grid>
 
+        <!--окно проигрыша-->
         <Grid x:Name="GameOverScreen" Visibility="Collapsed">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="ВЫ ПОГИБЛИ" FontSize="48" FontWeight="Bold" Foreground="DarkRed" Margin="0,0,0,30" TextAlignment="Center"/>
                 <Button Content="Начать заново" FontSize="24" Padding="20,10" Click="BtnStart_Click" />
             </StackPanel>
         </Grid>
-
+        
+        <!--окно где происходит сама игра и действия в ней-->
         <Grid x:Name="GameScreen" Visibility="Collapsed" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -33,6 +37,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    
+                    <!--отображение хп, этажа и статуса (заморожен либо нет текста, если не заморожен)-->
                     <TextBlock x:Name="TxtFloor" Grid.Column="0" Text="Этаж: 1" FontSize="18" FontWeight="Bold"/>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="Здоровье: " FontSize="18"/>
@@ -42,17 +48,20 @@
                 </Grid>
             </Border>
 
+            
             <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="White" Margin="0,0,0,10">
                 <Grid>
                     <Image x:Name="RoomImage" Stretch="Uniform" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
                     <TextBlock x:Name="TxtRoomContent" Text="" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
 
+                    <!--кнопки боя с врагами-->
                     <StackPanel x:Name="CombatPanel" Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
                         <Button Content="Атака" FontSize="20" Padding="20,10" Margin="10" Click="BtnAttack_Click"/>
                         <Button Content="Защита" FontSize="20" Padding="20,10" Margin="10" Click="BtnDefend_Click"/>
                     </StackPanel>
 
+                    <!--сообщение о нахождении лута с выбором действий-->
                     <StackPanel x:Name="LootPanel" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,20">
                         <TextBlock x:Name="TxtLootInfo" Text="Вы нашли предмет!" FontSize="20" FontWeight="Bold" Background="#DDFFFFFF" Padding="5" TextAlignment="Center" Margin="0,0,0,10"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -69,6 +78,7 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
+                <!--текущий инвент игрока-->
                 <Border Grid.Column="0" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Margin="0,0,5,0" Background="White" Padding="10">
                     <StackPanel>
                         <TextBlock Text="Инвентарь" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center"/>

@@ -38,8 +38,6 @@ namespace RoguelikeWPF
             if (_engine.CurrentEnemies.Any())
             {
                 Enemy firstEnemy = _engine.CurrentEnemies.First();
-
-                // Классический if вместо новых фишек C#
                 if (firstEnemy.IsBoss)
                     TxtRoomContent.Text = "БОСС: " + firstEnemy.Name + "!";
                 else
@@ -54,7 +52,6 @@ namespace RoguelikeWPF
             {
                 TxtRoomContent.Text = "СУНДУК";
                 _currentLoot = _engine.GenerateLoot();
-
                 if (_currentLoot is ItemPotion)
                 {
                     SetRoomImage("zelie.jpg"); // Если выпало зелье, показываем его
