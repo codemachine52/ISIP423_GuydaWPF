@@ -44,7 +44,7 @@ namespace RoguelikeWPF.Engine
             CurrentFloor++;
             CurrentEnemies.Clear();
 
-            if (CurrentFloor % 10 == 0)
+            if (CurrentFloor % 4 == 0) //босс только на каждом 4 этаже
             {
                 SpawnBoss();
             }

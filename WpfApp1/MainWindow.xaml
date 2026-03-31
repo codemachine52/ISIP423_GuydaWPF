@@ -30,6 +30,7 @@
                 <RowDefinition Height="200"/>
             </Grid.RowDefinitions>
 
+            <!--отображение хп, этажа и статуса (заморожен либо нет текста, если не заморожен)-->
             <Border Grid.Row="0" BorderBrush="Black" BorderThickness="2" CornerRadius="5" Padding="10" Margin="0,0,0,10" Background="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -38,7 +39,6 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     
-                    <!--отображение хп, этажа и статуса (заморожен либо нет текста, если не заморожен)-->
                     <TextBlock x:Name="TxtFloor" Grid.Column="0" Text="Этаж: 1" FontSize="18" FontWeight="Bold"/>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBlock Text="Здоровье: " FontSize="18"/>
@@ -48,27 +48,45 @@
                 </Grid>
             </Border>
 
-            
-            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="White" Margin="0,0,0,10">
+
+            <!--экран игры (комната, бой с врагами, нахождение лута)-->
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="2" CornerRadius="10" Background="White" Margin="0,0,0,10" ClipToBounds="True">
                 <Grid>
-                    <Image x:Name="RoomImage" Stretch="Uniform" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Image x:Name="BackgroundImage" Stretch="UniformToFill" Opacity="0.8"/>
 
-                    <TextBlock x:Name="TxtRoomContent" Text="" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10,0,0"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                    <!--кнопки боя с врагами-->
-                    <StackPanel x:Name="CombatPanel" Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20">
-                        <Button Content="Атака" FontSize="20" Padding="20,10" Margin="10" Click="BtnAttack_Click"/>
-                        <Button Content="Защита" FontSize="20" Padding="20,10" Margin="10" Click="BtnDefend_Click"/>
-                    </StackPanel>
-
-                    <!--сообщение о нахождении лута с выбором действий-->
-                    <StackPanel x:Name="LootPanel" Visibility="Collapsed" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,20">
-                        <TextBlock x:Name="TxtLootInfo" Text="Вы нашли предмет!" FontSize="20" FontWeight="Bold" Background="#DDFFFFFF" Padding="5" TextAlignment="Center" Margin="0,0,0,10"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Content="Забрать" FontSize="18" Padding="15,5" Margin="5" Click="BtnTakeLoot_Click"/>
-                            <Button Content="Выбросить" FontSize="18" Padding="15,5" Margin="5" Click="BtnDropLoot_Click"/>
+                        <!--изображение лута в комнате-->
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Image x:Name="RoomImage" Stretch="Uniform" Margin="10" Height="180"/>
+                            <Image x:Name="LootImage" Stretch="Uniform" Margin="10" Height="120" Visibility="Collapsed"/>
                         </StackPanel>
-                    </StackPanel>
+
+                        <!--бой с врагом (выбор атака/защита)-->
+                        <Border Grid.Row="1" Background="#AA000000" Padding="15">
+                            <StackPanel>
+                                <TextBlock x:Name="TxtRoomContent" Text="" FontSize="22" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                                <StackPanel x:Name="CombatPanel" Visibility="Collapsed" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Content="Атака" Width="120" Height="40" Margin="10,0" Click="BtnAttack_Click"/>
+                                    <Button Content="Защита" Width="120" Height="40" Margin="10,0" Click="BtnDefend_Click"/>
+                                </StackPanel>
+
+                                <!--нахождение лута (с выбором выкинуть или оставить себе)-->
+                                <StackPanel x:Name="LootPanel" Visibility="Collapsed">
+                                    <TextBlock x:Name="TxtLootInfo" Text="" FontSize="18" Foreground="White" TextAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Content="Забрать" Width="120" Height="40" Margin="10,0" Click="BtnTakeLoot_Click"/>
+                                        <Button Content="Выбросить" Width="120" Height="40" Margin="10,0" Click="BtnDropLoot_Click"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
                 </Grid>
             </Border>
 

@@ -18,6 +18,27 @@ namespace RoguelikeWPF
         {
             InitializeComponent();
             _engine = new GameEngine();
+
+            // ЗАГРУЗКА ФОНА КОМНАТЫ
+            try
+            {
+                string bgPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImagesFolder, "room_bg.jpg");
+                if (File.Exists(bgPath))
+                {
+                    BitmapImage bgImage = new BitmapImage();
+                    bgImage.BeginInit();
+                    bgImage.CacheOption = BitmapCacheOption.OnLoad;
+                    bgImage.UriSource = new Uri(bgPath);
+                    bgImage.EndInit();
+
+                    BackgroundImage.Source = bgImage;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Если что-то пойдет не так, фон просто останется белым
+                _engine.Log("Ошибка загрузки фона: " + ex.Message);
+            }
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
@@ -38,6 +59,7 @@ namespace RoguelikeWPF
             if (_engine.CurrentEnemies.Any())
             {
                 Enemy firstEnemy = _engine.CurrentEnemies.First();
+
                 if (firstEnemy.IsBoss)
                     TxtRoomContent.Text = "БОСС: " + firstEnemy.Name + "!";
                 else
@@ -46,23 +68,34 @@ namespace RoguelikeWPF
                 CombatPanel.Visibility = Visibility.Visible;
                 LootPanel.Visibility = Visibility.Collapsed;
 
+                // Прячем картинку лута, так как сейчас бой
+                LootImage.Visibility = Visibility.Collapsed;
+
                 LoadEnemyImage(firstEnemy);
             }
             else
             {
                 TxtRoomContent.Text = "СУНДУК";
                 _currentLoot = _engine.GenerateLoot();
+
+                // Показываем картинку сундука слева
+                SetRoomImage("chest.png");
+
+                // Показываем элемент лута справа
+                LootImage.Visibility = Visibility.Visible;
+
+                // Выбираем картинку для выпавшего предмета
                 if (_currentLoot is ItemPotion)
                 {
-                    SetRoomImage("zelie.jpg"); // Если выпало зелье, показываем его
+                    SetLootImage("zelie.png");
                 }
-                else if(_currentLoot is ItemArmor)
+                else if (_currentLoot is ItemArmor)
                 {
-                    SetRoomImage("armor.jpg");
+                    SetLootImage("armor.png");
                 }
                 else
                 {
-                    SetRoomImage("mech.jpg"); 
+                    SetLootImage("mech.png");
                 }
 
                 TxtLootInfo.Text = "В сундуке: " + _currentLoot.Name + "\nВзять?";
@@ -102,10 +135,10 @@ namespace RoguelikeWPF
                         imageName = "goblin.png";
                         break;
                     case EnemyType.Skeleton:
-                        imageName = "skeleton.jpg";
+                        imageName = "skeleton.png";
                         break;
                     case EnemyType.Mage:
-                        imageName = "mage.jpg";
+                        imageName = "mage.png";
                         break;
                     default:
                         imageName = "skeleton.jpg";
@@ -140,6 +173,32 @@ namespace RoguelikeWPF
             catch (Exception ex)
             {
                 _engine.Log("Ошибка загрузки фото: " + ex.Message);
+            }
+        }
+
+        private void SetLootImage(string fileName)
+        {
+            try
+            {
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImagesFolder, fileName);
+
+                if (File.Exists(path))
+                {
+                    BitmapImage image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.UriSource = new Uri(path);
+                    image.EndInit();
+                    LootImage.Source = image;
+                }
+                else
+                {
+                    LootImage.Source = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                _engine.Log("Ошибка загрузки фото лута: " + ex.Message);
             }
         }
 
