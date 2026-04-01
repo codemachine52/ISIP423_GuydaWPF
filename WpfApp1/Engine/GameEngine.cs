@@ -63,7 +63,7 @@ namespace RoguelikeWPF.Engine
             }
         }
 
-        private void SpawnEnemies()
+        private void SpawnEnemies() //появление врагов
         {
             int count = _rnd.Next(1, 4); // От 1 до 3 врагов
             for (int i = 0; i < count; i++)
@@ -96,7 +96,7 @@ namespace RoguelikeWPF.Engine
             return e;
         }
 
-        private void SpawnBoss()
+        private void SpawnBoss() //появление босса
         {
             Enemy boss = new Enemy() { IsBoss = true };
             int bossRoll = _rnd.Next(4);
@@ -135,7 +135,7 @@ namespace RoguelikeWPF.Engine
             Log($"ОСТОРОЖНО! Появился босс: {boss.Name}!");
         }
 
-        // --- БОЙ ---
+        // БОЙ
         // Возвращает true, если комната зачищена
         public bool ProcessTurn(bool playerDefends)
         {
@@ -186,7 +186,7 @@ namespace RoguelikeWPF.Engine
             return false;
         }
 
-        private void ProcessEnemyAttack(Enemy enemy, bool playerDefends)
+        private void ProcessEnemyAttack(Enemy enemy, bool playerDefends) //атака врагами игрока
         {
             int incDmg = enemy.Attack;
 

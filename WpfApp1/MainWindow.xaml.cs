@@ -19,7 +19,7 @@ namespace RoguelikeWPF
             InitializeComponent();
             _engine = new GameEngine();
 
-            // ЗАГРУЗКА ФОНА КОМНАТЫ
+            // ЗАГРУЗКА ФОНА КОМНАТЫ (по крайней мере попытка)
             try
             {
                 string bgPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ImagesFolder, "room_bg.jpg");
@@ -65,6 +65,7 @@ namespace RoguelikeWPF
                 else
                     TxtRoomContent.Text = "Враги (" + _engine.CurrentEnemies.Count + " шт.): " + firstEnemy.Name;
 
+                //бой с врагом отображается, лут скрываем
                 CombatPanel.Visibility = Visibility.Visible;
                 LootPanel.Visibility = Visibility.Collapsed;
 
