@@ -41,6 +41,8 @@
 
                 <Button x:Name="AuthUser" Width="40" Height="35" FontSize="18" Background="#FF383131" 
                         FontWeight="Thin" Foreground="White" Margin="5" Click="AuthUser_Click">👤</Button>
+
+                <Button x:Name="AdminPanelBtn" Content="Управление" HorizontalAlignment="Right" VerticalAlignment="Top" Width="150" Height="40" Margin="10" Visibility="Collapsed" Click="AdminPanelBtn_Click"/>
             </WrapPanel>
         </Border>
 

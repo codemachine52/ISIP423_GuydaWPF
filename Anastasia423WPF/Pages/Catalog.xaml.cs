@@ -22,17 +22,26 @@ namespace Anastasia423WPF.Pages
             InitializeComponent();
             LoadFilters();
             UpdateProducts();
+            AdminPanelBtn.Visibility = Visibility.Collapsed;
         }
 
         public Catalog(User us) : this()
         {
             user = us;
+            this.DataContext = user;
+
+
             // Если пользователь авторизован:
             if (user != null)
             {
                 AuthUser.Content = "👤";
                 AuthUser.Width = 80;
                 CartBtn.Visibility = Visibility.Visible; // Показываем кнопку корзины
+
+                if (user.RoleID == 3 || user.RoleID == 4)
+                {
+                    AdminPanelBtn.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -142,6 +151,12 @@ namespace Anastasia423WPF.Pages
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new StartPage());
+        }
+
+        private void AdminPanelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // Переходим на страницу админки, передавая текущего пользователя
+            NavigationService.Navigate(new AdminPage(user));
         }
     }
 }
