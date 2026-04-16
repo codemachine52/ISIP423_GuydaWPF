@@ -76,11 +76,18 @@
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ProductPartial.cs" />
+    <Compile Include="Model\ShoppingCart.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CartPage.xaml.cs">
+      <DependentUpon>CartPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductDetailsWindow.xaml.cs">
+      <DependentUpon>ProductDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Product_Order.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
@@ -116,6 +123,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\CartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\Catalog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,6 +136,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ProductDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

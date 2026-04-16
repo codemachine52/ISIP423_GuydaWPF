@@ -118,16 +118,12 @@ namespace Anastasia423WPF.Pages
         {
             if (ProductsList.SelectedItem is Product selectedProduct)
             {
-                // По заданию: открывается в НОВОМ ОКНЕ (Window, не Page)
-                // Создадим это окно позже. Назовем его ProductDetailsWindow
-                // ProductDetailsWindow detailsWindow = new ProductDetailsWindow(selectedProduct, user);
-                // detailsWindow.ShowDialog();
-
-                MessageBox.Show($"Тут откроется окно с инфой о: {selectedProduct.Name}");
+                // Создаем и открываем наше новое окно
+                var detailsWindow = new Windows.ProductDetailsWindow(selectedProduct, user);
+                detailsWindow.ShowDialog(); // ShowDialog заблокирует каталог, пока не закроют детали
             }
         }
 
-        // Навигация
         private void AuthUser_Click(object sender, RoutedEventArgs e)
         {
             if (user == null)

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Anastasia423WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Салон красоты Косметическая Ложа" Height="450" Width="800">
     <Grid>
         <Frame Source="Pages/StartPage.xaml" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
