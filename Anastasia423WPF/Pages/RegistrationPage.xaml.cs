@@ -1,159 +1,174 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Anastasia423WPF.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для RegistrationPage.xaml
-    /// </summary>
     public partial class RegistrationPage : Page
     {
-        User us = new User();
+        private User us = new User();
+
         public RegistrationPage()
         {
             InitializeComponent();
         }
-
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AuthPage());
         }
 
-        public bool PasswordVer(string password, string password2)
+        //Обработчики потери фокуса (Inline-валидация)
+        private void LoginText_LostFocus(object sender, RoutedEventArgs e) => ValidateLogin();
+        private void PassText_LostFocus(object sender, RoutedEventArgs e) => ValidatePassword();
+        private void PassVerificText_LostFocus(object sender, RoutedEventArgs e) => ValidatePasswordMatch();
+        private void FIOText_LostFocus(object sender, RoutedEventArgs e) => ValidateFIO();
+        private void PhoneText_LostFocus(object sender, RoutedEventArgs e) => ValidatePhone();
+
+
+        private void ShowError(TextBlock errorBlock, TextBox input, string message)
         {
-            if (password != null && password2 != null)
+            errorBlock.Text = message;
+            errorBlock.Visibility = Visibility.Visible;
+            input.BorderBrush = Brushes.Red;
+            input.BorderThickness = new Thickness(2);
+        }
+
+        private void ShowError(TextBlock errorBlock, PasswordBox input, string message)
+        {
+            errorBlock.Text = message;
+            errorBlock.Visibility = Visibility.Visible;
+            input.BorderBrush = Brushes.Red;
+            input.BorderThickness = new Thickness(2);
+        }
+
+        private void HideError(TextBlock errorBlock, Control input)
+        {
+            errorBlock.Visibility = Visibility.Collapsed;
+            input.ClearValue(Control.BorderBrushProperty);
+            input.ClearValue(Control.BorderThicknessProperty);
+        }
+
+        private bool ValidateLogin()
+        {
+            if (string.IsNullOrWhiteSpace(LoginText.Text))
             {
-                if (password == password2)
-                {
-                    us.Password = password;
-                    return true;
-                }
-                else
-                {
-                    MessageBox.Show("Пароли не совпадают!", "Ошибка соответствия паролей", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Пароли не совпадают!");
+                ShowError(LoginError, LoginText, "Логин не может быть пустым");
                 return false;
             }
+
+            // Проверка на занятость логина в БД прямо при вводе
+            var existingUser = Core.Context.User.FirstOrDefault(u => u.Login == LoginText.Text);
+            if (existingUser != null)
+            {
+                ShowError(LoginError, LoginText, "Этот логин уже занят");
+                return false;
+            }
+
+            HideError(LoginError, LoginText);
+            return true;
+        }
+
+        private bool ValidatePassword()
+        {
+            if (string.IsNullOrWhiteSpace(PassText.Password))
+            {
+                ShowError(PassError, PassText, "Пароль не может быть пустым");
+                return false;
+            }
+            if (PassText.Password.Length < 4)
+            {
+                ShowError(PassError, PassText, "Пароль слишком короткий (минимум 4 символа)");
+                return false;
+            }
+            HideError(PassError, PassText);
+
+            // Если подтверждение уже введено, проверяем совпадение заново
+            if (!string.IsNullOrEmpty(PassVerificText.Password))
+                ValidatePasswordMatch();
+
+            return true;
+        }
+
+        private bool ValidatePasswordMatch()
+        {
+            if (PassText.Password != PassVerificText.Password)
+            {
+                ShowError(PassVerificError, PassVerificText, "Пароли не совпадают");
+                return false;
+            }
+            HideError(PassVerificError, PassVerificText);
+            return true;
+        }
+
+        private bool ValidateFIO()
+        {
+            if (string.IsNullOrWhiteSpace(FIOText.Text))
+            {
+                ShowError(FIOError, FIOText, "Укажите ваше ФИО");
+                return false;
+            }
+            HideError(FIOError, FIOText);
+            return true;
+        }
+
+        private bool ValidatePhone()
+        {
+            string cleanPhone = PhoneText.Text.Trim();
+            if (string.IsNullOrWhiteSpace(cleanPhone))
+            {
+                ShowError(PhoneError, PhoneText, "Укажите номер телефона");
+                return false;
+            }
+
+            bool isPhoneValid = (cleanPhone.StartsWith("+") && cleanPhone.Length == 12) ||
+                                (!cleanPhone.StartsWith("+") && cleanPhone.Length == 11);
+
+            if (!isPhoneValid)
+            {
+                ShowError(PhoneError, PhoneText, "Формат: 11 цифр или 12 с '+' (напр. +79991234567)");
+                return false;
+            }
+
+            HideError(PhoneError, PhoneText);
+            return true;
         }
 
         private void RegistrUser_Click(object sender, RoutedEventArgs e)
         {
-            if (RegistrationUser(LoginText.Text, PassText.Password))
-            {
-                MessageBox.Show("Успешная регистрация!");
-                NavigationService.Navigate(new Catalog(us));
-            }
-            else
-            {
-                MessageBox.Show("Регистрация не удалась!", "Ошибка регистрации", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+            // все проверки разом. Используем одинарное &, чтобы выполнить ВСЕ методы 
+            // (иначе последующие методы не вызовутся, если первый вернул false)
+            bool isValid = ValidateLogin() & ValidatePassword() & ValidatePasswordMatch() & ValidateFIO() & ValidatePhone();
 
-        public bool RegistrationUser(string login, string password)
-        {
-            var usInDB = Core.Context.User.Where(u => u.Login == login).FirstOrDefault();
-            if (usInDB == null)
+            if (isValid)
             {
-                if (CheckFields(login, password, PassVerificText.Password, FIOText.Text, PhoneText.Text) && (PasswordVer(password, PassVerificText.Password)))
+                us.Login = LoginText.Text;
+                us.Password = PassText.Password;
+                us.FIO = FIOText.Text;
+                us.Phone = PhoneText.Text;
+
+                // обязательные для БД
+                us.RoleID = 1;         // 1 = Клиент (из таблицы Role)
+                us.Rating = 0.0;       
+                us.Status = "Active";  
+
+                try
                 {
                     Core.Context.User.Add(us);
                     Core.Context.SaveChanges();
-                    MessageBox.Show("Пользователь успешно зарегистрирован!", "Успешная регистрация");
-                    return true;
-                }
 
-                else return false;
+                    MessageBox.Show("Вы успешно зарегистрированы!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    NavigationService.Navigate(new Catalog(us));
                 }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при сохранении в базу данных: {ex.Message}", "Ошибка БД", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             else
             {
-                var answ = MessageBox.Show("Ошибка! Пользователь уже зарегистрирован! Желаете войти?", "Повторная регистрация", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
-                if (answ == MessageBoxResult.Yes)
-                {
-                    NavigationService.Navigate(new AuthPage(us));
-                    return true;
-                }
-                else return false;
-            }
-        }
-
-        private bool CheckFields(string login, string password, string passwordConfirm, string FIO, string phoneNum)
-        {
-            while (true)
-            {
-                // Проверка login
-                if (string.IsNullOrEmpty(login))
-                {
-                    MessageBox.Show("Логин должен быть указан!", "Некорректный ввод", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-
-                // Проверка пароля
-                if (string.IsNullOrEmpty(password))
-                {
-                    MessageBox.Show("Пароль должен быть указан!", "Некорректный ввод", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-
-                // Проверка пароля подтвенржденного
-                if (string.IsNullOrEmpty(passwordConfirm))
-                {
-                    MessageBox.Show("Пароль должен быть указан!", "Некорректный ввод", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-
-                // Проверка ФИО
-                if (string.IsNullOrEmpty(FIO))
-                {
-                    MessageBox.Show("Поле ФИО должно быть заполнено!", "Некорректный ввод", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return false;
-                }
-
-                // Проверка телефона
-                if (string.IsNullOrEmpty(phoneNum))
-                {
-                    MessageBox.Show("Номер телефона не может быть пустым!", "Некорректный ввод",
-                                    MessageBoxButton.OK, MessageBoxImage.Error);
-                    return false;
-                }
-
-                // Нормализация номера (если есть +, то должно быть 12 символов, иначе 11)
-                string cleanPhone = phoneNum.Trim();
-                bool isPhoneValid = (cleanPhone.StartsWith("+") && cleanPhone.Length == 12) ||
-                                    (!cleanPhone.StartsWith("+") && cleanPhone.Length == 11);
-
-                if (!isPhoneValid)
-                {
-                    MessageBox.Show("Номер телефона должен содержать 11 цифр или 12 с '+' в начале!", "Некорректный ввод",
-                                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return false;
-                }
-
-                // Все проверки пройдены – сохраняем данные в объект пользователя
-
-                us.Login = login;
-                us.FIO = FIO;
-                us.Phone = phoneNum;
-
-                return true;
+                MessageBox.Show("Пожалуйста, исправьте ошибки в подсвеченных полях.", "Ошибка заполнения", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
     }

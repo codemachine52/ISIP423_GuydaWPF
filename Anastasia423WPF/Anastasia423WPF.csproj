@@ -93,9 +93,6 @@
     <Compile Include="Service_Master.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>MG_Cosmetic.tt</DependentUpon>
-    </Compile>
     <Compile Include="Type.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
@@ -188,19 +185,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="MG_Cosmetic.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MG_Cosmetic.Context.cs</LastGenOutput>
       <DependentUpon>MG_Cosmetic.edmx</DependentUpon>
+      <LastGenOutput>MG_Cosmetic.Context.cs</LastGenOutput>
     </Content>
     <Content Include="MG_Cosmetic.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MG_Cosmetic.edmx</DependentUpon>
       <LastGenOutput>MG_Cosmetic.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

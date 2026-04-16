@@ -33,7 +33,15 @@ namespace Anastasia423WPF.Pages
 
         private void AuthUser_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AuthPage());
+            if (user != null)
+            {
+                NavigationService.Navigate(new AuthPage());
+            }
+            else
+            {
+                MessageBox.Show("Страница аккаунта в разработке", "Переход невозможен", MessageBoxButton.OK, MessageBoxImage.Information);
+                //NavigationService.Navigate(new AuthPage(user));
+            }
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

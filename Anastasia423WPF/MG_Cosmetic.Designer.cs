@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\234878\Source\Repos\Anastasia423WPF\Anastasia423WPF\MG_Cosmetic.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\82and\Source\Repos\Anastasia423WPF\Anastasia423WPF\MG_Cosmetic.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

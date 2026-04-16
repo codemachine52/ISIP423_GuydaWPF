@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Anastasia423WPF.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="800"
       Title="RegistrationPage">
@@ -15,20 +14,33 @@
                 <GradientStop Color="#FF1B375D" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
+
         <Button x:Name="Back" Width="100" Height="35" FontSize="20" Background="#FF0F3E25" FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,30" Click="Back_Click">Назад</Button>
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Padding="20" FontSize="36" FontWeight="Thin"  Foreground="White">Регистрация</TextBlock>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,15" FontSize="18" FontWeight="Thin"  Foreground="White" >Введите логин</TextBlock>
-            <TextBox x:Name="LoginText"  Width="210" Height="30" Background="#B2FFFFFF"></TextBox>
-            <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="18" FontWeight="Thin"  Foreground="White">Введите пароль</TextBlock>
-            <PasswordBox x:Name="PassText" Width="210" Height="30" Background="#B2FFFFFF" Margin="0,15,0,0"></PasswordBox>
-            <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" FontSize="18" FontWeight="Thin"  Foreground="White">Подтвердите пароль</TextBlock>
-            <PasswordBox x:Name="PassVerificText" Width="210" Height="30" Background="#B2FFFFFF" Margin="0,15,0,0"></PasswordBox>
-            <TextBlock HorizontalAlignment="Center" Margin="0,10,0,15" FontSize="18" FontWeight="Thin"  Foreground="White" >Введите ФИО</TextBlock>
-            <TextBox x:Name="FIOText"  Width="210" Height="30" Background="#B2FFFFFF"></TextBox>
-            <TextBlock HorizontalAlignment="Center" Margin="0,10,0,15" FontSize="18" FontWeight="Thin"  Foreground="White" >Введите номер телефона</TextBlock>
-            <TextBox x:Name="PhoneText"  Width="210" Height="30" Background="#B2FFFFFF"></TextBox>
-            <Button x:Name="RegistrUser"  Height="35" FontSize="20" Background="#FF0F3E25" FontWeight="Thin" Foreground="White" Margin="0,50,0,0" Click="RegistrUser_Click">Зарегистрироваться</Button>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
+            <TextBlock Padding="0,0,0,20" FontSize="36" FontWeight="Thin" Foreground="White" HorizontalAlignment="Center">Регистрация</TextBlock>
+
+            <TextBlock FontSize="16" FontWeight="Thin" Foreground="White" Margin="0,0,0,5">Введите логин</TextBlock>
+            <TextBox x:Name="LoginText" Height="30" Background="#B2FFFFFF" LostFocus="LoginText_LostFocus"/>
+            <TextBlock x:Name="LoginError" Foreground="#FFFF6B6B" FontSize="12" Margin="0,2,0,10" Visibility="Collapsed" TextWrapping="Wrap"/>
+
+            <TextBlock FontSize="16" FontWeight="Thin" Foreground="White" Margin="0,0,0,5">Введите пароль</TextBlock>
+            <PasswordBox x:Name="PassText" Height="30" Background="#B2FFFFFF" LostFocus="PassText_LostFocus"/>
+            <TextBlock x:Name="PassError" Foreground="#FFFF6B6B" FontSize="12" Margin="0,2,0,10" Visibility="Collapsed" TextWrapping="Wrap"/>
+
+            <TextBlock FontSize="16" FontWeight="Thin" Foreground="White" Margin="0,0,0,5">Подтвердите пароль</TextBlock>
+            <PasswordBox x:Name="PassVerificText" Height="30" Background="#B2FFFFFF" LostFocus="PassVerificText_LostFocus"/>
+            <TextBlock x:Name="PassVerificError" Foreground="#FFFF6B6B" FontSize="12" Margin="0,2,0,10" Visibility="Collapsed" TextWrapping="Wrap"/>
+
+            <TextBlock FontSize="16" FontWeight="Thin" Foreground="White" Margin="0,0,0,5">Введите ФИО</TextBlock>
+            <TextBox x:Name="FIOText" Height="30" Background="#B2FFFFFF" LostFocus="FIOText_LostFocus"/>
+            <TextBlock x:Name="FIOError" Foreground="#FFFF6B6B" FontSize="12" Margin="0,2,0,10" Visibility="Collapsed" TextWrapping="Wrap"/>
+
+            <TextBlock FontSize="16" FontWeight="Thin" Foreground="White" Margin="0,0,0,5">Номер телефона</TextBlock>
+            <TextBox x:Name="PhoneText" Height="30" Background="#B2FFFFFF" LostFocus="PhoneText_LostFocus"/>
+            <TextBlock x:Name="PhoneError" Foreground="#FFFF6B6B" FontSize="12" Margin="0,2,0,20" Visibility="Collapsed" TextWrapping="Wrap"/>
+
+            <Button x:Name="RegistrUser" Height="40" FontSize="20" Background="#FF0F3E25" FontWeight="Thin" Foreground="White" Click="RegistrUser_Click">Зарегистрироваться</Button>
         </StackPanel>
     </Grid>
 </Page>
