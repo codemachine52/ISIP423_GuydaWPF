@@ -1,47 +1,145 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Anastasia423WPF.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для Catalog.xaml
-    /// </summary>
+    
     public partial class Catalog : Page
     {
         public User user { get; set; }
+
         public Catalog()
         {
             InitializeComponent();
+            LoadFilters();
+            UpdateProducts();
         }
 
-        public Catalog(User us): this()
+        public Catalog(User us) : this()
         {
             user = us;
-        }
-
-        private void AuthUser_Click(object sender, RoutedEventArgs e)
-        {
+            // Если пользователь авторизован:
             if (user != null)
             {
-                NavigationService.Navigate(new AuthPage());
+                AuthUser.Content = "👤";
+                AuthUser.Width = 80;
+                CartBtn.Visibility = Visibility.Visible; // Показываем кнопку корзины
             }
-            else
+        }
+
+        // Загрузка данных в выпадающие списки
+        private void LoadFilters()
+        {
+            // Сортировка
+            SortCombo.Items.Add("Без сортировки");
+            SortCombo.Items.Add("По оценке (Сначала высокие)");
+            SortCombo.Items.Add("По оценке (Сначала низкие)");
+            SortCombo.SelectedIndex = 0;
+
+            // Типы товаров
+            var types = Core.Context.Type.ToList();
+            types.Insert(0, new Type { ID = 0, Name = "Все типы" });
+            TypeCombo.ItemsSource = types;
+            TypeCombo.SelectedIndex = 0;
+
+            // Производители
+            var manufs = Core.Context.Manufacturer.ToList();
+            manufs.Insert(0, new Manufacturer { ID = 0, Name = "Все производители" });
+            ManufCombo.ItemsSource = manufs;
+            ManufCombo.SelectedIndex = 0;
+        }
+
+        // Универсальный метод обновления списка (Поиск + Фильтры + Сортировка)
+        private void UpdateProducts()
+        {
+            // только активные товары
+            var currentProducts = Core.Context.Product.Where(p => p.IsActive).ToList();
+
+            // 1. Поиск по названию
+            if (!string.IsNullOrWhiteSpace(SearchBox.Text))
             {
-                MessageBox.Show("Страница аккаунта в разработке", "Переход невозможен", MessageBoxButton.OK, MessageBoxImage.Information);
-                //NavigationService.Navigate(new AuthPage(user));
+                currentProducts = currentProducts.Where(p => p.Name.ToLower().Contains(SearchBox.Text.ToLower())).ToList();
             }
+
+            // 2. Фильтрация по типу
+            if (TypeCombo.SelectedIndex > 0)
+            {
+                var selectedType = TypeCombo.SelectedItem as Type;
+                currentProducts = currentProducts.Where(p => p.TypeID == selectedType.ID).ToList();
+            }
+
+            // 3. Фильтрация по производителю
+            if (ManufCombo.SelectedIndex > 0)
+            {
+                var selectedManuf = ManufCombo.SelectedItem as Manufacturer;
+                currentProducts = currentProducts.Where(p => p.ManufacturerID == selectedManuf.ID).ToList();
+            }
+
+            // 4. Сортировка по оценке
+            if (SortCombo.SelectedIndex == 1) // Высокие
+                currentProducts = currentProducts.OrderByDescending(p => p.Rating).ToList();
+            else if (SortCombo.SelectedIndex == 2) // Низкие
+                currentProducts = currentProducts.OrderBy(p => p.Rating).ToList();
+
+            ProductsList.ItemsSource = currentProducts;
+        }
+
+        // Обработчик изменения любых фильтров (Search, Comboboxes)
+        private void Filter_Changed(object sender, SelectionChangedEventArgs e) => UpdateProducts();
+        private void Filter_Changed(object sender, TextChangedEventArgs e) => UpdateProducts();
+
+        // Добавление в корзину (по кнопке на товаре)
+        private void AddToCart_Click(object sender, RoutedEventArgs e)
+        {
+            if (user == null)
+            {
+                MessageBox.Show("Для добавления товара в корзину необходимо авторизоваться!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Получаем товар, на кнопку которого нажали
+            var button = sender as Button;
+            var product = button.DataContext as Product;
+
+            // Тут позже напишем логику добавления в БД/Список корзины
+            MessageBox.Show($"Товар '{product.Name}' добавлен в корзину!", "Успех");
+        }
+
+        // Открытие карточки товара в НОВОМ ОКНЕ по двойному клику
+        private void ProductsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (ProductsList.SelectedItem is Product selectedProduct)
+            {
+                // По заданию: открывается в НОВОМ ОКНЕ (Window, не Page)
+                // Создадим это окно позже. Назовем его ProductDetailsWindow
+                // ProductDetailsWindow detailsWindow = new ProductDetailsWindow(selectedProduct, user);
+                // detailsWindow.ShowDialog();
+
+                MessageBox.Show($"Тут откроется окно с инфой о: {selectedProduct.Name}");
+            }
+        }
+
+        // Навигация
+        private void AuthUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (user == null)
+                NavigationService.Navigate(new AuthPage());
+            else
+                MessageBox.Show("Тут будет переход в личный кабинет (страницу профиля).");
+        }
+
+        private void CartBtn_Click(object sender, RoutedEventArgs e)
+        {
+            // NavigationService.Navigate(new CartPage(user));
+            MessageBox.Show("Тут будет переход на страницу корзины.");
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)

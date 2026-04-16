@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Anastasia423WPF.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="700" d:DesignWidth="1100"
       Title="Catalog">
 
     <Grid>
@@ -15,7 +15,94 @@
                 <GradientStop Color="#FFFFF6CD" Offset="1"/>
             </RadialGradientBrush>
         </Grid.Background>
-        <Button x:Name="AuthUser" Width="40" Height="35" FontSize="20" Background="#FF383131"  FontWeight="Thin" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,30,30,0" Click="AuthUser_Click">👤</Button>
-        <Button x:Name="Back" Width="100" Height="35" FontSize="20" Background="#FF803F3F" FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,30" Click="Back_Click">Назад</Button>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#33FFFFFF" Padding="15" Margin="20,20,20,10" CornerRadius="10">
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBox x:Name="SearchBox" Width="200" Height="30" Margin="5" Background="#B2FFFFFF" 
+                         VerticalContentAlignment="Center" TextChanged="Filter_Changed" ToolTip="Поиск по названию"/>
+
+                <ComboBox x:Name="TypeCombo" Width="180" Height="30" Margin="5" Background="#B2FFFFFF" 
+                          DisplayMemberPath="Name" SelectionChanged="Filter_Changed"/>
+
+                <ComboBox x:Name="ManufCombo" Width="180" Height="30" Margin="5" Background="#B2FFFFFF" 
+                          DisplayMemberPath="Name" SelectionChanged="Filter_Changed"/>
+
+                <ComboBox x:Name="SortCombo" Width="180" Height="30" Margin="5" Background="#B2FFFFFF" 
+                          SelectionChanged="Filter_Changed"/>
+
+                <Button x:Name="CartBtn" Content="🛒 Корзина" Width="110" Height="30" Margin="15,5,5,5" 
+                        Background="#FF0F3E25" Foreground="White" FontWeight="Bold" Visibility="Collapsed" Click="CartBtn_Click"/>
+
+                <Button x:Name="AuthUser" Width="40" Height="35" FontSize="18" Background="#FF383131" 
+                        FontWeight="Thin" Foreground="White" Margin="5" Click="AuthUser_Click">👤</Button>
+            </WrapPanel>
+        </Border>
+
+        <ListView x:Name="ProductsList" Grid.Row="1" Margin="20,0,20,10" Background="Transparent" 
+                  BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                  MouseDoubleClick="ProductsList_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4" VerticalAlignment="Top"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="10" Padding="10" CornerRadius="10" BorderBrush="#FF803F3F" BorderThickness="1">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Background" Value="#CCFFFFFF"/>
+
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasBigDiscount}" Value="True">
+                                        <Setter Property="Background" Value="#E5FFD2D2"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <StackPanel>
+                            <Image Source="{Binding Image}" Height="130" Stretch="Uniform" Margin="0,0,0,10"/>
+
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" TextWrapping="Wrap" 
+                           TextAlignment="Center" Foreground="#FF383131" Height="40"/>
+
+                            <TextBlock Text="{Binding Manufacturer.Name}" FontSize="12" Foreground="Gray" HorizontalAlignment="Center"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5">
+                                <TextBlock Text="{Binding Price, StringFormat={}{0:N0} ₽}" FontSize="16" FontWeight="Bold" Foreground="#FF803F3F"/>
+                                <TextBlock Text="{Binding Discount, StringFormat={} (-{0}%)}" FontSize="12" Foreground="Red" 
+                               VerticalAlignment="Bottom" Margin="5,0,0,0">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Discount}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <TextBlock Text="{Binding Rating, StringFormat={}⭐ {0}}" FontSize="14" HorizontalAlignment="Center" Foreground="#FFB28A13"/>
+
+                            <Button Content="В корзину" Margin="0,10,0,0" Background="#FF0F3E25" Foreground="White" 
+                        Height="30" Cursor="Hand" Click="AddToCart_Click"/>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button x:Name="Back" Grid.Row="2" Width="100" Height="35" FontSize="20" Background="#FF803F3F" 
+                FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" Margin="30,0,0,20" Click="Back_Click">Назад</Button>
     </Grid>
 </Page>

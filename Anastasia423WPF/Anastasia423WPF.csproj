@@ -75,6 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\ProductPartial.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
