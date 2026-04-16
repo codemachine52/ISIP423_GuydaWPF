@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Anastasia423WPF.Windows;
 
 namespace Anastasia423WPF.Pages
 {
@@ -68,13 +69,13 @@ namespace Anastasia423WPF.Pages
 
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Тут будет форма добавления нового товара");
+            new AddEditProductWindow(null).ShowDialog();
         }
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)
         {
             if (ProductsGrid.SelectedItem is Product selected)
-                MessageBox.Show($"Редактируем: {selected.Name}");
+                new AddEditProductWindow(selected).ShowDialog();
         }
 
         private void DeleteProduct_Click(object sender, RoutedEventArgs e)

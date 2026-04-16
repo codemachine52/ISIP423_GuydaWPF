@@ -30,9 +30,9 @@ namespace Anastasia423WPF.Pages
             ScheduleList.ItemsSource = myAppointments;
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void LogOutButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new MainHubPage(_master));
+            NavigationService.Navigate(new AuthPage());
         }
     }
 }

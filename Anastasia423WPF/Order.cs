@@ -27,6 +27,7 @@ namespace Anastasia423WPF
         public string PaymentWay { get; set; }
         public string Comment { get; set; }
         public System.DateTime ReceiveDate { get; set; }
+        public Nullable<System.DateTime> DelieveryDate { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

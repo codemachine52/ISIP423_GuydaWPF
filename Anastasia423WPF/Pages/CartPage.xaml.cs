@@ -3,76 +3,112 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Anastasia423WPF.Model;
+using Anastasia423WPF.Windows;
 
 namespace Anastasia423WPF.Pages
 {
     public partial class CartPage : Page
     {
-        public User user { get; set; }
-        public CartPage(User user1)
+        private User _currentUser;
+
+        public CartPage(User user)
         {
-            user = user1;
             InitializeComponent();
+            _currentUser = user;
             RefreshCart();
         }
 
         private void RefreshCart()
         {
+            // Перепривязываем список для обновления UI
             CartList.ItemsSource = null;
             CartList.ItemsSource = ShoppingCart.Items;
 
-            // Считаем сумму (используем нашу логику из partial или просто Sum)
-            double total = ShoppingCart.Items.Sum(p => (double)p.Price * (1 - p.Discount / 100));
+            // Считаем сумму с учетом скидки и КОЛИЧЕСТВА (наш CountProd из partial класса)
+            decimal total = ShoppingCart.Items.Sum(p => p.Price * (1 - (decimal)p.Discount / 100) * p.CountProd);
             TotalSumText.Text = $"{total:N0} ₽";
+        }
+
+        private void PlusBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button).DataContext is Product product)
+            {
+                product.CountProd++;
+                RefreshCart();
+            }
+        }
+
+        private void MinusBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button).DataContext is Product product && product.CountProd > 1)
+            {
+                product.CountProd--;
+                RefreshCart();
+            }
+        }
+
+        private void RemoveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as Button).DataContext is Product product)
+            {
+                ShoppingCart.Items.Remove(product);
+                RefreshCart();
+            }
         }
 
         private void Order_Click(object sender, RoutedEventArgs e)
         {
             if (ShoppingCart.Items.Count == 0)
             {
-                MessageBox.Show("Невозможно оформить заказ! Корзина пуста", "Ошибка заказа", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Корзина пуста!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            var answ = MessageBox.Show("Желаете оплатить картой онлайн? При выборе варианта 'нет' оплата будет при получении.", "Оплата заказа", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            using (var db = new MG_CosmeticEntities()) //наша бд
+            // Итоговая сумма для окна
+            decimal total = ShoppingCart.Items.Sum(p => p.Price * (1 - (decimal)p.Discount / 100) * p.CountProd);
+
+            CheckoutWindow checkout = new CheckoutWindow(total);
+            checkout.Owner = Window.GetWindow(this);
+
+            if (checkout.ShowDialog() == true)
             {
-                // 1. Создаем запись в таблице Order
-                var newOrder = new Order
+                try
                 {
-                    OrderDate = DateTime.Now,
-                    ReceiveDate = DateTime.Now.AddDays(3), // доставка через 3 дня для примера
-                    ClientID = user.ID,             // ID авторизованного юзера
-                    Status = "Новый"
-                };
-                if (answ == MessageBoxResult.Yes)
-                {
-                    newOrder.PaymentWay = "Картой онлайн";
-                }
-                else
-                {
-                    newOrder.PaymentWay = "При получении";
-                }
-
-                db.Order.Add(newOrder);
-                db.SaveChanges(); // Сохраняем, чтобы получить ID заказа
-
-                // 2. Сохраняем состав заказа в Product_Order
-                foreach (var item in ShoppingCart.Items)
-                {
-                    var orderDetail = new Product_Order
+                    // 1. Создаем сам заказ
+                    Order newOrder = new Order
                     {
-                        OrderID = newOrder.ID,
-                        ProductID = item.ID,
-                        CountProd = 1 // Для начала по одному, потом можно добавить счетчик
+                        ClientID = _currentUser.ID,
+                        OrderDate = DateTime.Now,
+                        DelieveryDate = checkout.SelectedDate,
+                        PaymentWay = checkout.SelectedPayment,
+                        Status = "Новый",
+                        ReceiveDate = checkout.SelectedDate
                     };
-                    db.Product_Order.Add(orderDetail);
-                }
 
-                db.SaveChanges();
-                MessageBox.Show($"Заказ №{newOrder.ID} оформлен!");
-                ShoppingCart.Items.Clear();
-                NavigationService.GoBack();
+                    Core.Context.Order.Add(newOrder);
+                    Core.Context.SaveChanges(); // Сохраняем, чтобы получить ID заказа
+
+                    // 2. Создаем детали заказа
+                    foreach (var item in ShoppingCart.Items)
+                    {
+                        Core.Context.Product_Order.Add(new Product_Order
+                        {
+                            OrderID = newOrder.ID,
+                            ProductID = item.ID,
+                            CountProd = item.CountProd
+                        });
+                    }
+
+                    Core.Context.SaveChanges();
+
+                    MessageBox.Show($"Заказ №{newOrder.ID} успешно оформлен!");
+                    ShoppingCart.Items.Clear();
+                    NavigationService.GoBack();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка сохранения: " + ex.Message);
+                }
             }
         }
 

@@ -39,7 +39,7 @@ namespace Anastasia423WPF.Pages
             {
                 AuthUser.Content = "👤";
                 AuthUser.Width = 80;
-                CartBtn.Visibility = Visibility.Visible; // Показываем кнопку корзины
+                if (user.RoleID == 1) CartBtn.Visibility = Visibility.Visible; // Показываем кнопку корзины
 
                 if (user.RoleID == 3 || user.RoleID == 4)
                 {
@@ -153,7 +153,14 @@ namespace Anastasia423WPF.Pages
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            if(user != null) NavigationService.Navigate(new MainHubPage(user));
+            if (user != null)
+            {
+                if(user.RoleID == 1) NavigationService.Navigate(new MainHubPage(user));
+                else
+                {
+                    NavigationService.Navigate(new StartPage(user));
+                }
+            }
             else NavigationService.Navigate(new StartPage());
         }
 

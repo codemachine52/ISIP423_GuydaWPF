@@ -70,10 +70,20 @@
     <Compile Include="Manufacturer.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>
+    <Compile Include="MG_Cosmetic.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MG_Cosmetic.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="MG_Cosmetic.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MG_Cosmetic.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MG_Cosmetic.edmx</DependentUpon>
     </Compile>
     <Compile Include="Model\ProductPartial.cs" />
     <Compile Include="Model\ShoppingCart.cs" />
@@ -90,6 +100,9 @@
     <Compile Include="Pages\MainHubPage.xaml.cs">
       <DependentUpon>MainHubPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ManagerPage.xaml.cs">
+      <DependentUpon>ManagerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\MasterCabinetPage.xaml.cs">
       <DependentUpon>MasterCabinetPage.xaml</DependentUpon>
     </Compile>
@@ -104,12 +117,6 @@
     </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\OrderDetailsWindow.xaml.cs">
-      <DependentUpon>OrderDetailsWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ProductDetailsWindow.xaml.cs">
-      <DependentUpon>ProductDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Product_Order.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
@@ -128,6 +135,18 @@
     </Compile>
     <Compile Include="User.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddEditProductWindow.xaml.cs">
+      <DependentUpon>AddEditProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\CheckoutWindow.xaml.cs">
+      <DependentUpon>CheckoutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\OrderDetailsWindow.xaml.cs">
+      <DependentUpon>OrderDetailsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ProductDetailsWindow.xaml.cs">
+      <DependentUpon>ProductDetailsWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -161,6 +180,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ManagerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MasterCabinetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +208,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\AddEditProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CheckoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\OrderDetailsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -195,16 +226,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MG_Cosmetic.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MG_Cosmetic.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="MG_Cosmetic.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MG_Cosmetic.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Pages\AuthPage.xaml.cs">
       <DependentUpon>AuthPage.xaml</DependentUpon>
     </Compile>

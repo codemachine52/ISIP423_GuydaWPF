@@ -15,7 +15,16 @@ namespace Anastasia423WPF.Pages
             InitializeComponent();
             _currentUser = user;
             this.DataContext = _currentUser;
-            LoadOrders();
+            if(user.RoleID == 1)
+            {
+                LoadOrders();
+            }
+            else
+            {
+                OrderHistoryText.Visibility = Visibility.Hidden;
+                OrdersList.IsEnabled = false;
+                OrdersList.Visibility = Visibility.Hidden;
+            }
         }
 
         private void LoadOrders()

@@ -23,7 +23,6 @@
 
                             <StackPanel>
                                 <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Description}" FontSize="12" Foreground="Gray" TextWrapping="Wrap"/>
                             </StackPanel>
 
                             <TextBlock Grid.Column="1" Text="{Binding Price, StringFormat={}{0} ₽}" VerticalAlignment="Center" FontSize="18" Margin="20,0"/>
@@ -35,6 +34,6 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button x:Name="Back" Grid.Row="2" Width="100" Height="35" FontSize="20" Background="#FF803F3F" 
-        FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" Margin="30,0,0,20" Click="Back_Click">Назад</Button>
+        FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" Margin="30,0,0,20" Click="Back_Click" VerticalAlignment="Bottom">Назад</Button>
     </Grid>
 </Page>

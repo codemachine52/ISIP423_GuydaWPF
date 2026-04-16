@@ -20,14 +20,25 @@ namespace Anastasia423WPF.Pages
     /// </summary>
     public partial class StartPage : Page
     {
+        User _user;
         public StartPage()
         {
             InitializeComponent();
         }
 
+        public StartPage(User user) : this()
+        {
+            _user = user;
+        }
+
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Catalog());
+           if(_user == null) NavigationService.Navigate(new Catalog());
+            else
+            {
+                if(_user.RoleID != 1) NavigationService.Navigate(new Catalog(_user));
+                else { NavigationService.Navigate(new MainHubPage(_user)); }
+            }
         }
     }
 }

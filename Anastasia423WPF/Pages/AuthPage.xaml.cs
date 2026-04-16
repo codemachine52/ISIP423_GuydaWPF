@@ -55,6 +55,10 @@ namespace Anastasia423WPF.Pages
                 {
                     NavigationService.Navigate(new MasterCabinetPage(user));
                 }
+                if (user.RoleID == 3 || user.RoleID == 4)
+                {
+                    NavigationService.Navigate(new AdminPage(user));
+                }// manager
                 else
                 {
                     NavigationService.Navigate(new MainHubPage(user));
