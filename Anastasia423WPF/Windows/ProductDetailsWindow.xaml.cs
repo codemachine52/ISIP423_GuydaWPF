@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Anastasia423WPF.Model;
 
 namespace Anastasia423WPF.Windows
 {
@@ -31,6 +32,7 @@ namespace Anastasia423WPF.Windows
             }
 
             // Логика добавления (можно сделать через статический класс корзины)
+            ShoppingCart.Add(CurrentProduct);
             MessageBox.Show($"{CurrentProduct.Name} добавлен в корзину!");
         }
     }

@@ -77,6 +77,7 @@
     </Compile>
     <Compile Include="Model\ProductPartial.cs" />
     <Compile Include="Model\ShoppingCart.cs" />
+    <Compile Include="Model\UserPartial.cs" />
     <Compile Include="Order.cs">
       <DependentUpon>MG_Cosmetic.tt</DependentUpon>
     </Compile>

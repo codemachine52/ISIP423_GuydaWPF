@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Anastasia423WPF.Model;
 
 namespace Anastasia423WPF.Pages
 {
@@ -102,6 +103,7 @@ namespace Anastasia423WPF.Pages
             if (user == null)
             {
                 MessageBox.Show("Для добавления товара в корзину необходимо авторизоваться!", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
+                NavigationService.Navigate(new AuthPage());
                 return;
             }
 
@@ -109,7 +111,7 @@ namespace Anastasia423WPF.Pages
             var button = sender as Button;
             var product = button.DataContext as Product;
 
-            // Тут позже напишем логику добавления в БД/Список корзины
+            ShoppingCart.Add(product);
             MessageBox.Show($"Товар '{product.Name}' добавлен в корзину!", "Успех");
         }
 
@@ -134,8 +136,7 @@ namespace Anastasia423WPF.Pages
 
         private void CartBtn_Click(object sender, RoutedEventArgs e)
         {
-            // NavigationService.Navigate(new CartPage(user));
-            MessageBox.Show("Тут будет переход на страницу корзины.");
+            NavigationService.Navigate(new CartPage(user));
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
