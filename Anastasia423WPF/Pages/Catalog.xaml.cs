@@ -22,7 +22,10 @@ namespace Anastasia423WPF.Pages
             InitializeComponent();
             LoadFilters();
             UpdateProducts();
-            AdminPanelBtn.Visibility = Visibility.Collapsed;
+            if (user != null && (user.RoleID == 3 || user.RoleID == 4))
+            {
+                AdminPanelBtn.Visibility = Visibility.Visible;
+            }
         }
 
         public Catalog(User us) : this()
@@ -140,7 +143,7 @@ namespace Anastasia423WPF.Pages
             if (user == null)
                 NavigationService.Navigate(new AuthPage());
             else
-                MessageBox.Show("Тут будет переход в личный кабинет (страницу профиля).");
+                NavigationService.Navigate(new ProfilePage(user));
         }
 
         private void CartBtn_Click(object sender, RoutedEventArgs e)
@@ -150,7 +153,8 @@ namespace Anastasia423WPF.Pages
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new StartPage());
+            if(user != null) NavigationService.Navigate(new MainHubPage(user));
+            else NavigationService.Navigate(new StartPage());
         }
 
         private void AdminPanelBtn_Click(object sender, RoutedEventArgs e)
@@ -160,3 +164,6 @@ namespace Anastasia423WPF.Pages
         }
     }
 }
+
+//история заказов: просмотр каждого заказа
+//запись на услуги пустая стр почему-то

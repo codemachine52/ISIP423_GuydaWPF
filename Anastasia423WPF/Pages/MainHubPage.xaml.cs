@@ -1,28 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Anastasia423WPF.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для MainHubPage.xaml
-    /// </summary>
     public partial class MainHubPage : Page
     {
-        public MainHubPage()
+        private User _currentUser;
+
+        public MainHubPage(User user)
         {
             InitializeComponent();
+            _currentUser = user;
+        }
+
+        // Переход в магазин товаров
+        private void GoToShop_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Catalog(_currentUser));
+        }
+
+        // Переход в каталог услуг
+        private void GoToServices_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new ServiceCatalogPage(_currentUser));
+        }
+
+        // Кнопка выхода (можно добавить в угол страницы)
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AuthPage());
         }
     }
 }

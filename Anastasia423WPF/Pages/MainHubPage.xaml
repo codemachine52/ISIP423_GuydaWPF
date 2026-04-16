@@ -11,7 +11,7 @@
         </Grid.Background>
 
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="Добро пожаловать в MG Cosmetic" FontSize="32" Foreground="#FF6F1717" Margin="0,0,0,50" HorizontalAlignment="Center" FontWeight="Thin"/>
+            <TextBlock Text="Добро пожаловать в Косметическую Ложу МГ" FontSize="32" Foreground="#FF6F1717" Margin="0,0,0,50" HorizontalAlignment="Center" FontWeight="Thin"/>
 
             <UniformGrid Columns="2" Width="600" Height="250">
                 <Button Margin="15" Background="#CCFFFFFF" Click="GoToShop_Click" BorderThickness="0">

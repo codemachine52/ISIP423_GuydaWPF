@@ -39,7 +39,7 @@ namespace Anastasia423WPF.Pages
         private void RoleCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var combo = sender as ComboBox;
-            // КРИТИЧНО: проверяем, что изменение сделано руками человека, а не кодом при загрузке
+            // ФИКС: Если выпадающий список закрыт, значит изменение программное — игнорируем его
             if (!combo.IsDropDownOpen) return;
 
             var selectedUser = combo.DataContext as User;
@@ -47,10 +47,11 @@ namespace Anastasia423WPF.Pages
 
             if (selectedUser != null && newRole != null)
             {
+                // Если админ пытается сменить роль САМ СЕБЕ
                 if (selectedUser.ID == _admin.ID && newRole.ID != 4)
                 {
-                    MessageBox.Show("Вы не можете снять с себя полномочия администратора!");
-                    // Чтобы не было цикла, просто выходим, не сохраняя
+                    MessageBox.Show("Нельзя лишать прав самого себя!");
+                    // Отменяем визуально
                     combo.SelectedValue = 4;
                     return;
                 }

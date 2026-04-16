@@ -20,9 +20,12 @@ namespace Anastasia423WPF.Pages
     /// </summary>
     public partial class ServiceCatalogPage : Page
     {
-        public ServiceCatalogPage()
+        User _currentUser;
+        public ServiceCatalogPage(User user)
         {
             InitializeComponent();
+            _currentUser = user;
+            ServicesList.ItemsSource = Core.Context.Service.ToList();
         }
 
         // Код в ServiceCatalogPage.xaml.cs
@@ -33,6 +36,11 @@ namespace Anastasia423WPF.Pages
 
             // Переходим на страницу бронирования, передавая саму услугу и текущего юзера
             NavigationService.Navigate(new ServiceBookingPage(selectedService, _currentUser));
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new MainHubPage(_currentUser));
         }
     }
 }
