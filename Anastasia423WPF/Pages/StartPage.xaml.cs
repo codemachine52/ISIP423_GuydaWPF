@@ -33,7 +33,7 @@ namespace Anastasia423WPF.Pages
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-           if(_user == null) NavigationService.Navigate(new Catalog());
+           if(_user == null) NavigationService.Navigate(new AuthPage());
             else
             {
                 if(_user.RoleID != 1) NavigationService.Navigate(new Catalog(_user));

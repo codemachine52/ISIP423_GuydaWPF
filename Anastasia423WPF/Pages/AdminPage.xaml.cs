@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,19 +9,20 @@ namespace Anastasia423WPF.Pages
 {
     public partial class AdminPage : Page
     {
-        private User _admin;
-        // Список ролей для привязки к ComboBox в таблице
+        private User _currentUser;
         public List<Role> AllRoles { get; set; }
 
         public AdminPage(User user)
         {
             InitializeComponent();
-            _admin = user;
+            _currentUser = user;
 
-            // Менеджер (3) видит только товары, Админ (4) — всё
-            if (_admin.RoleID != 4)
+            // Настройка прав доступа
+            if (_currentUser.RoleID != 4) // Если зашел не Администратор
             {
                 UsersTab.Visibility = Visibility.Collapsed;
+                DeleteManufacturerBtn.Visibility = Visibility.Collapsed;
+                DeleteTypeBtn.Visibility = Visibility.Collapsed;
             }
 
             LoadData();
@@ -28,32 +30,37 @@ namespace Anastasia423WPF.Pages
 
         private void LoadData()
         {
-            AllRoles = Core.Context.Role.ToList();
-            ProductsGrid.ItemsSource = Core.Context.Product.ToList();
-            UsersGrid.ItemsSource = Core.Context.User.ToList();
+            try
+            {
+                AllRoles = Core.Context.Role.ToList();
+                ProductsGrid.ItemsSource = Core.Context.Product.ToList();
+                ManufacturersGrid.ItemsSource = Core.Context.Manufacturer.ToList();
+                TypesGrid.ItemsSource = Core.Context.Type.ToList();
+                UsersGrid.ItemsSource = Core.Context.User.ToList();
 
-            // Устанавливаем DataContext, чтобы DataGrid видел список AllRoles
-            this.DataContext = this;
+                this.DataContext = this;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при загрузке данных: " + ex.Message);
+            }
         }
 
-        // Событие смены роли пользователя
+        // --- УПРАВЛЕНИЕ РОЛЯМИ ---
         private void RoleCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var combo = sender as ComboBox;
-            // ФИКС: Если выпадающий список закрыт, значит изменение программное — игнорируем его
-            if (!combo.IsDropDownOpen) return;
+            if (combo == null || !combo.IsDropDownOpen) return;
 
             var selectedUser = combo.DataContext as User;
             var newRole = combo.SelectedItem as Role;
 
             if (selectedUser != null && newRole != null)
             {
-                // Если админ пытается сменить роль САМ СЕБЕ
-                if (selectedUser.ID == _admin.ID && newRole.ID != 4)
+                if (selectedUser.ID == _currentUser.ID && newRole.ID != 4)
                 {
-                    MessageBox.Show("Нельзя лишать прав самого себя!");
-                    // Отменяем визуально
-                    combo.SelectedValue = 4;
+                    MessageBox.Show("Вы не можете лишить прав администратора самого себя!");
+                    LoadData();
                     return;
                 }
 
@@ -62,34 +69,92 @@ namespace Anastasia423WPF.Pages
             }
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new Catalog(_admin));
-        }
-
+        // --- ТОВАРЫ ---
         private void AddProduct_Click(object sender, RoutedEventArgs e)
         {
-            new AddEditProductWindow(null).ShowDialog();
+            if (new AddEditProductWindow(null).ShowDialog() == true) LoadData();
         }
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)
         {
             if (ProductsGrid.SelectedItem is Product selected)
-                new AddEditProductWindow(selected).ShowDialog();
+            {
+                if (new AddEditProductWindow(selected).ShowDialog() == true) LoadData();
+            }
         }
 
         private void DeleteProduct_Click(object sender, RoutedEventArgs e)
         {
             if (ProductsGrid.SelectedItem is Product selected)
             {
-                var result = MessageBox.Show($"Удалить {selected.Name}?", "Подтверждение", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                if (MessageBox.Show($"Удалить товар {selected.Name}?", "Подтверждение", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     Core.Context.Product.Remove(selected);
                     Core.Context.SaveChanges();
                     LoadData();
                 }
             }
+        }
+
+        // --- ПРОИЗВОДИТЕЛИ ---
+        private void AddManufacturer_Click(object sender, RoutedEventArgs e)
+        {
+            if (new DictionaryEditWindow(new Manufacturer()).ShowDialog() == true) LoadData();
+        }
+
+        private void EditManufacturer_Click(object sender, RoutedEventArgs e)
+        {
+            if (ManufacturersGrid.SelectedItem is Manufacturer selected)
+            {
+                if (new DictionaryEditWindow(selected).ShowDialog() == true) LoadData();
+            }
+        }
+
+        private void DeleteManufacturer_Click(object sender, RoutedEventArgs e)
+        {
+            if (ManufacturersGrid.SelectedItem is Manufacturer selected)
+            {
+                try
+                {
+                    Core.Context.Manufacturer.Remove(selected);
+                    Core.Context.SaveChanges();
+                    LoadData();
+                }
+                catch { MessageBox.Show("Нельзя удалить производителя, так как он привязан к товарам!"); }
+            }
+        }
+
+        // --- ТИПЫ ---
+        private void AddType_Click(object sender, RoutedEventArgs e)
+        {
+            if (new DictionaryEditWindow(new Anastasia423WPF.Type()).ShowDialog() == true) LoadData();
+        }
+
+        private void EditType_Click(object sender, RoutedEventArgs e)
+        {
+            if (TypesGrid.SelectedItem is Anastasia423WPF.Type selected)
+            {
+                if (new DictionaryEditWindow(selected).ShowDialog() == true) LoadData();
+            }
+        }
+
+        private void DeleteType_Click(object sender, RoutedEventArgs e)
+        {
+            if (TypesGrid.SelectedItem is Anastasia423WPF.Type selected)
+            {
+                try
+                {
+                    Core.Context.Type.Remove(selected);
+                    Core.Context.SaveChanges();
+                    LoadData();
+                }
+                catch { MessageBox.Show("Нельзя удалить тип, так как он используется в записях!"); }
+            }
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

@@ -34,6 +34,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button x:Name="Back" Grid.Row="2" Width="100" Height="35" FontSize="20" Background="#FF803F3F" 
-        FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" Margin="30,0,0,20" Click="Back_Click" VerticalAlignment="Bottom">Назад</Button>
+FontWeight="Thin" Foreground="White" HorizontalAlignment="Left" Margin="30,0,0,20" Click="Back_Click" VerticalAlignment="Bottom">Назад</Button>
+
     </Grid>
 </Page>

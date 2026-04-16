@@ -28,10 +28,10 @@
                               Margin="5" SelectionMode="Single">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="№" Binding="{Binding ID}" Width="50"/>
-                            <DataGridTextColumn Header="Клиент" Binding="{Binding User.FullName}" Width="*"/>
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding User.FIO}" Width="*"/>
                             <DataGridTextColumn Header="Дата заказа" Binding="{Binding OrderDate, StringFormat={}{0:dd.MM.yyyy}}" Width="120"/>
-                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding DeliveryDate, StringFormat={}{0:dd.MM.yyyy}}" Width="120"/>
-                            <DataGridTextColumn Header="Оплата" Binding="{Binding PaymentType}" Width="150"/>
+                            <DataGridTextColumn Header="Дата доставки" Binding="{Binding DelieveryDate, StringFormat={}{0:dd.MM.yyyy}}" Width="120"/>
+                            <DataGridTextColumn Header="Оплата" Binding="{Binding PaymentWay}" Width="150"/>
                             <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -54,9 +54,9 @@
                     <DataGrid x:Name="AppointmentsGrid" AutoGenerateColumns="False" IsReadOnly="True" Margin="5">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Дата/Время" Binding="{Binding AppointmentDate, StringFormat={}{0:dd.MM.yyyy HH:mm}}" Width="150"/>
-                            <DataGridTextColumn Header="Клиент" Binding="{Binding User.FullName}" Width="*"/>
+                            <DataGridTextColumn Header="Клиент" Binding="{Binding User.FIO}" Width="*"/>
                             <DataGridTextColumn Header="Услуга" Binding="{Binding Service.Name}" Width="*"/>
-                            <DataGridTextColumn Header="Мастер" Binding="{Binding User1.FullName}" Width="*"/>
+                            <DataGridTextColumn Header="Мастер" Binding="{Binding User1.FIO}" Width="*"/>
                             <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -71,5 +71,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button x:Name="ExitButton" Content="К товарам" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="25" FontSize="16" Width="150"
+                Background="DarkRed" Foreground="Wheat" Click="ExitButton_Click" Padding="5"/>
     </Grid>
 </Page>

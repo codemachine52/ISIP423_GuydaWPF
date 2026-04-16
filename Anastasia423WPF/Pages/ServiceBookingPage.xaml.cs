@@ -21,6 +21,8 @@ namespace Anastasia423WPF.Pages
 
             // Загружаем только мастеров (Роль ID = 2)
             ComboMasters.ItemsSource = Core.Context.User.Where(u => u.RoleID == 2).ToList();
+
+            DatePick.DisplayDateStart = DateTime.Today;
         }
 
         private void ConfirmBooking_Click(object sender, RoutedEventArgs e)
