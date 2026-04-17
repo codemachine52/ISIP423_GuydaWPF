@@ -41,8 +41,18 @@ namespace Anastasia423WPF.Pages
                     return;
                 }
 
+                // 1. Ищем самого пользователя (клиента) в таблице User по ClientID из заказа
+                var client = Core.Context.User.FirstOrDefault(u => u.ID == selectedOrder.ClientID);
+
+                // 2. Проверяем статус найденного клиента
+                if (client != null && client.Status == "Freeze")
+                {
+                    MessageBox.Show("Невозможно выдать заказ: аккаунт клиента заморожен!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return; // Прерываем выполнение
+                }
+
+                // 3. Если клиент не заморожен, выдаем заказ
                 selectedOrder.Status = "Выдан";
-                // Если в базе есть поле даты выдачи, расскомментируй:
                 // selectedOrder.DeliveryDate = DateTime.Now; 
 
                 Core.Context.SaveChanges();

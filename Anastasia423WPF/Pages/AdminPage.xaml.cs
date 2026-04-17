@@ -17,8 +17,7 @@ namespace Anastasia423WPF.Pages
             InitializeComponent();
             _currentUser = user;
 
-            // Настройка прав доступа
-            if (_currentUser.RoleID != 4) // Если зашел не Администратор
+            if (_currentUser.RoleID != 4)
             {
                 UsersTab.Visibility = Visibility.Collapsed;
                 DeleteManufacturerBtn.Visibility = Visibility.Collapsed;
@@ -46,7 +45,7 @@ namespace Anastasia423WPF.Pages
             }
         }
 
-        // --- УПРАВЛЕНИЕ РОЛЯМИ ---
+        // --- УПРАВЛЕНИЕ РОЛЯМИ И СТАТУСАМИ ---
         private void RoleCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var combo = sender as ComboBox;
@@ -66,6 +65,28 @@ namespace Anastasia423WPF.Pages
 
                 selectedUser.RoleID = newRole.ID;
                 Core.Context.SaveChanges();
+            }
+        }
+
+        private void ChangeUserStatus_Click(object sender, RoutedEventArgs e)
+        {
+            if (UsersGrid.SelectedItem is User selectedUser)
+            {
+                if (selectedUser.ID == _currentUser.ID)
+                {
+                    MessageBox.Show("Вы не можете заморозить сами себя!");
+                    return;
+                }
+
+                var window = new ChangeUserStatusWindow(selectedUser);
+                if (window.ShowDialog() == true)
+                {
+                    LoadData(); // Перезагружаем таблицу, чтобы обновить текст статуса
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите пользователя из списка!");
             }
         }
 

@@ -142,6 +142,9 @@
     <Compile Include="Windows\AppointmentEditWindow.xaml.cs">
       <DependentUpon>AppointmentEditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ChangeUserStatusWindow.xaml.cs">
+      <DependentUpon>ChangeUserStatusWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CheckoutWindow.xaml.cs">
       <DependentUpon>CheckoutWindow.xaml</DependentUpon>
     </Compile>
@@ -222,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AppointmentEditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ChangeUserStatusWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,7 +20,7 @@ namespace Anastasia423WPF.Pages
             TxtServiceName.Text = _selectedService.Name;
 
             // Загружаем только мастеров (Роль ID = 2)
-            ComboMasters.ItemsSource = Core.Context.User.Where(u => u.RoleID == 2).ToList();
+            ComboMasters.ItemsSource = Core.Context.User.Where(u => u.RoleID == 2 && u.Status != "Freeze").ToList();
 
             DatePick.DisplayDateStart = DateTime.Today;
         }

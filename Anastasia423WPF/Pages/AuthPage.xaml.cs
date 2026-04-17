@@ -50,6 +50,12 @@ namespace Anastasia423WPF.Pages
         {
             if(AuthUser(LoginText.Text, PassText.Password))
             {
+                if (user.Status == "Freeze")
+                {
+                    MessageBox.Show("Ваш аккаунт заблокирован администратором.", "Ошибка доступа");
+                    return; // Прерываем вход
+                }
+                // Если статус норм, пускаем дальше...
                 MessageBox.Show("Успешный вход!", "Успешный вход", MessageBoxButton.OK, MessageBoxImage.Information);
                 if (user.RoleID == 2) // Мастер
                 {

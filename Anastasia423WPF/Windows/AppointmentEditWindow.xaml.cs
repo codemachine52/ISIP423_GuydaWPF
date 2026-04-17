@@ -32,9 +32,10 @@ namespace Anastasia423WPF.Windows
             InitializeComponent();
 
             AptDatePicker.DisplayDateStart = DateTime.Today;
+            
             // Загружаем списки для выбора
-            ClientCombo.ItemsSource = Core.Context.User.Where(u => u.RoleID == 1).ToList();
-            MasterCombo.ItemsSource = Core.Context.User.Where(u => u.RoleID == 2).ToList();
+            ClientCombo.ItemsSource = Core.Context.User.Where(u => u.RoleID == 1 && u.Status != "Freeze").ToList();
+            MasterCombo.ItemsSource = Core.Context.User.Where(u => u.RoleID == 2 && u.Status != "Freeze").ToList();
             ServiceCombo.ItemsSource = Core.Context.Service.ToList();
 
             if (existingApt != null)
