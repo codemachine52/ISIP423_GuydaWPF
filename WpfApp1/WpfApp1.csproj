@@ -35,8 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,6 +65,48 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="book.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BookGanre.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Core.cs" />
+    <Compile Include="ganre.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KISH.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="readList.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="readStatus.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="report.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requestRole.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="requestUnFreeze.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="review.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="role.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="user_.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,12 +115,29 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="KISH.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KISH.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KISH.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KISH.edmx</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AuthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\AuthPage.xaml.cs">
+      <DependentUpon>AuthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -86,13 +155,41 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="KISH.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>KISH.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="KISH.edmx.diagram">
+      <DependentUpon>KISH.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="storage\it_king.pdf" />
+    <None Include="storage\metro.pdf" />
+    <None Include="storage\shining.pdf" />
+    <None Include="storage\witcher_1.pdf" />
+    <None Include="storage\witcher_2.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="KISH.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>KISH.Context.cs</LastGenOutput>
+      <DependentUpon>KISH.edmx</DependentUpon>
+    </Content>
+    <Content Include="KISH.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KISH.edmx</DependentUpon>
+      <LastGenOutput>KISH.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
