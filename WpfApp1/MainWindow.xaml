@@ -5,8 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Читай, Пиши и не спиши" Height="600" Width="1000" WindowStartupLocation="CenterScreen">
+
     <Grid>
-        
+        <Grid.Background>
+            <RadialGradientBrush>
+                <GradientStop Color="#FF2B2B45" Offset="0"/>
+                <GradientStop Color="#FF0D0D16" Offset="1"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#80000000" BorderBrush="#33FFFFFF" BorderThickness="0,0,1,0">
+            <StackPanel Margin="0,20,0,0">
+
+                <Button x:Name="BtnCatalog" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnCatalog_Click" ToolTip="Каталог книг">
+                    <TextBlock FontSize="24" Foreground="#FF27A6AF" TextAlignment="Center">📚</TextBlock>
+                </Button>
+
+                <Button x:Name="BtnLists" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnLists_Click" ToolTip="Мои списки">
+                    <TextBlock FontSize="24" Foreground="#FF27A6AF" TextAlignment="Center">📋</TextBlock>
+                </Button>
+
+                <Button x:Name="BtnAuthor" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnAuthor_Click" ToolTip="Панель автора" Visibility="Collapsed">
+                    <TextBlock FontSize="24" Foreground="#FF27A6AF" TextAlignment="Center">✍️</TextBlock>
+                </Button>
+
+                <Button x:Name="BtnAdmin" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnAdmin_Click" ToolTip="Администрирование" Visibility="Collapsed">
+                    <TextBlock FontSize="24" Foreground="#FF27A6AF" TextAlignment="Center">⚙️</TextBlock>
+                </Button>
+
+                <Button x:Name="BtnFreezeWarning" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnFreezeWarning_Click" ToolTip="Аккаунт заморожен!" Visibility="Collapsed">
+                    <TextBlock FontSize="24" Foreground="#FFFF4C4C" TextAlignment="Center">❄️</TextBlock>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
+        <Button Grid.Column="0" x:Name="BtnProfile" Width="50" Height="50" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="Transparent" BorderThickness="0" Click="BtnProfile_Click" ToolTip="Профиль">
+            <TextBlock FontSize="24" Foreground="#FF27A6AF" TextAlignment="Center">👤</TextBlock>
+        </Button>
+
+        <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

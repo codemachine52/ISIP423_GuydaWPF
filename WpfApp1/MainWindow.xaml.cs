@@ -1,28 +1,74 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using WpfApp1.Pages;
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public user_ CurrentUser { get; set; }
+
+        public MainWindow(user_ user)
         {
             InitializeComponent();
+            CurrentUser = user;
+
+            // Настройка интерфейса в зависимости от роли
+            SetupSidebar();
+
+            // По умолчанию открываем каталог
+            MainFrame.Navigate(new CatalogPage());
+        }
+
+        private void SetupSidebar()
+        {
+            if (CurrentUser == null) return;
+
+            // Если аккаунт заморожен, показываем снежинку
+            if (CurrentUser.IsFreeze == true)
+            {
+                BtnFreezeWarning.Visibility = Visibility.Visible;
+            }
+
+            // Роль 2 = Автор
+            if (CurrentUser.RoleID == 2)
+            {
+                BtnAuthor.Visibility = Visibility.Visible;
+            }
+            // Роль 3 = Администратор
+            else if (CurrentUser.RoleID == 3)
+            {
+                BtnAdmin.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void BtnCatalog_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new CatalogPage());
+        }
+
+        private void BtnLists_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new BookListPage(CurrentUser));
+        }
+
+        private void BtnAuthor_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AuthorPage(CurrentUser));
+        }
+
+        private void BtnAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new AdminPage(CurrentUser));
+        }
+
+        private void BtnFreezeWarning_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new FreezeWarningPage(CurrentUser));
+        }
+
+        private void BtnProfile_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new ProfilePage(CurrentUser));
         }
     }
 }
