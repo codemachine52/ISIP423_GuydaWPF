@@ -16,7 +16,7 @@ namespace WpfApp1
             SetupSidebar();
 
             // По умолчанию открываем каталог
-            MainFrame.Navigate(new CatalogPage());
+            MainFrame.Navigate(new CatalogPage(CurrentUser));
         }
 
         private void SetupSidebar()
@@ -43,7 +43,7 @@ namespace WpfApp1
 
         private void BtnCatalog_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new CatalogPage());
+            MainFrame.Navigate(new CatalogPage(CurrentUser));
         }
 
         private void BtnLists_Click(object sender, RoutedEventArgs e)
