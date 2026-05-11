@@ -40,6 +40,8 @@ namespace WpfApp1.Windows
             {
                 userID = _user.ID,
                 requestText = TBoxAppeal.Text,
+                bookID = null,
+                reportDate = DateTime.Now
              });
 
             Core.Context.SaveChanges();

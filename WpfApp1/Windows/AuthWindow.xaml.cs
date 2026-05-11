@@ -38,12 +38,6 @@ namespace WpfApp1.Windows
         {
             if (Authenticate(LoginText.Text, PassText.Password))
             {
-                if (user.IsFreeze == true)
-                {
-                    MessageBox.Show("Ваш аккаунт заблокирован.", "Ошибка");
-                    return;
-                }
-
                 MainWindow main = new MainWindow(user);
                 main.Show();
                 this.Close(); // Закрываем окно входа после успешного входа
@@ -75,16 +69,33 @@ namespace WpfApp1.Windows
                 {
                     // Ищем последнюю жалобу на этого пользователя, чтобы узнать причину
                     var lastReport = Core.Context.report
-                        .Where(r => r.AuthorID == user.ID || r.review.UserID == user.ID)
-                        .OrderByDescending(r => r.ID)
-                        .FirstOrDefault();
+        .Where(r => r.userWasReportedID == currentUser.ID || (r.review != null && r.AuthorID == currentUser.ID))
+        .OrderByDescending(r => r.ID)
+        .FirstOrDefault();
 
-                    string reason = "Нарушение правил платформы";
+                    string reason = "Нарушение правил платформы"; // Значение по умолчанию
+
+                    if (lastReport != null)
+                    {
+                        // Определяем причину на основе заполненных полей в жалобе
+                        if (lastReport.reviewID != null)
+                        {
+                            reason = $"Ваш отзыв к книге '{lastReport.review.book.Name}' был признан недопустимым.";
+                        }
+                        else if (lastReport.BookID != null)
+                        {
+                            reason = $"Ваше произведение '{lastReport.book.Name}' нарушает правила публикации.";
+                        }
+                        else if (lastReport.userWasReportedID != null)
+                        {
+                            reason = "Ваш профиль был заблокирован за нарушение правил сообщества.";
+                        }
+                    }
 
                     // Открываем окно апелляции
-                    FreezeAppealWindow appealWin = new FreezeAppealWindow(user, reason);
+                    FreezeAppealWindow appealWin = new FreezeAppealWindow(currentUser, reason);
                     appealWin.ShowDialog();
-                    return; // Не пускаем в главное меню
+                    return false; // Не пускаем в главное меню
                 }
                 Core.CurrentUser = currentUser;
                 this.user = currentUser;

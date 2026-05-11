@@ -31,6 +31,8 @@
         <AssociationConnector Association="MG_KISHModel.FK__readList__UserID__76969D2E" />
         <AssociationConnector Association="MG_KISHModel.FK_BookGanre_book" />
         <AssociationConnector Association="MG_KISHModel.FK_BookGanre_ganre" />
+        <AssociationConnector Association="MG_KISHModel.FK_requestUnFreeze_book" />
+        <AssociationConnector Association="MG_KISHModel.FK_report_user_" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -63,6 +63,7 @@
           <Property Name="reviewID" Type="int" />
           <Property Name="reportDate" Type="datetime" Nullable="false" />
           <Property Name="AuthorID" Type="int" />
+          <Property Name="userWasReportedID" Type="int" />
         </EntityType>
         <EntityType Name="requestRole">
           <Key>
@@ -81,6 +82,7 @@
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="requestText" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="reportDate" Type="datetime" Nullable="false" />
+          <Property Name="bookID" Type="int" />
         </EntityType>
         <EntityType Name="review">
           <Key>
@@ -291,6 +293,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_report_user$">
+          <End Role="user$" Type="Self.user$" Multiplicity="0..1" />
+          <End Role="report" Type="Self.report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user$">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="userWasReportedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_requestUnFreeze_book">
+          <End Role="book" Type="Self.book" Multiplicity="0..1" />
+          <End Role="requestUnFreeze" Type="Self.requestUnFreeze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="requestUnFreeze">
+              <PropertyRef Name="bookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище MG_KISHModelContainer">
           <EntitySet Name="book" EntityType="Self.book" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BookGanre" EntityType="Self.BookGanre" Schema="dbo" store:Type="Tables" />
@@ -360,6 +386,14 @@
             <End Role="ganre" EntitySet="ganre" />
             <End Role="BookGanre" EntitySet="BookGanre" />
           </AssociationSet>
+          <AssociationSet Name="FK_report_user$" Association="Self.FK_report_user$">
+            <End Role="user$" EntitySet="user$" />
+            <End Role="report" EntitySet="report" />
+          </AssociationSet>
+          <AssociationSet Name="FK_requestUnFreeze_book" Association="Self.FK_requestUnFreeze_book">
+            <End Role="book" EntitySet="book" />
+            <End Role="requestUnFreeze" EntitySet="requestUnFreeze" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -383,6 +417,7 @@
           <NavigationProperty Name="review" Relationship="Self.FK__review__BookID__6C190EBB" FromRole="book" ToRole="review" />
           <NavigationProperty Name="readList" Relationship="MG_KISHModel.FK__readList__BookID__778AC167" FromRole="book" ToRole="readList" />
           <NavigationProperty Name="BookGanre" Relationship="MG_KISHModel.FK_BookGanre_book" FromRole="book" ToRole="BookGanre" />
+          <NavigationProperty Name="requestUnFreeze" Relationship="MG_KISHModel.FK_requestUnFreeze_book" FromRole="book" ToRole="requestUnFreeze" />
         </EntityType>
         <EntityType Name="BookGanre">
           <Key>
@@ -425,6 +460,8 @@
           <NavigationProperty Name="review" Relationship="Self.FK__report__reviewID__7E37BEF6" FromRole="report" ToRole="review" />
           <NavigationProperty Name="user_" Relationship="Self.FK__report__userID__7C4F7684" FromRole="report" ToRole="user_" />
           <Property Name="AuthorID" Type="Int32" />
+          <Property Name="userWasReportedID" Type="Int32" />
+          <NavigationProperty Name="user_1" Relationship="MG_KISHModel.FK_report_user_" FromRole="report" ToRole="user_" />
         </EntityType>
         <EntityType Name="requestRole">
           <Key>
@@ -445,6 +482,8 @@
           <Property Name="requestText" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="reportDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="user_" Relationship="Self.FK__requestUn__userI__03F0984C" FromRole="requestUnFreeze" ToRole="user_" />
+          <Property Name="bookID" Type="Int32" />
+          <NavigationProperty Name="book" Relationship="MG_KISHModel.FK_requestUnFreeze_book" FromRole="requestUnFreeze" ToRole="book" />
         </EntityType>
         <EntityType Name="review">
           <Key>
@@ -497,6 +536,7 @@
           <NavigationProperty Name="review" Relationship="Self.FK__review__UserID__5629CD9C" FromRole="user_" ToRole="review" />
           <NavigationProperty Name="role" Relationship="Self.FK__user___RoleID__4E88ABD4" FromRole="user_" ToRole="role" />
           <NavigationProperty Name="readList" Relationship="MG_KISHModel.FK__readList__UserID__76969D2E" FromRole="user_" ToRole="readList" />
+          <NavigationProperty Name="report1" Relationship="MG_KISHModel.FK_report_user_" FromRole="user_" ToRole="report" />
         </EntityType>
         <Association Name="FK__book__AuthorID__6754599E">
           <End Role="user_" Type="Self.user_" Multiplicity="1" />
@@ -675,6 +715,14 @@
             <End Role="ganre" EntitySet="ganre" />
             <End Role="BookGanre" EntitySet="BookGanre" />
           </AssociationSet>
+          <AssociationSet Name="FK_requestUnFreeze_book" Association="MG_KISHModel.FK_requestUnFreeze_book">
+            <End Role="book" EntitySet="book" />
+            <End Role="requestUnFreeze" EntitySet="requestUnFreeze" />
+          </AssociationSet>
+          <AssociationSet Name="FK_report_user_" Association="MG_KISHModel.FK_report_user_">
+            <End Role="user_" EntitySet="user_" />
+            <End Role="report" EntitySet="report" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="readList">
           <Key>
@@ -749,6 +797,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_requestUnFreeze_book">
+          <End Type="MG_KISHModel.book" Role="book" Multiplicity="0..1" />
+          <End Type="MG_KISHModel.requestUnFreeze" Role="requestUnFreeze" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="book">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="requestUnFreeze">
+              <PropertyRef Name="bookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_report_user_">
+          <End Type="MG_KISHModel.user_" Role="user_" Multiplicity="0..1" />
+          <End Type="MG_KISHModel.report" Role="report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="userWasReportedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -799,6 +871,7 @@
           <EntitySetMapping Name="report">
             <EntityTypeMapping TypeName="MG_KISHModel.report">
               <MappingFragment StoreEntitySet="report">
+                <ScalarProperty Name="userWasReportedID" ColumnName="userWasReportedID" />
                 <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
@@ -821,6 +894,7 @@
           <EntitySetMapping Name="requestUnFreeze">
             <EntityTypeMapping TypeName="MG_KISHModel.requestUnFreeze">
               <MappingFragment StoreEntitySet="requestUnFreeze">
+                <ScalarProperty Name="bookID" ColumnName="bookID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="requestText" ColumnName="requestText" />

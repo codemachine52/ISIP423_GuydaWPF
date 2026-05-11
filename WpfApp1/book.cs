@@ -21,6 +21,7 @@ namespace WpfApp1
             this.review = new HashSet<review>();
             this.readList = new HashSet<readList>();
             this.BookGanre = new HashSet<BookGanre>();
+            this.requestUnFreeze = new HashSet<requestUnFreeze>();
         }
     
         public int ID { get; set; }
@@ -42,5 +43,7 @@ namespace WpfApp1
         public virtual ICollection<readList> readList { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BookGanre> BookGanre { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<requestUnFreeze> requestUnFreeze { get; set; }
     }
 }

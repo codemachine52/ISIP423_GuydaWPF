@@ -88,6 +88,7 @@ namespace WpfApp1.Pages
             {
                 userID = _currentUser.ID,
                 reviewID = rev.ID,
+                userWasReportedID = rev.UserID,
                 BookID = null,
                 AuthorID = null,
                 reportDate = DateTime.Now
