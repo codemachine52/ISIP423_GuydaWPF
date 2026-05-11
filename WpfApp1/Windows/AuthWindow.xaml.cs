@@ -36,7 +36,7 @@ namespace WpfApp1.Windows
 
         private void Enter_Click(object sender, RoutedEventArgs e)
         {
-            if (AuthUser(LoginText.Text, PassText.Password))
+            if (Authenticate(LoginText.Text, PassText.Password))
             {
                 if (user.IsFreeze == true)
                 {
@@ -50,16 +50,42 @@ namespace WpfApp1.Windows
             }
         }
 
-        public bool AuthUser(string login, string password)
+        /// <summary>
+        /// Авторизация пользователя в системе
+        /// </summary>
+        /// <param name="login">Логин</param>
+        /// <param name="password">Пароль</param>
+        /// <returns>Возвращает true, если данные верны и аккаунт не заморожен</returns>
+        public bool Authenticate(string login, string password)
         {
-            var UsInDB = Core.Context.user_.FirstOrDefault(u => u.Login == login);
-            if (UsInDB != null && UsInDB.Password == password)
+            try
             {
-                user = UsInDB;
+                var currentUser = Core.Context.user_
+                    .FirstOrDefault(u => u.Login == login && u.Password == password);
+
+                if (currentUser == null)
+                {
+                    MessageBox.Show("Неверный логин или пароль", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+
+                // Проверка статуса блокировки (перенесено из UI-логики в метод данных)
+                if (currentUser.IsFreeze == true)
+                {
+                    MessageBox.Show("Ваш аккаунт временно заморожен", "Доступ ограничен",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return false;
+                }
+
+                this.user = currentUser;
                 return true;
             }
-            MessageBox.Show("Неверный логин или пароль!");
-            return false;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Критическая ошибка БД: {ex.Message}");
+                return false;
+            }
         }
     }
 }
