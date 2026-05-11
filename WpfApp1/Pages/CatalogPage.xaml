@@ -8,9 +8,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="TBoxSearch" Grid.Row="0" Width="300" HorizontalAlignment="Left" 
-                 Margin="10" TextChanged="TBoxSearch_TextChanged" />
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBox x:Name="TBoxSearch" Width="200" ToolTip="Поиск по названию" 
+                     TextChanged="FilterChanged" Margin="0,0,10,0"/>
 
+            <ComboBox x:Name="ComboGenre" Width="150" DisplayMemberPath="Name" 
+                      SelectionChanged="FilterChanged" Margin="0,0,10,0"/>
+
+            <ComboBox x:Name="ComboSort" Width="150" SelectionChanged="FilterChanged">
+                <ComboBoxItem Content="Без сортировки"/>
+                <ComboBoxItem Content="Имя (А-Я)"/>
+                <ComboBoxItem Content="Имя (Я-А)"/>
+                <ComboBoxItem Content="Рейтинг (возр.)"/>
+                <ComboBoxItem Content="Рейтинг (убыв.)"/>
+            </ComboBox>
+        </StackPanel>
         <ListBox x:Name="LBoxBooks" Grid.Row="1" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -20,14 +32,21 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Background="#2D2D2D" CornerRadius="8" Margin="10" Width="200" Height="350">
+                    <Border Background="#2D2D2D" CornerRadius="8" Margin="10" Width="200" Height="410">
                         <StackPanel>
                             <Image Source="{Binding Picture}" Height="250" Stretch="UniformToFill" Margin="5"/>
                             <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" 
                                        FontSize="16" TextAlignment="Center" Margin="5"/>
+                            <TextBlock Text="{Binding GenresDisplay}" FontSize="10" Foreground="Gray" Margin="5,0" TextAlignment="Center"/>
                             <TextBlock Text="{Binding Rating, StringFormat='Рейтинг: {0}'}" 
                                        Foreground="Gold" TextAlignment="Center"/>
-                            <Button Content="Читать" Margin="10,5" Click="BtnRead_Click" Tag="{Binding ID}"/>
+                            <Button Content="Открыть" Margin="10,5" Click="BtnRead_Click" Tag="{Binding}"/>
+                            <TextBlock Text="Статус:" Foreground="Gray" Margin="5,5,5,0" FontSize="10"/>
+                            <ComboBox x:Name="ComboStatus" Margin="5" 
+                  SelectedValuePath="ID" DisplayMemberPath="Name"
+                  SelectionChanged="ComboStatus_SelectionChanged"
+                  Loaded="ComboStatus_Loaded"
+                  Tag="{Binding ID}"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

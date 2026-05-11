@@ -18,7 +18,6 @@ namespace WpfApp1
         public int UserID { get; set; }
         public int BookID { get; set; }
         public int ReadStatusID { get; set; }
-        public string Description { get; set; }
     
         public virtual book book { get; set; }
         public virtual readStatus readStatus { get; set; }

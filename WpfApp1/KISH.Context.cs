@@ -28,7 +28,6 @@ namespace WpfApp1
         public virtual DbSet<book> book { get; set; }
         public virtual DbSet<BookGanre> BookGanre { get; set; }
         public virtual DbSet<ganre> ganre { get; set; }
-        public virtual DbSet<readList> readList { get; set; }
         public virtual DbSet<readStatus> readStatus { get; set; }
         public virtual DbSet<report> report { get; set; }
         public virtual DbSet<requestRole> requestRole { get; set; }
@@ -37,5 +36,6 @@ namespace WpfApp1
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<user_> user_ { get; set; }
+        public virtual DbSet<readList> readList { get; set; }
     }
 }

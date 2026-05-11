@@ -73,11 +73,20 @@ namespace WpfApp1.Windows
                 // Проверка статуса блокировки (перенесено из UI-логики в метод данных)
                 if (currentUser.IsFreeze == true)
                 {
-                    MessageBox.Show("Ваш аккаунт временно заморожен", "Доступ ограничен",
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return false;
-                }
+                    // Ищем последнюю жалобу на этого пользователя, чтобы узнать причину
+                    var lastReport = Core.Context.report
+                        .Where(r => r.AuthorID == user.ID || r.review.UserID == user.ID)
+                        .OrderByDescending(r => r.ID)
+                        .FirstOrDefault();
 
+                    string reason = "Нарушение правил платформы";
+
+                    // Открываем окно апелляции
+                    FreezeAppealWindow appealWin = new FreezeAppealWindow(user, reason);
+                    appealWin.ShowDialog();
+                    return; // Не пускаем в главное меню
+                }
+                Core.CurrentUser = currentUser;
                 this.user = currentUser;
                 return true;
             }

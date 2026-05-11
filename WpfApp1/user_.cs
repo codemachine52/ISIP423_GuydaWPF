@@ -18,11 +18,11 @@ namespace WpfApp1
         public user_()
         {
             this.book = new HashSet<book>();
-            this.readList = new HashSet<readList>();
             this.report = new HashSet<report>();
             this.requestRole = new HashSet<requestRole>();
             this.requestUnFreeze = new HashSet<requestUnFreeze>();
             this.review = new HashSet<review>();
+            this.readList = new HashSet<readList>();
         }
     
         public int ID { get; set; }
@@ -36,8 +36,6 @@ namespace WpfApp1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<book> book { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<readList> readList { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<report> report { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<requestRole> requestRole { get; set; }
@@ -46,5 +44,7 @@ namespace WpfApp1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<review> review { get; set; }
         public virtual role role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<readList> readList { get; set; }
     }
 }

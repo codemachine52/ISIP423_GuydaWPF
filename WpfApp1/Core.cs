@@ -19,7 +19,9 @@ namespace WpfApp1
                     _context = new MG_KISHEntities();
                 return _context;
             }
+
         }
+        public static user_ CurrentUser { get; set; }
 
         /// <summary>
         /// Метод для проверки доступности базы данных

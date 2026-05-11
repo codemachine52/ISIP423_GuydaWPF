@@ -19,6 +19,7 @@ namespace WpfApp1
         public Nullable<int> BookID { get; set; }
         public Nullable<int> reviewID { get; set; }
         public System.DateTime reportDate { get; set; }
+        public Nullable<int> AuthorID { get; set; }
     
         public virtual book book { get; set; }
         public virtual review review { get; set; }

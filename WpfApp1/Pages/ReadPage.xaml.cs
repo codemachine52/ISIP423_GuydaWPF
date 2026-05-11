@@ -21,9 +21,9 @@ namespace WpfApp1.Pages
             {
                 TBlockBookName.Text = _currentBook.Name;
                 // В приложении текст загружается из БД
-                TBlockContent.Text = $"Вы начали чтение книги: {_currentBook.Name}. \n\nОписание: {_currentBook.Description}\n\n ТЕКСТ: {_currentBook.Text}";
+                TBlockContent.Text = $"Вы начали чтение книги: {_currentBook.Name}. \n\nОписание: {_currentBook.Description}\n\nТЕКСТ: {_currentBook.Text}";
             }
-            MessageBox.Show($"User ID: {_currentUser.ID}");
+            //MessageBox.Show($"User ID: {_currentUser.ID}");
         }
 
         private void Back_Click(object sender, RoutedEventArgs e) => NavigationService.GoBack();

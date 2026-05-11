@@ -24,5 +24,27 @@ namespace WpfApp1.Pages
         {
             InitializeComponent();
         }
+        private void UpdateGrid()
+        {
+            GridUsers.ItemsSource = Core.Context.user_.ToList();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e) => UpdateGrid();
+
+        private void BtnToggleFreeze_Click(object sender, RoutedEventArgs e)
+        {
+            var user = (sender as Button).Tag as user_;
+
+            // Инвертируем статус заморозки
+            user.IsFreeze = !user.IsFreeze;
+
+            try
+            {
+                Core.Context.SaveChanges();
+                MessageBox.Show($"Статус пользователя {user.Login} изменен.");
+                UpdateGrid();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
     }
 }

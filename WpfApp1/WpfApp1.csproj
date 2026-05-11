@@ -65,7 +65,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\book_partial.cs" />
     <Compile Include="Models\review1.cs" />
+    <Compile Include="Models\user_partial.cs" />
+    <Compile Include="Pages\BookDetailsPage.xaml.cs">
+      <DependentUpon>BookDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ReadPage.xaml.cs">
       <DependentUpon>ReadPage.xaml</DependentUpon>
     </Compile>
@@ -135,9 +140,19 @@
     <Compile Include="user_.cs">
       <DependentUpon>KISH.tt</DependentUpon>
     </Compile>
+    <Compile Include="Windows\EditBookWindow.xaml.cs">
+      <DependentUpon>EditBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FreezeAppealWindow.xaml.cs">
+      <DependentUpon>FreezeAppealWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Pages\BookDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\ReadPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +208,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ProfilePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditBookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\FreezeAppealWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,9 +20,48 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class BookListPage : Page
     {
-        public BookListPage(user_ currentUser)
+        private user_ _currentUser;
+        public BookListPage(user_ us)
         {
+            _currentUser = us;
             InitializeComponent();
+            LBoxStatuses.ItemsSource = Core.Context.readStatus.ToList();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateData();
+        }
+
+        private void LBoxStatuses_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateData();
+        }
+
+        private void UpdateData()
+        {
+            var selectedStatus = LBoxStatuses.SelectedItem as readStatus;
+            var query = Core.Context.readList.Where(r => r.UserID == _currentUser.ID);
+
+            if (selectedStatus != null)
+            {
+                query = query.Where(r => r.ReadStatusID == selectedStatus.ID);
+            }
+
+            LBoxFilteredBooks.ItemsSource = query.ToList();
+        }
+
+        private void LBoxFilteredBooks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            // Получаем выбранный объект из списка (это тип readList)
+            var selectedRecord = LBoxFilteredBooks.SelectedItem as readList;
+
+            if (selectedRecord != null && selectedRecord.book != null)
+            {
+                // Переходим на страницу ReadPage, передавая ID книги и текущего пользователя
+                // Убедись, что конструктор ReadPage принимает эти параметры
+                NavigationService.Navigate(new ReadPage(selectedRecord.book.ID, _currentUser));
+            }
         }
     }
 }

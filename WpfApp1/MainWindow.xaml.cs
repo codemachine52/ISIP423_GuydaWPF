@@ -15,6 +15,20 @@ namespace WpfApp1
             // Настройка интерфейса в зависимости от роли
             SetupSidebar();
 
+            if (user.RoleID == 3) // Администратор
+            {
+                BtnAdmin.Visibility = Visibility.Visible;
+            }
+            else if (user.RoleID == 2) // Автор
+            {
+                BtnAuthor.Visibility = Visibility.Visible;
+            }
+            else // Обычный читатель
+            {
+                BtnAdmin.Visibility = Visibility.Collapsed;
+                BtnAuthor.Visibility = Visibility.Collapsed;
+            }
+
             // По умолчанию открываем каталог
             MainFrame.Navigate(new CatalogPage(CurrentUser));
         }

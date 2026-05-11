@@ -14,8 +14,17 @@ namespace WpfApp1
     
     public partial class ganre
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ganre()
+        {
+            this.BookGanre = new HashSet<BookGanre>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BookGanre> BookGanre { get; set; }
     }
 }
