@@ -12,24 +12,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.Pages;
 
-namespace WpfApp1.Pages
+namespace WpfApp1.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для RegistrationPage.xaml
+    /// Логика взаимодействия для RegistrationWindow.xaml
     /// </summary>
-    public partial class RegistrationPage : Page
+    public partial class RegistrationWindow : Window
     {
         private user_ us = new user_();
 
-        public RegistrationPage()
+        public RegistrationWindow()
         {
             InitializeComponent();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new AuthPage());
+            AuthWindow authWin = new AuthWindow();
+            authWin.Show();
+            this.Close();
         }
 
         //Обработчики потери фокуса (Inline-валидация)
@@ -136,7 +139,7 @@ namespace WpfApp1.Pages
             }
 
             bool isEmailValid = cleanEmail.Contains("@");
-                                
+
 
             if (!isEmailValid)
             {
@@ -150,37 +153,31 @@ namespace WpfApp1.Pages
 
         private void RegistrUser_Click(object sender, RoutedEventArgs e)
         {
-            // все проверки разом. Используем одинарное &, чтобы выполнить ВСЕ методы 
-            // (иначе последующие методы не вызовутся, если первый вернул false)
             bool isValid = ValidateLogin() & ValidatePassword() & ValidatePasswordMatch() & ValidateFIO() & ValidatePhone();
 
             if (isValid)
             {
-                us.Login = LoginText.Text;
-                us.Password = PassText.Password;
-                us.Name = FIOText.Text;
-                us.Email = EmailText.Text;
-
-                // обязательные для БД
-                us.RoleID = 1;         // 1 = Клиент (из таблицы Role)
-                us.IsFreeze = false;
+                user_ us = new user_
+                {
+                    Login = LoginText.Text,
+                    Password = PassText.Password,
+                    Name = FIOText.Text,
+                    Email = EmailText.Text,
+                    RoleID = 1,
+                    IsFreeze = false
+                };
 
                 try
                 {
                     Core.Context.user_.Add(us);
                     Core.Context.SaveChanges();
+                    MessageBox.Show("Успех!");
 
-                    MessageBox.Show("Вы успешно зарегистрированы!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                    //NavigationService.Navigate(new Catalog(us));
+                    MainWindow main = new MainWindow(us);
+                    main.Show();
+                    this.Close();
                 }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при сохранении в базу данных: {ex.Message}", "Ошибка БД", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Пожалуйста, исправьте ошибки в подсвеченных полях.", "Ошибка заполнения", MessageBoxButton.OK, MessageBoxImage.Warning);
+                catch (System.Exception ex) { MessageBox.Show(ex.Message); }
             }
         }
     }
