@@ -27,25 +27,36 @@ namespace WpfApp1.Windows
         {
             InitializeComponent();
             _currentUser = us;
+
+            // 1. Загружаем все жанры из базы
+            var allGenres = Core.Context.ganre.ToList();
+
             if (selectedBook != null)
             {
                 _currentBook = selectedBook;
                 _isEdit = true;
-                // Заполняем поля данными для редактирования
                 TBoxName.Text = _currentBook.Name;
                 TBoxDescription.Text = _currentBook.Description;
                 TBoxPicture.Text = _currentBook.Picture;
-                TBoxContent.Text = _currentBook.Text; // Поле текста из БД
+                TBoxContent.Text = _currentBook.Text;
+
+                // 2. Если редактируем, отмечаем те жанры, которые уже есть у книги
+                var currentGenreIds = _currentBook.BookGanre.Select(bg => bg.GanreID).ToList();
+                foreach (var g in allGenres)
+                {
+                    if (currentGenreIds.Contains(g.ID)) g.IsSelected = true;
+                }
             }
             else
             {
                 _currentBook = new book();
             }
+
+            LBoxGenres.ItemsSource = allGenres;
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            // Базовая валидация
             if (string.IsNullOrWhiteSpace(TBoxName.Text)) { MessageBox.Show("Укажите название!"); return; }
 
             _currentBook.Name = TBoxName.Text;
@@ -55,20 +66,39 @@ namespace WpfApp1.Windows
 
             if (!_isEdit)
             {
-                // Если новая книга, прописываем ID автора (текущего пользователя)
-                // Допустим, мы сохранили текущего пользователя в статичном классе
                 _currentBook.AuthorID = _currentUser.ID;
-                _currentBook.Rating = 0; // Начальный рейтинг
+                _currentBook.Rating = 0;
+                _currentBook.IsFreeze = false; // По умолчанию книга активна
+                _currentBook.BookPath = null;
                 Core.Context.book.Add(_currentBook);
+            }
+            else
+            {
+                // Если редактируем — удаляем старые связи с жанрами, чтобы записать новые
+                var oldGenres = Core.Context.BookGanre.Where(bg => bg.BookID == _currentBook.ID);
+                Core.Context.BookGanre.RemoveRange(oldGenres);
+            }
+
+            // 3. Сохраняем выбранные жанры в таблицу-посредник
+            foreach (ganre g in LBoxGenres.ItemsSource)
+            {
+                if (g.IsSelected)
+                {
+                    Core.Context.BookGanre.Add(new BookGanre
+                    {
+                        book = _currentBook,
+                        GanreID = g.ID
+                    });
+                }
             }
 
             try
             {
                 Core.Context.SaveChanges();
-                MessageBox.Show("Данные успешно сохранены!");
+                MessageBox.Show("Книга успешно сохранена!");
                 this.DialogResult = true;
             }
-            catch (Exception ex) { MessageBox.Show("Ошибка: " + ex.Message); }
+            catch (Exception ex) { MessageBox.Show("Ошибка сохранения: " + ex.Message); }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e) => this.Close();

@@ -91,8 +91,6 @@ namespace WpfApp1.Windows
                             reason = "Ваш профиль был заблокирован за нарушение правил сообщества.";
                         }
                     }
-
-                    // Открываем окно апелляции
                     FreezeAppealWindow appealWin = new FreezeAppealWindow(currentUser, reason);
                     appealWin.ShowDialog();
                     return false; // Не пускаем в главное меню

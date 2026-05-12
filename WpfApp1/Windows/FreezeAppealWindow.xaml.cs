@@ -20,32 +20,48 @@ namespace WpfApp1.Windows
     public partial class FreezeAppealWindow : Window
     {
         private user_ _user;
-        public FreezeAppealWindow(user_ user, string reason)
+        private int? _bookId; // Храним ID книги, если апелляция по ней
+
+        public Visibility BookTitleVisibility => _bookId != null ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility AccountTitleVisibility => _bookId == null ? Visibility.Visible : Visibility.Collapsed;
+
+        // Универсальный конструктор
+        public FreezeAppealWindow(user_ user, string reason, int? bookId = null)
         {
             InitializeComponent();
             _user = user;
+            _bookId = bookId;
             TBlockReason.Text = reason;
+
+            // Меняем заголовок в зависимости от типа
+            if (_bookId != null)
+                this.Title = "Оспорить заморозку книги";
+            else
+                this.Title = "Оспорить заморозку аккаунта";
+            this.DataContext = this;
         }
 
         private void BtnSend_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBoxAppeal.Text))
             {
-                MessageBox.Show("Введите текст обращения");
+                MessageBox.Show("Напишите текст апелляции");
                 return;
             }
 
-            // Создаем запись в таблице апелляций
-            Core.Context.requestUnFreeze.Add(new requestUnFreeze
+            // Сохраняем в БД (таблица requestUnFreeze)
+            var request = new requestUnFreeze
             {
                 userID = _user.ID,
+                bookID = _bookId, // Если null - значит аккаунт, если число - значит книга
                 requestText = TBoxAppeal.Text,
-                bookID = null,
                 reportDate = DateTime.Now
-             });
+            };
 
+            Core.Context.requestUnFreeze.Add(request);
             Core.Context.SaveChanges();
-            MessageBox.Show("Апелляция отправлена. Ожидайте решения модератора.");
+
+            MessageBox.Show("Ваше обращение отправлено модераторам.");
             this.Close();
         }
 

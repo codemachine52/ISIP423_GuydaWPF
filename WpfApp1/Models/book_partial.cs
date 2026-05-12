@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 
 namespace WpfApp1
 {
     public partial class book
     {
-        // Теперь точно правильно: вытаскиваем имена через связь
         public string GenresDisplay
         {
             get
@@ -27,6 +27,16 @@ namespace WpfApp1
         public string FreezeActionText => (IsFreeze == true) ? "Разморозить книгу" : "Заморозить книгу";
 
         // Видимость админ-панелей (используем глобального Core.CurrentUser)
-        public Visibility AdminVisibility => (Core.CurrentUser?.RoleID == 1) ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility AdminVisibility => (Core.CurrentUser?.RoleID == 3) ? Visibility.Visible : Visibility.Collapsed;
+        // Текст статуса
+        public string StatusText => IsFreeze == true ? "Заморожена" : "Опубликована";
+
+        // Цвет статуса
+        public SolidColorBrush StatusColor => IsFreeze == true
+            ? new SolidColorBrush(Color.FromRgb(255, 76, 76))
+            : new SolidColorBrush(Color.FromRgb(39, 166, 175));
+
+        // Видимость кнопки "Оспорить" (только если заморожена)
+        public Visibility AppealVisibility => IsFreeze == true ? Visibility.Visible : Visibility.Collapsed;
     }
 }

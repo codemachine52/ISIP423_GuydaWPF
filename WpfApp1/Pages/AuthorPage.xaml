@@ -8,21 +8,39 @@
                     Margin="0,0,0,20" Click="BtnAddBook_Click" Background="#FF27A6AF" Foreground="White"/>
 
             <TextBlock Text="Мои публикации:" FontSize="20" Foreground="White" Margin="0,0,0,10"/>
+
             <ListBox x:Name="LBoxAuthorBooks" Height="400" Background="#33FFFFFF" 
-         MouseDoubleClick="LBoxAuthorBooks_MouseDoubleClick">
+                     MouseDoubleClick="LBoxAuthorBooks_MouseDoubleClick" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderBrush="Gray" BorderThickness="0,0,0,1" Padding="10">
-                            <Grid>
+                        <Border BorderBrush="#33FFFFFF" BorderThickness="0,0,0,1" Padding="10">
+                            <Grid Width="850">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="120"/>
                                 </Grid.ColumnDefinitions>
-                                <StackPanel>
+
+                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding Name}" Foreground="White" FontSize="18" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Description}" Foreground="LightGray" MaxHeight="40" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Description}" Foreground="LightGray" 
+                                               MaxHeight="40" TextTrimming="CharacterEllipsis" Margin="0,5,0,0"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="1" Text="{Binding Rating}" Foreground="Gold" VerticalAlignment="Center" Margin="10,0"/>
+
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Rating, StringFormat='Рейтинг: {0}'}" Foreground="Gold" Margin="0,0,0,5"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Статус: " Foreground="Gray"/>
+                                        <TextBlock Text="{Binding StatusText}" Foreground="{Binding StatusColor}" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                                <Button Grid.Column="2" Content="Оспорить" 
+                                        Click="BtnAppeal_Click" 
+                                        Tag="{Binding}"
+                                        Visibility="{Binding AppealVisibility}"
+                                        Background="#FFFF4C4C" Foreground="White" 
+                                        Padding="10,5" VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
                     </DataTemplate>

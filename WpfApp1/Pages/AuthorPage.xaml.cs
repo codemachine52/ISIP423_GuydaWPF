@@ -63,7 +63,7 @@ namespace WpfApp1.Pages
                 EditBookWindow editWin = new EditBookWindow(selectedBook, _currentUser);
                 if (editWin.ShowDialog() == true)
                 {
-                    //UpdateData(); // Обновляем список после сохранения
+                    UpdateData(); // Обновляем список после сохранения
                 }
             }
         }
@@ -74,8 +74,19 @@ namespace WpfApp1.Pages
             EditBookWindow addWin = new EditBookWindow(null, _currentUser);
             if (addWin.ShowDialog() == true)
             {
-                //UpdateData();
+                UpdateData();
             }
+        }
+        private void BtnAppeal_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedBook = (sender as Button).Tag as book;
+            if (selectedBook == null) return;
+
+            string reason = $"Ваше произведение '{selectedBook.Name}' было заморожено модератором.";
+
+            // Вызываем универсальное окно апелляции, передаем юзера, причину и ID книги
+            FreezeAppealWindow appealWin = new FreezeAppealWindow(Core.CurrentUser, reason, selectedBook.ID);
+            appealWin.ShowDialog();
         }
     }
 }

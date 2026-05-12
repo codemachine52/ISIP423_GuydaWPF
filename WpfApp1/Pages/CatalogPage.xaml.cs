@@ -62,7 +62,7 @@ namespace WpfApp1.Pages
             }
 
             // 4. Скрытие замороженных книг для обычных пользователей
-            if (Core.CurrentUser.RoleID != 1)
+            if (Core.CurrentUser.RoleID != 3)
                 list = list.Where(p => p.IsFreeze != true).ToList();
 
             LBoxBooks.ItemsSource = list;

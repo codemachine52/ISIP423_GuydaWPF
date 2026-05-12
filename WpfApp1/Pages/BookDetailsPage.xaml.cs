@@ -41,7 +41,7 @@ namespace WpfApp1.Pages
         {
             // Загружаем отзывы, которые не заморожены (если не админ)
             var reviews = Core.Context.review.Where(r => r.BookID == _currentBook.ID);
-            if (_currentUser.RoleID != 1)
+            if (_currentUser.RoleID != 3)
                 reviews = reviews.Where(r => r.IsFreeze != true);
 
             LBoxReviews.ItemsSource = reviews.ToList();

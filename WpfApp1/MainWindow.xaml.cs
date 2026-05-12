@@ -36,13 +36,6 @@ namespace WpfApp1
         private void SetupSidebar()
         {
             if (CurrentUser == null) return;
-
-            // Если аккаунт заморожен, показываем снежинку
-            if (CurrentUser.IsFreeze == true)
-            {
-                BtnFreezeWarning.Visibility = Visibility.Visible;
-            }
-
             // Роль 2 = Автор
             if (CurrentUser.RoleID == 2)
             {
@@ -73,11 +66,6 @@ namespace WpfApp1
         private void BtnAdmin_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new AdminPage(CurrentUser));
-        }
-
-        private void BtnFreezeWarning_Click(object sender, RoutedEventArgs e)
-        {
-            MainFrame.Navigate(new FreezeWarningPage(CurrentUser));
         }
 
         private void BtnProfile_Click(object sender, RoutedEventArgs e)

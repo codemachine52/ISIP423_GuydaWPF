@@ -38,11 +38,6 @@
                 <Button x:Name="BtnAdmin" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnAdmin_Click" ToolTip="Администрирование" Visibility="Collapsed">
                     <TextBlock FontSize="24" Foreground="#FF27A6AF" TextAlignment="Center">⚙️</TextBlock>
                 </Button>
-
-                <Button x:Name="BtnFreezeWarning" Width="50" Height="50" Margin="0,0,0,15" Background="Transparent" BorderThickness="0" Click="BtnFreezeWarning_Click" ToolTip="Аккаунт заморожен!" Visibility="Collapsed">
-                    <TextBlock FontSize="24" Foreground="#FFFF4C4C" TextAlignment="Center">❄️</TextBlock>
-                </Button>
-
             </StackPanel>
         </Border>
 

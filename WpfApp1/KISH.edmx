@@ -13,7 +13,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Picture" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="BookPath" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="BookPath" Type="nvarchar" MaxLength="200" />
           <Property Name="AuthorID" Type="int" Nullable="false" />
           <Property Name="IsFreeze" Type="bit" Nullable="false" />
           <Property Name="Text" Type="nvarchar(max)" />
@@ -94,7 +94,7 @@
           <Property Name="Mark" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="150" Nullable="false" />
           <Property Name="Date" Type="datetime" />
-          <Property Name="IsFreeze" Type="bit" Nullable="false" />
+          <Property Name="IsFreeze" Type="bit" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -407,7 +407,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Picture" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="BookPath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BookPath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AuthorID" Type="Int32" Nullable="false" />
           <Property Name="IsFreeze" Type="Boolean" Nullable="false" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -498,7 +498,7 @@
           <NavigationProperty Name="report" Relationship="Self.FK__report__reviewID__7E37BEF6" FromRole="review" ToRole="report" />
           <NavigationProperty Name="user_" Relationship="Self.FK__review__UserID__5629CD9C" FromRole="review" ToRole="user_" />
           <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="IsFreeze" Type="Boolean" Nullable="false" />
+          <Property Name="IsFreeze" Type="Boolean" />
         </EntityType>
         <EntityType Name="role">
           <Key>
