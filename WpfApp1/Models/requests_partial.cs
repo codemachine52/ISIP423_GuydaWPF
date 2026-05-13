@@ -9,7 +9,20 @@ namespace WpfApp1
 {
     public partial class requestUnFreeze
     {
-        public string TargetName => bookID == null ? $"Аккаунт: {user_.Login}" : $"Книга: {book.Name}";
+        public string TargetName
+        {
+            get
+            {
+                // Если в БД bookID не null, значит это заявка на книгу
+                if (bookID != null)
+                {
+                    // Если book подгрузился через Include, выводим имя, иначе - ID
+                    return book != null ? $"Книга: {book.Name}" : $"Книга (ID: {bookID})";
+                }
+                // Иначе это заявка на пользователя
+                return user_ != null ? $"Аккаунт: {user_.Login}" : "Неизвестный объект";
+            }
+        }
     }
 
     // Для заявок на роль

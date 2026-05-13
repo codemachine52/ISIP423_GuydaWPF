@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -8,15 +9,16 @@ namespace WpfApp1.Windows
     {
         private int _bookId;
         private int _userId;
+        book _currentBook;
 
         public AddReviewWindow(int bookId, int userId)
         {
             InitializeComponent();
             _bookId = bookId;
             _userId = userId;
+            book currentBook = Core.Context.book.Where(b => b.ID == bookId).FirstOrDefault();
+            _currentBook = currentBook;
         }
-
-        
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TBoxReviewText.Text))
@@ -24,7 +26,6 @@ namespace WpfApp1.Windows
                 MessageBox.Show("Напишите текст отзыва!");
                 return;
             }
-
             try
             {
                 var newReview = new review
@@ -35,12 +36,17 @@ namespace WpfApp1.Windows
                     Mark = int.Parse((ComboRating.SelectedItem as ComboBoxItem).Content.ToString()),
                     Date = DateTime.Now
                 };
-
                 Core.Context.review.Add(newReview);
                 Core.Context.SaveChanges();
-
+                var allReviews = Core.Context.review.Where(r => r.BookID == _bookId).ToList();
+                if (allReviews.Any())
+                {
+                    double averageRating = allReviews.Average(r => r.Mark);
+                    _currentBook.Rating = Math.Round(averageRating, 1);
+                    Core.Context.SaveChanges();
+                }
                 MessageBox.Show("Отзыв успешно добавлен!");
-                this.DialogResult = true; // Закрывает окно и сообщает об успехе
+                this.DialogResult = true;
             }
             catch (Exception ex)
             {

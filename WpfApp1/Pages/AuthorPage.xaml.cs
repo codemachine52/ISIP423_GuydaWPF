@@ -39,13 +39,8 @@ namespace WpfApp1.Pages
         {
             try
             {
-                // Очищаем кэш контекста, чтобы увидеть изменения, если они были в другом окне
                 Core.Context.ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-
-                // Загружаем только книги текущего автора
-                LBoxAuthorBooks.ItemsSource = Core.Context.book
-                    .Where(b => b.AuthorID == _currentUser.ID)
-                    .ToList();
+                LBoxAuthorBooks.ItemsSource = Core.Context.book.Where(b => b.AuthorID == _currentUser.ID).ToList();
             }
             catch (Exception ex)
             {

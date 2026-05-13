@@ -29,20 +29,27 @@ namespace WpfApp1.Pages
             _currentBook = selectedBook;
             _currentUser = user;
             this.DataContext = _currentBook;
-
             InitializeComponent();
-
             LoadReviews();
         }
 
         private void LoadReviews()
         {
-            // Загружаем отзывы, которые не заморожены (если не админ)
             var reviews = Core.Context.review.Where(r => r.BookID == _currentBook.ID);
-            if (_currentUser.RoleID != 3)
-                reviews = reviews.Where(r => r.IsFreeze != true);
-
+            if (_currentUser.RoleID != 3) reviews = reviews.Where(r => r.IsFreeze != true);
             LBoxReviews.ItemsSource = reviews.ToList();
+        }
+
+        private void RefreshBookData()
+        {
+            Core.Context.Entry(_currentBook).Reload();
+            TxtBlockRating.Text = $"Рейтинг: {_currentBook.Rating} / 5";
+            var freshReviews = Core.Context.review
+                .Include("user_")
+                .Where(r => r.BookID == _currentBook.ID)
+                .ToList();
+
+            LBoxReviews.ItemsSource = freshReviews;
         }
 
         // Жалоба на книгу
@@ -124,6 +131,7 @@ namespace WpfApp1.Pages
             {
 
             }
+            RefreshBookData();
         }
         private void ComboStatus_Loaded(object sender, RoutedEventArgs e)
         {
@@ -169,7 +177,4 @@ namespace WpfApp1.Pages
         }
     }
 }
-//заявку на автора из профиля
-//вместо моя библиотека мои отзывы сделать
-//список замороженных книг как пользователей выводить у админа
 //автообновление рейтинга книги и отображение отзыва

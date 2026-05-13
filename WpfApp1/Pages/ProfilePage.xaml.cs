@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WpfApp1.Windows;
 
 namespace WpfApp1.Pages
@@ -11,14 +13,27 @@ namespace WpfApp1.Pages
         public ProfilePage(user_ user)
         {
             InitializeComponent();
+            currentUser = user;
             TBlockFIO.Text = $"ФИО: {user.Name}";
             TBlockEmail.Text = $"Email: {user.Email}";
-            TBlockRole.Text = $"Статус: {user.role.Name}"; // Используем связь с таблицей Role
+            TBlockRole.Text = $"Статус: {user.role.Name}";
+            var myReviews = Core.Context.review
+                .Where(r => r.UserID == user.ID)
+                .ToList() // Сначала выгружаем в память для корректной работы
+                .Select(r => new {
+                    BookName = r.book.Name,
+                    BookID = r.BookID,
+                    Rating = r.Mark,
+                    Description = r.Description
+                })
+                .ToList();
 
-            // Загружаем список прочитанных книг из таблицы readList
-            var myBooks = Core.Context.readList.Where(r => r.UserID == user.ID).Select(r => r.book.Name).ToList();
-            LBoxMyBooks.ItemsSource = myBooks;
-            currentUser = user;
+            LBoxMyReviews.ItemsSource = myReviews;
+
+            if (user.RoleID != 1)
+            {
+                RequestButton.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -44,7 +59,24 @@ namespace WpfApp1.Pages
 
             if (reviewWin.ShowDialog() == true)
             {
-                // Можно обновить данные на странице, если это нужно
+
+            }
+        }
+
+        private void LBoxMyReviews_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedReview = LBoxMyReviews.SelectedItem;
+            if (selectedReview == null) { return; }
+            dynamic data = selectedReview;
+            int? bID = data.BookID;
+
+            if (bID != null)
+            {
+                var book = Core.Context.book.FirstOrDefault(b => b.ID == bID);
+                if (book != null)
+                {
+                    NavigationService.Navigate(new BookDetailsPage(book, currentUser));
+                }
             }
         }
     }

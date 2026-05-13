@@ -63,21 +63,12 @@ namespace WpfApp1.Windows
                         MessageBoxButton.OK, MessageBoxImage.Error);
                     return false;
                 }
-
-                // Проверка статуса блокировки (перенесено из UI-логики в метод данных)
                 if (currentUser.IsFreeze == true)
                 {
-                    // Ищем последнюю жалобу на этого пользователя, чтобы узнать причину
-                    var lastReport = Core.Context.report
-        .Where(r => r.userWasReportedID == currentUser.ID || (r.review != null && r.AuthorID == currentUser.ID))
-        .OrderByDescending(r => r.ID)
-        .FirstOrDefault();
-
-                    string reason = "Нарушение правил платформы"; // Значение по умолчанию
-
+                    var lastReport = Core.Context.report.Where(r => r.userWasReportedID == currentUser.ID || (r.review != null && r.AuthorID == currentUser.ID)).OrderByDescending(r => r.ID).FirstOrDefault();
+                    string reason = "Нарушение правил платформы";
                     if (lastReport != null)
                     {
-                        // Определяем причину на основе заполненных полей в жалобе
                         if (lastReport.reviewID != null)
                         {
                             reason = $"Ваш отзыв к книге '{lastReport.review.book.Name}' был признан недопустимым.";
@@ -93,7 +84,7 @@ namespace WpfApp1.Windows
                     }
                     FreezeAppealWindow appealWin = new FreezeAppealWindow(currentUser, reason);
                     appealWin.ShowDialog();
-                    return false; // Не пускаем в главное меню
+                    return false;
                 }
                 Core.CurrentUser = currentUser;
                 this.user = currentUser;

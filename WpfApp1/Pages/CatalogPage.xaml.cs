@@ -36,23 +36,16 @@ namespace WpfApp1.Pages
 
         private void FilterChanged(object sender, EventArgs e) => UpdateData();
 
-        // Метод для обновления списка (с учетом поиска)
         private void UpdateData()
         {
             var list = Core.Context.book.ToList();
-
-            // 1. Поиск
             if (!string.IsNullOrWhiteSpace(TBoxSearch.Text))
                 list = list.Where(p => p.Name.ToLower().Contains(TBoxSearch.Text.ToLower())).ToList();
-
-            // 2. Фильтрация по жанру
             if (ComboGenre.SelectedIndex > 0)
             {
                 var selectedGenre = ComboGenre.SelectedItem as ganre;
                 list = list.Where(p => p.BookGanre.Any(g => g.GanreID == selectedGenre.ID)).ToList();
             }
-
-            // 3. Сортировка
             switch (ComboSort.SelectedIndex)
             {
                 case 1: list = list.OrderBy(p => p.Name).ToList(); break;
@@ -60,8 +53,6 @@ namespace WpfApp1.Pages
                 case 3: list = list.OrderBy(p => p.Rating).ToList(); break;
                 case 4: list = list.OrderByDescending(p => p.Rating).ToList(); break;
             }
-
-            // 4. Скрытие замороженных книг для обычных пользователей
             if (Core.CurrentUser.RoleID != 3)
                 list = list.Where(p => p.IsFreeze != true).ToList();
 
@@ -82,16 +73,12 @@ namespace WpfApp1.Pages
         {
             var combo = sender as ComboBox;
             combo.ItemsSource = Core.Context.readStatus.ToList();
-
-            // Подсвечиваем текущий статус книги для пользователя, если он есть
             int bookId = (int)combo.Tag;
             var currentStatus = Core.Context.readList
                 .FirstOrDefault(r => r.BookID == bookId && r.UserID == _currentUser.ID);
-
             if (currentStatus != null)
                 combo.SelectedValue = currentStatus.ReadStatusID;
         }
-
         private void ComboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var combo = sender as ComboBox;
@@ -99,8 +86,6 @@ namespace WpfApp1.Pages
 
             int bookId = (int)combo.Tag;
             int selectedStatusId = (int)combo.SelectedValue; // Получаем ID из ComboBox
-
-            // Ищем запись в списках текущего пользователя
             var record = Core.Context.readList.FirstOrDefault(r => r.BookID == bookId && r.UserID == _currentUser.ID);
 
             if (record != null)
@@ -109,7 +94,6 @@ namespace WpfApp1.Pages
             }
             else
             {
-                // Создаем новую запись, если её не было
                 Core.Context.readList.Add(new readList
                 {
                     UserID = _currentUser.ID,
@@ -117,7 +101,6 @@ namespace WpfApp1.Pages
                     ReadStatusID = selectedStatusId
                 });
             }
-
             Core.Context.SaveChanges();
         }
     }

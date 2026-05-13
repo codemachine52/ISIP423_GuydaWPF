@@ -35,10 +35,11 @@ namespace WpfApp1.Pages
         {
             Core.Context.ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
             DGridUsers.ItemsSource = Core.Context.user_.ToList();
-            LBoxUnfreezeRequests.ItemsSource = Core.Context.requestUnFreeze.Include("user_").ToList();
+            LBoxUnfreezeRequests.ItemsSource = Core.Context.requestUnFreeze
+        .Include("user_").Include("book")
+        .ToList();
             LBoxRoleRequests.ItemsSource = Core.Context.requestRole.Include("user_").ToList();
         }
-
         private void FreezeCheckBox_Click(object sender, RoutedEventArgs e)
         {
             var cb = sender as CheckBox;
@@ -57,12 +58,10 @@ namespace WpfApp1.Pages
         private void RoleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var cb = sender as ComboBox;
-            // чтобы база не дергалась при первой загрузке страницы
             if (cb != null && cb.IsLoaded)
             {
                 var selectedUser = cb.DataContext as user_;
                 if (selectedUser == null) return;
-                // Проверка на самого себя
                 if (selectedUser.ID == _currentAdmin.ID)
                 {
                     // Если админ пытается сменить себе роль
@@ -74,10 +73,8 @@ namespace WpfApp1.Pages
                         return;
                     }
                 }
-
                 try
                 {
-                    // Явно говорим контексту, что объект изменен
                     Core.Context.Entry(selectedUser).State = System.Data.Entity.EntityState.Modified;
                     Core.Context.SaveChanges();
                 }
@@ -87,20 +84,16 @@ namespace WpfApp1.Pages
                 }
             }
         }
-
-        // РАЗМОРОЗКА
         private void BtnAcceptUnfreeze_Click(object sender, RoutedEventArgs e)
         {
             var req = (sender as Button).Tag as requestUnFreeze;
-            if (req.bookID != null) req.book.IsFreeze = false; // Размораживаем книгу
-            else req.user_.IsFreeze = false; // Или пользователя
+            if (req.bookID != null) req.book.IsFreeze = false;
+            else req.user_.IsFreeze = false;
 
             Core.Context.requestUnFreeze.Remove(req); // Удаляем заявку
             Core.Context.SaveChanges();
             RefreshData();
         }
-
-        // РОЛЬ АВТОРА
         private void BtnAcceptAuthor_Click(object sender, RoutedEventArgs e)
         {
             var req = (sender as Button).Tag as requestRole;
@@ -110,8 +103,6 @@ namespace WpfApp1.Pages
             Core.Context.SaveChanges();
             RefreshData();
         }
-
-        // СМЕНА ПАРОЛЯ
         private void BtnChangePass_Click(object sender, RoutedEventArgs e)
         {
             var u = (sender as Button).Tag as user_;
@@ -119,8 +110,6 @@ namespace WpfApp1.Pages
             Core.Context.SaveChanges();
             MessageBox.Show($"Пароль для {u.Login} сброшен на '123'");
         }
-
-        // Метод отклонения заявки на роль АВТОРА
         private void BtnDeclineAuthor_Click(object sender, RoutedEventArgs e)
         {
             var req = (sender as Button).Tag as requestRole;
@@ -132,8 +121,6 @@ namespace WpfApp1.Pages
                 MessageBox.Show("Заявка на роль автора отклонена");
             }
         }
-
-        // Метод отклонения заявки на РАЗМОРОЗКУ
         private void BtnDeclineUnfreeze_Click(object sender, RoutedEventArgs e)
         {
             var req = (sender as Button).Tag as requestUnFreeze;
@@ -145,25 +132,6 @@ namespace WpfApp1.Pages
                 MessageBox.Show("Заявка на разморозку отклонена");
             }
         }
-
         private void Page_Loaded(object sender, RoutedEventArgs e) => RefreshData();
-
-
-        
-        //private void BtnToggleFreeze_Click(object sender, RoutedEventArgs e)
-        //{
-        //    var user = (sender as Button).Tag as user_;
-
-        //    // Инвертируем статус заморозки
-        //    user.IsFreeze = !user.IsFreeze;
-
-        //    try
-        //    {
-        //        Core.Context.SaveChanges();
-        //        MessageBox.Show($"Статус пользователя {user.Login} изменен.");
-        //        RefreshData();
-        //    }
-        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
-        //}
     }
 }

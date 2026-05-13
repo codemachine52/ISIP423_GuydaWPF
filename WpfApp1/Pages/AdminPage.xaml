@@ -12,7 +12,6 @@
           Background="Transparent" RowBackground="#20FFFFFF" 
           AlternatingRowBackground="#10FFFFFF" Foreground="White" 
           BorderThickness="0" GridLinesVisibility="None" HeadersVisibility="Column">
-
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="Background" Value="#FF111111"/>
@@ -21,10 +20,8 @@
                                 <Setter Property="FontWeight" Value="Bold"/>
                             </Style>
                         </DataGrid.ColumnHeaderStyle>
-
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Логин" Binding="{Binding Login}" IsReadOnly="True" Width="*"/>
-
                             <DataGridTemplateColumn Header="Роль" Width="120">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -32,7 +29,6 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-
                             <DataGridTemplateColumn Header="Заморожен" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -40,7 +36,6 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-
                             <DataGridTemplateColumn Header="Действие" Width="150">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -52,7 +47,6 @@
                     </DataGrid>
                 </StackPanel>
             </TabItem>
-
             <TabItem Header="Заявки на разморозку">
                 <ListBox x:Name="LBoxUnfreezeRequests">
                     <ListBox.ItemTemplate>
@@ -71,7 +65,6 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </TabItem>
-
             <TabItem Header="Заявки на Автора">
                 <ListBox x:Name="LBoxRoleRequests">
                     <ListBox.ItemTemplate>
@@ -82,7 +75,6 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-
                                     <TextBlock Grid.Column="0" Text="{Binding UserName}" VerticalAlignment="Center" Foreground="Black" FontSize="14" Margin="10" FontWeight="Bold"/>
                                     <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Button Content="Сделать автором" Click="BtnAcceptAuthor_Click" Tag="{Binding}" Margin="0,0,10,0"/>
