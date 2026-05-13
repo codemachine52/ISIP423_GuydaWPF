@@ -65,6 +65,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="book.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BookGanre.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ganre.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KISH.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KISH.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KISH.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KISH.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KISH.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\book_partial.cs" />
     <Compile Include="Models\genre.cs" />
     <Compile Include="Models\requests_partial.cs" />
@@ -75,42 +99,6 @@
     </Compile>
     <Compile Include="Pages\ReadPage.xaml.cs">
       <DependentUpon>ReadPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\AddReviewWindow.xaml.cs">
-      <DependentUpon>AddReviewWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\AuthWindow.xaml.cs">
-      <DependentUpon>AuthWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="book.cs">
-      <DependentUpon>KISH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BookGanre.cs">
-      <DependentUpon>KISH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Core.cs" />
-    <Compile Include="ganre.cs">
-      <DependentUpon>KISH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KISH.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KISH.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AdminPage.xaml.cs">
-      <DependentUpon>AdminPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\AuthorPage.xaml.cs">
-      <DependentUpon>AuthorPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\BookListPage.xaml.cs">
-      <DependentUpon>BookListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CatalogPage.xaml.cs">
-      <DependentUpon>CatalogPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ProfilePage.xaml.cs">
-      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="readList.cs">
       <DependentUpon>KISH.tt</DependentUpon>
@@ -133,11 +121,30 @@
     <Compile Include="role.cs">
       <DependentUpon>KISH.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>KISH.tt</DependentUpon>
-    </Compile>
     <Compile Include="user_.cs">
       <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AddReviewWindow.xaml.cs">
+      <DependentUpon>AddReviewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\AuthWindow.xaml.cs">
+      <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Core.cs" />
+    <Compile Include="Pages\AdminPage.xaml.cs">
+      <DependentUpon>AdminPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AuthorPage.xaml.cs">
+      <DependentUpon>AuthorPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\BookListPage.xaml.cs">
+      <DependentUpon>BookListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CatalogPage.xaml.cs">
+      <DependentUpon>CatalogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditBookWindow.xaml.cs">
       <DependentUpon>EditBookWindow.xaml</DependentUpon>
@@ -147,6 +154,9 @@
     </Compile>
     <Compile Include="Windows\RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RoleRequestWindow.xaml.cs">
+      <DependentUpon>RoleRequestWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Pages\BookDetailsPage.xaml">
       <SubType>Designer</SubType>
@@ -171,16 +181,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="KISH.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KISH.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KISH.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>KISH.edmx</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -215,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RoleRequestWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -259,19 +263,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="KISH.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>KISH.Context.cs</LastGenOutput>
       <DependentUpon>KISH.edmx</DependentUpon>
+      <LastGenOutput>KISH.Context.cs</LastGenOutput>
     </Content>
     <Content Include="KISH.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>KISH.edmx</DependentUpon>
       <LastGenOutput>KISH.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

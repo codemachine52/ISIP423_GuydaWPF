@@ -8,15 +8,15 @@ namespace WpfApp1
 {
     internal class Core
     {
-        private static MG_KISHEntities _context;
+        private static MG_KISHEntities1 _context;
 
-        public static MG_KISHEntities Context
+        public static MG_KISHEntities1 Context
         {
             get
             {
                 // Реализация Singleton для экономии ресурсов
                 if (_context == null)
-                    _context = new MG_KISHEntities();
+                    _context = new MG_KISHEntities1();
                 return _context;
             }
 

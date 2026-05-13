@@ -16,7 +16,10 @@
 
             <TextBlock Text="Моя библиотека:" FontSize="22" Foreground="White" Margin="0,30,0,10"/>
             <ListBox x:Name="LBoxMyBooks" Height="200" Background="Transparent" Foreground="White"/>
-            <Button Name="ExitButton" HorizontalAlignment="Left" FontSize="14" Foreground="Honeydew" Background="DarkCyan"  VerticalAlignment="Bottom" Content="Выйти из аккаунта" Padding="7" Margin="0, 20, 0, 0" Click="ExitButton_Click"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="ExitButton" HorizontalAlignment="Left" FontSize="14" Foreground="Honeydew" Background="LightCoral"  VerticalAlignment="Bottom" Content="Выйти из аккаунта" Padding="7" Margin="0, 20, 0, 0" Click="ExitButton_Click"/>
+            <Button Name="RequestButton" HorizontalAlignment="Left" FontSize="14" Foreground="Honeydew" Background="DarkCyan"  VerticalAlignment="Bottom" Content="Заявка на роль администратора" Padding="7" Margin="20, 0, 0, 0" Click="RequestButton_Click"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Page>

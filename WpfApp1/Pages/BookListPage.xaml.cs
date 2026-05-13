@@ -60,7 +60,7 @@ namespace WpfApp1.Pages
             {
                 // Переходим на страницу ReadPage, передавая ID книги и текущего пользователя
                 // Убедись, что конструктор ReadPage принимает эти параметры
-                NavigationService.Navigate(new ReadPage(selectedRecord.book.ID, _currentUser));
+                NavigationService.Navigate(new BookDetailsPage(selectedRecord.book, _currentUser));
             }
         }
     }

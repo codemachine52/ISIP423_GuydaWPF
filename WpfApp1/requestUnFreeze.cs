@@ -20,7 +20,7 @@ namespace WpfApp1
         public System.DateTime reportDate { get; set; }
         public Nullable<int> bookID { get; set; }
     
-        public virtual user_ user_ { get; set; }
         public virtual book book { get; set; }
+        public virtual user_ user_ { get; set; }
     }
 }

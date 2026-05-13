@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp1.Windows;
 
 namespace WpfApp1.Pages
 {
@@ -25,15 +26,12 @@ namespace WpfApp1.Pages
 
         public BookDetailsPage(book selectedBook, user_ user)
         {
-            // 1. Сначала данные
             _currentBook = selectedBook;
             _currentUser = user;
             this.DataContext = _currentBook;
 
-            // 2. Потом инициализация компонентов (Bindingи увидят готовый DataContext)
             InitializeComponent();
 
-            // 3. Потом загрузка доп. данных
             LoadReviews();
         }
 
@@ -118,5 +116,60 @@ namespace WpfApp1.Pages
         {
             NavigationService.Navigate(new ReadPage(_currentBook.ID, _currentUser));
         }
+        private void ReviewBut_Click(object sender, RoutedEventArgs e)
+        {
+            var reviewWin = new AddReviewWindow(_currentBook.ID, _currentUser.ID);
+            reviewWin.Owner = Window.GetWindow(this);
+            if (reviewWin.ShowDialog() == true)
+            {
+
+            }
+        }
+        private void ComboStatus_Loaded(object sender, RoutedEventArgs e)
+        {
+            var combo = sender as ComboBox;
+            combo.ItemsSource = Core.Context.readStatus.ToList();
+
+            // Подсвечиваем текущий статус книги для пользователя, если он есть
+            int bookId = (int)combo.Tag;
+            var currentStatus = Core.Context.readList
+                .FirstOrDefault(r => r.BookID == bookId && r.UserID == _currentUser.ID);
+
+            if (currentStatus != null)
+                combo.SelectedValue = currentStatus.ReadStatusID;
+        }
+
+        private void ComboStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var combo = sender as ComboBox;
+            if (combo.SelectedValue == null) return;
+
+            int bookId = (int)combo.Tag;
+            int selectedStatusId = (int)combo.SelectedValue; // Получаем ID из ComboBox
+
+            // Ищем запись в списках текущего пользователя
+            var record = Core.Context.readList.FirstOrDefault(r => r.BookID == bookId && r.UserID == _currentUser.ID);
+
+            if (record != null)
+            {
+                record.ReadStatusID = selectedStatusId;
+            }
+            else
+            {
+                // Создаем новую запись, если её не было
+                Core.Context.readList.Add(new readList
+                {
+                    UserID = _currentUser.ID,
+                    BookID = bookId,
+                    ReadStatusID = selectedStatusId
+                });
+            }
+
+            Core.Context.SaveChanges();
+        }
     }
 }
+//заявку на автора из профиля
+//вместо моя библиотека мои отзывы сделать
+//список замороженных книг как пользователей выводить у админа
+//автообновление рейтинга книги и отображение отзыва

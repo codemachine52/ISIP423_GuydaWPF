@@ -7,6 +7,7 @@ namespace WpfApp1.Pages
 {
     public partial class ProfilePage : Page
     {
+        user_ currentUser;
         public ProfilePage(user_ user)
         {
             InitializeComponent();
@@ -17,6 +18,7 @@ namespace WpfApp1.Pages
             // Загружаем список прочитанных книг из таблицы readList
             var myBooks = Core.Context.readList.Where(r => r.UserID == user.ID).Select(r => r.book.Name).ToList();
             LBoxMyBooks.ItemsSource = myBooks;
+            currentUser = user;
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -31,6 +33,18 @@ namespace WpfApp1.Pages
             if (parentWindow != null)
             {
                 parentWindow.Close();
+            }
+        }
+
+        private void RequestButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Открываем окно как модальное
+            var reviewWin = new RoleRequestWindow(currentUser.ID);
+            reviewWin.Owner = Window.GetWindow(this); // Чтобы окно было по центру ReadPage
+
+            if (reviewWin.ShowDialog() == true)
+            {
+                // Можно обновить данные на странице, если это нужно
             }
         }
     }

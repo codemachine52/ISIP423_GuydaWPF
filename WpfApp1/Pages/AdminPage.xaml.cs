@@ -99,20 +99,22 @@ namespace WpfApp1.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e) => RefreshData();
 
-        private void BtnToggleFreeze_Click(object sender, RoutedEventArgs e)
-        {
-            var user = (sender as Button).Tag as user_;
 
-            // Инвертируем статус заморозки
-            user.IsFreeze = !user.IsFreeze;
+        
+        //private void BtnToggleFreeze_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var user = (sender as Button).Tag as user_;
 
-            try
-            {
-                Core.Context.SaveChanges();
-                MessageBox.Show($"Статус пользователя {user.Login} изменен.");
-                RefreshData();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
+        //    // Инвертируем статус заморозки
+        //    user.IsFreeze = !user.IsFreeze;
+
+        //    try
+        //    {
+        //        Core.Context.SaveChanges();
+        //        MessageBox.Show($"Статус пользователя {user.Login} изменен.");
+        //        RefreshData();
+        //    }
+        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
+        //}
     }
 }

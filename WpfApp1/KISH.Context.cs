@@ -13,10 +13,10 @@ namespace WpfApp1
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MG_KISHEntities : DbContext
+    public partial class MG_KISHEntities1 : DbContext
     {
-        public MG_KISHEntities()
-            : base("name=MG_KISHEntities")
+        public MG_KISHEntities1()
+            : base("name=MG_KISHEntities1")
         {
         }
     
@@ -28,14 +28,13 @@ namespace WpfApp1
         public virtual DbSet<book> book { get; set; }
         public virtual DbSet<BookGanre> BookGanre { get; set; }
         public virtual DbSet<ganre> ganre { get; set; }
+        public virtual DbSet<readList> readList { get; set; }
         public virtual DbSet<readStatus> readStatus { get; set; }
         public virtual DbSet<report> report { get; set; }
         public virtual DbSet<requestRole> requestRole { get; set; }
         public virtual DbSet<requestUnFreeze> requestUnFreeze { get; set; }
         public virtual DbSet<review> review { get; set; }
         public virtual DbSet<role> role { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<user_> user_ { get; set; }
-        public virtual DbSet<readList> readList { get; set; }
     }
 }
