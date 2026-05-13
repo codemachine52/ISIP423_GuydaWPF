@@ -20,23 +20,72 @@ namespace WpfApp1.Pages
     /// </summary>
     public partial class AdminPage : Page
     {
+        private user_ _currentAdmin;
+        public List<role> AllRoles { get; set; }
+        
         public AdminPage(user_ currentUser)
         {
             InitializeComponent();
             RefreshData();
+            _currentAdmin = currentUser;
+            AllRoles = Core.Context.role.ToList();
+            this.DataContext = this;
         }
-            private void RefreshData()
+        private void RefreshData()
         {
-            // Отключаем кэширование, чтобы EF лез прямо в базу
             Core.Context.ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
-
-            // Заполняем списки
             DGridUsers.ItemsSource = Core.Context.user_.ToList();
-            LBoxUnfreezeRequests.ItemsSource = Core.Context.requestUnFreeze.ToList();
-            LBoxRoleRequests.ItemsSource = Core.Context.requestRole.ToList();
+            LBoxUnfreezeRequests.ItemsSource = Core.Context.requestUnFreeze.Include("user_").ToList();
+            LBoxRoleRequests.ItemsSource = Core.Context.requestRole.Include("user_").ToList();
+        }
 
-            // Проверка для отладки: если после этого выскочит сообщение "0", значит в базе пусто
-            // MessageBox.Show(Core.Context.user_.Count().ToString()); 
+        private void FreezeCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            var cb = sender as CheckBox;
+            var selectedUser = cb.DataContext as user_;
+
+            if (selectedUser.ID == _currentAdmin.ID)
+            {
+                MessageBox.Show("Вы не можете заморозить самого себя!");
+                selectedUser.IsFreeze = false; 
+                cb.IsChecked = false;          
+                return;
+            }
+
+            Core.Context.SaveChanges();
+        }
+        private void RoleComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var cb = sender as ComboBox;
+            // чтобы база не дергалась при первой загрузке страницы
+            if (cb != null && cb.IsLoaded)
+            {
+                var selectedUser = cb.DataContext as user_;
+                if (selectedUser == null) return;
+                // Проверка на самого себя
+                if (selectedUser.ID == _currentAdmin.ID)
+                {
+                    // Если админ пытается сменить себе роль
+                    if (selectedUser.RoleID != 3)
+                    {
+                        MessageBox.Show("Вы не можете сменить роль самому себе!");
+                        selectedUser.RoleID = 3;
+                        cb.SelectedValue = 3;
+                        return;
+                    }
+                }
+
+                try
+                {
+                    // Явно говорим контексту, что объект изменен
+                    Core.Context.Entry(selectedUser).State = System.Data.Entity.EntityState.Modified;
+                    Core.Context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при сохранении роли: " + ex.Message);
+                }
+            }
         }
 
         // РАЗМОРОЗКА

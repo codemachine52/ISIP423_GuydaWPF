@@ -121,6 +121,9 @@
     <Compile Include="role.cs">
       <DependentUpon>KISH.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>KISH.tt</DependentUpon>
+    </Compile>
     <Compile Include="user_.cs">
       <DependentUpon>KISH.tt</DependentUpon>
     </Compile>

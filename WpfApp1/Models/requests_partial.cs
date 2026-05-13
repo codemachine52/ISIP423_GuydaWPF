@@ -15,6 +15,6 @@ namespace WpfApp1
     // Для заявок на роль
     public partial class requestRole
     {
-        public string UserName => user_.Login;
+        public string UserName => user_ != null ? user_.Login : "Нет данных";
     }
 }
