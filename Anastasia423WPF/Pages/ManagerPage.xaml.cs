@@ -167,5 +167,10 @@ namespace Anastasia423WPF.Pages
         {
             NavigationService.Navigate(new AdminPage(_currentUser));
         }
+
+        private void ExitAccButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AuthPage(_currentUser));
+        }
     }
 }
