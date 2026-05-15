@@ -256,11 +256,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="storage\it_king.pdf" />
-    <None Include="storage\metro.pdf" />
-    <None Include="storage\shining.pdf" />
-    <None Include="storage\witcher_1.pdf" />
-    <None Include="storage\witcher_2.pdf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

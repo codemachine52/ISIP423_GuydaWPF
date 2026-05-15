@@ -31,17 +31,18 @@ namespace WpfApp1.Pages
         {
             Source = r;
 
-            if (r.BookID != null)
+            if (r.BookID != null && r.AuthorID != null)
+            {
+                ReportTypeLabel = "Автор";
+                ReportTypeBadgeColor = Brush("#7A6048");
+                var author = Core.Context.user_.FirstOrDefault(u => u.ID == r.AuthorID);
+                TargetDescription = author != null ? $"Автор: {author.Login}" : $"Автор (ID {r.AuthorID})";
+            }
+            else if (r.AuthorID == null && r.BookID != null)
             {
                 ReportTypeLabel = "Книга";
                 ReportTypeBadgeColor = Brush("#5C3D2E");
                 TargetDescription = r.book != null ? $"Книга: «{r.book.Name}»" : $"Книга (ID {r.BookID})";
-            }
-            else if (r.AuthorID != null)
-            {
-                ReportTypeLabel = "Автор";
-                ReportTypeBadgeColor = Brush("#7A6048");
-                TargetDescription = r.user_1 != null ? $"Автор: {r.user_1.Login}": $"Автор (ID {r.AuthorID})";
             }
             else if (r.reviewID != null)
             {
@@ -160,15 +161,20 @@ namespace WpfApp1.Pages
             var vm = (sender as Button)?.Tag as ReportViewModel;
             if (vm == null) return;
             var rep = vm.Source;
-            if (rep.BookID != null && rep.book != null)
+
+            if (rep.BookID != null && rep.AuthorID != null)
+            {
+                var author = Core.Context.user_.Find(rep.AuthorID);
+                if (author != null)
+                {
+                    author.IsFreeze = true;
+                    MessageBox.Show($"Аккаунт автора «{author.Login}» заморожен.");
+                }
+            }
+            else if (rep.BookID != null && rep.book != null)
             {
                 rep.book.IsFreeze = true;
                 MessageBox.Show($"Книга «{rep.book.Name}» заморожена.");
-            }
-            else if (rep.AuthorID != null && rep.user_1 != null)
-            {
-                rep.user_1.IsFreeze = true;
-                MessageBox.Show($"Аккаунт автора «{rep.user_1.Login}» заморожен.");
             }
             else if (rep.reviewID != null && rep.review != null)
             {
@@ -179,6 +185,7 @@ namespace WpfApp1.Pages
                     MessageBox.Show($"Аккаунт «{author.Login}» заморожен за отзыв.");
                 }
             }
+
             Core.Context.report.Remove(rep);
             Core.Context.SaveChanges();
             RefreshData();
